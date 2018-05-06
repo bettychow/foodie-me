@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.restaurant-img{
+  width: 200px;
+  height: auto;
+  
+}
+
+.restaurant{
+  border: solid;
+  border-width: thin;
+  width: 220px;
+  margin-bottom: 20px;
+}
+
+.heart{
+  color: red;
+}
+
+#map{
+  width: 50%;
+  height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.favorite-list{
+  width: 33%;
+  text-align: center;
+  display: inline-block
+}
+
+.search-box{
+  width: 33%;
+  margin: auto;
+  display: inline-block
+}
+
+.search-results{
+  width: 33%;
+  display: inline-block
+}
+
+.nav{
+  background-color: gold;
+  height: 100px;
+}
+
+li{
+  margin: auto;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.header{
+  width: 100%;
+  height: 400px;
+  position: relative;
+    z-index: 1;
+  /* background-image: url('./gourmet_02a.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; */
+  
+}
+
+.header .bg{
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url('./gourmet_02a.jpg') center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: .6;
+  width: 100%;
+  height: 100%;
+}
+
+.main-flex-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.about-me{
+  width: 50%;
+}
+
+.search-button{
+  float: right;
+}
+
+.review-body{
+  margin-left: 30%;
+  text-align: left;
+}
+
+.food-image{
+  width: 30%;
+}
+
+nav{
+  height: 50px;
+  background-color: gold;
+}
