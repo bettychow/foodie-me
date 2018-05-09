@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import GoogleMapReact from 'google-map-react';
+import { bindActionCreators } from 'redux'
+import { getUserRestaurants } from '../actions/index'
  
 
 const MARKER_SIZE = 10;
@@ -22,15 +24,38 @@ const greatPlaceStyle = {
 class Map extends Component {
 
   
-  static defaultProps = {
-    center: {lat: 37.3230, lng: -122.0322},
-    zoom: 12
-  };
+  // static defaultProps = {
+  //   // center: {lat: this.props.favorites[0]? this.props.favorites[0].lat: 37.3230, lng: this.props.favorites[0]? this.props.favorites[0].lng: -122.0322 },
+  //   center: {lat: 37.3230, lng: -122.0322},
+  //   zoom: 12
+  // };
 
   handleMouseHover = this.handleMouseHover.bind(this);
   state = {
     isHovering: false,
+    lat: 37.7749,
+    lng: -122.4194,
+    center: {lat: 37.3230, lng: -122.0322},
+    zoom: 12
   };
+
+  componentDidMount() {
+
+    this.props.getUserRestaurants()
+    console.log('OOOOOOOOOO', this.props)
+
+    // if(this.props.userFavorites[0]) {
+    //   this.setState({
+    
+        
+    //       lat: Number(this.props.userFavorites[0].lat),
+    //       lng: Number(this.props.userFavorites[0].lng)
+      
+        
+    //   })
+    // }
+    
+  }
 
 
 handleMouseHover() {
@@ -42,10 +67,19 @@ toggleHoverState(state) {
     isHovering: !state.isHovering,
   };
 }
+
+
+
  
   render() {
 
-    const AnyReactComponent = ({ text }) => 
+    console.log('PPPPPPPPPP',this.props.userFavorites)
+
+    console.log('TTTTTTT', this.state.center)
+
+    
+
+    const RestaurantOnMap = ({ text }) => 
     <div>
       <div  
         style={greatPlaceStyle} 
@@ -55,17 +89,27 @@ toggleHoverState(state) {
       {this.state.isHovering && <div>{text}</div>}
     </div>;
 
-    const { userFavorites } = this.props
+    const { userFavorites, getUserRestaurants } = this.props
 
     const displayFavoritesOnMap = userFavorites.map(restaurant => {
-      return <AnyReactComponent key={restaurant.yelp_id} lat={restaurant.lat} lng={restaurant.lng} text={restaurant.restaurant_name}/>
+      return <RestaurantOnMap key={restaurant.yelp_id} lat={restaurant.lat} lng={restaurant.lng} text={restaurant.restaurant_name}/>
     })
+    
+    console.log('?????????', userFavorites[0])
+    // const lat = Number(userFavorites[0].lat)
+    // const lng = Number(userFavorites[0].lng)
+
+    // const coordinatesObj = {lat, lng }
+
+    // console.log('CCCCCCC', coordinatesObj)
+
+   
 
     return (
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAIfMFqTk-qZu7-bPuH2-haZC1lSzmEn7c' }}
-        defaultCenter={this.props.center}
-        defaultZoom={this.props.zoom}
+        defaultCenter={this.state.center}
+        defaultZoom={this.state.zoom}
       >
         {/* <AnyReactComponent
           lat={37.7876}
@@ -89,5 +133,8 @@ const mapStateToProps = state => {
   })
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getUserRestaurants
+}, dispatch)
 
-export default connect(mapStateToProps, null)(Map)
+export default connect(mapStateToProps, mapDispatchToProps)(Map)

@@ -59,7 +59,7 @@ class Review extends Component {
 
     if(this.state.isEditing) {
       return(
-        <ReviewForm {...this.state} currentReview={currentReview} />
+        <ReviewForm {...this.state} currentRestaurant={currentRestaurant} currentReview={currentReview} />
       )
     } else {
       return(

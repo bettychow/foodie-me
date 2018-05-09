@@ -29,6 +29,9 @@ class ReviewForm extends Component {
 
   componentDidMount () {
     const { id, title, comment, dishes, food_rating, service_rating, pic_01, pic_02, pic_03, pic_04 } = this.props.currentReview
+    
+    console.log(this.props.currentReview, this.props.currentRestaurant)
+    
     this.setState({
       title,
       comment,
@@ -78,6 +81,24 @@ class ReviewForm extends Component {
     })
   }
 
+  handlePic02Change = e => {
+    this.setState({
+      pic_02: e.target.value
+    })
+  }
+
+  handlePic03Change = e => {
+    this.setState({
+      pic_03: e.target.value
+    })
+  }
+
+  handlePic04Change = e => {
+    this.setState({
+      pic_04: e.target.value
+    })
+  }
+
   handleSubmit = e => {
     const id = this.props.currentReview.id
     const reviewObj = {...this.state, id}
@@ -86,11 +107,16 @@ class ReviewForm extends Component {
   }
   render() {
 
-    const { currentReview } = this.props
-
-    
+    const { currentReview, currentRestaurant } = this.props
+console.log('++++++++>>>>>>', this.props.currentReview)
+    console.log('bbbbbbbbb//////', currentRestaurant)
     return(
       <div>
+        <div>
+          <h1>{currentRestaurant.restaurant_name}</h1>
+          <p>{currentRestaurant.address}</p>
+          <p>{currentRestaurant.phone}</p>
+        </div>
         <Form onSubmit={e => this.handleSubmit(e)}>
           <FormGroup>
             <Label for="title">Title</Label>
@@ -161,6 +187,42 @@ class ReviewForm extends Component {
               placeholder="image url"
               value={this.state.pic_01}
               onChange={e => this.handlePic01Change(e)}
+            />
+            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
+          </FormGroup>
+          <FormGroup>
+            <Label for="pic_02">Pic_02</Label>
+            <Input
+              type="text"
+              name="pic_02"
+              id="pic_02-field"
+              placeholder="image url"
+              value={this.state.pic_02}
+              onChange={e => this.handlePic02Change(e)}
+            />
+            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
+          </FormGroup>
+          <FormGroup>
+            <Label for="pic_03">Pic_03</Label>
+            <Input
+              type="text"
+              name="pic_03"
+              id="pic_03-field"
+              placeholder="image url"
+              value={this.state.pic_03}
+              onChange={e => this.handlePic03Change(e)}
+            />
+            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
+          </FormGroup>
+          <FormGroup>
+            <Label for="pic_04">Pic_04</Label>
+            <Input
+              type="text"
+              name="pic_04"
+              id="pic_04-field"
+              placeholder="image url"
+              value={this.state.pic_04}
+              onChange={e => this.handlePic04Change(e)}
             />
             {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>

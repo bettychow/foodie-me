@@ -19,7 +19,8 @@ import NavBar from './NavBar';
 class Main extends Component {
 
   state = {
-    isAuth: false
+    isAuth: false,
+    
   }
 
   componentDidMount() {
@@ -38,60 +39,49 @@ class Main extends Component {
         })
       }
     }
+
+    const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
+    this.props.getUserInfo(username)
+      .then(result => {
+        const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
+        this.props.getUserRestaurants(userId)
+        this.props.getAllReviews()
+      })
   }
 
   render() {
 
-    console.log('Auth???', this.state.isAuth)
-    //const token = localStorage.getItem('authorization')
-  //console.log('username?????', jwtDecode(token).sub.username)
-  const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
-  this.props.getUserInfo(username)
-    .then(result => {
-      const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
-      this.props.getUserRestaurants(userId)
-      this.props.getAllReviews()
-    })
+    const { userFavorites } = this.props
+
   
     const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
 
-    console.log('FFFFFFFFFFFF', userId)
-    // if(this.state.isAuth) {
-      
-    //   console.log('userId in Main is isAuth is true', userId)
-    //   //this.props.getUserInfo(username)
-    //   this.props.getUserRestaurants(userId)
-      
-    // } else {
-    //   //this.props.getUserInfo(this.props.match.params.username)
-    //   this.props.getUserRestaurants(this.props.userId)
-    // }
-
+    console.log('FFFFFFFFFFFF', this.props.userId)
     
-
+    const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     
   
     
     return (
+      
       <div>
         <div>
           <NavBar isAuth={this.state.isAuth}/>
           <div className="header">
             <div className="bg"></div>
             <Link to={`/searchpage/${username}`}>Search Restaurants</Link>
-            <Profile isAuth={this.state.isAuth} username={username}/>
+            <Profile isAuth={this.state.isAuth} username={username} currentUser={this.props.currentUser} />
           </div>
           <div className="main-flex-container">
             <div className="about-me" >
-            <div>
-              <h2>About Me</h2>
-              <p>Write Something about you</p>
-              <Input type="textarea"/>
+         
+              <div className="favorite-list">
+                
+                <FavoriteList userId={userId} isAuth={this.state.isAuth} />
               </div>
-              <div className="favorite-list"><FavoriteList userId={userId} isAuth={this.state.isAuth} /></div>
             </div>
             
-            <div id="map" ><Map /></div>  
+            <div id="map" ><Map favorites={userFavorites} lat={37.3230} lng={-122.0322}/></div>  
 
           </div>
         </div>
@@ -108,7 +98,9 @@ class Main extends Component {
 const mapStateToProps = state =>  {
   console.log('sssssss', state)
   return {
-    userId: state.currentUser.id
+    userId: state.currentUser.id,
+    currentUser: state.currentUser,
+    userFavorites: state.favorites.restaurants
   }
 }
 

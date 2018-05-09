@@ -38,14 +38,19 @@ render() {
                  <h3>{restaurant.restaurant_name}</h3>
                  <p>{restaurant.address}</p>
                  <p>{restaurant.phone}</p>
-                 {restaurant.review? <Link to={`/review/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
+                 {restaurant.review? <Link to={`/review/${restaurant.restaurant_name}/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
                </li>
   })
   
   return (
-    <ul>
+    <div>
+      <h2>My Favorite Restaurants List</h2>
+      <ul>
       {displayList}
-    </ul>)
+      </ul>
+    </div>
+  )
+    
 }
 
 }

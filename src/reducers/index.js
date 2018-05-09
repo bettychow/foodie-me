@@ -17,7 +17,8 @@ import { FETCH_LOCATION,
          GET_REVIEW,
          UPDATE_REVIEW,
          UPDATE_VOTES,
-         GET_RESTAURANT
+         GET_RESTAURANT,
+         UPDATE_USER_INFO
        } from '../actions'
 
 const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
@@ -121,6 +122,18 @@ const currentUser = (state = {
             password: obj.password,
             bio: obj.bio,
             profile_pic: obj.profile_pic
+        }
+      case UPDATE_USER_INFO:
+      const newObj = action.payload
+      return {
+        ...state,
+            id: newObj.id,
+            username: newObj.username,
+            name: newObj.name,
+            email: newObj.email,
+            password: newObj.password,
+            bio: newObj.bio,
+            profile_pic: newObj.profile_pic
         }
       default: 
         return state

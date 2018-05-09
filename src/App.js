@@ -35,7 +35,7 @@ class App extends Component {
             <Route exact path='/allreviews/:restaurant_id' component={AllReviews}/>
             <Route exact path='/reviewform/:username/:restaurant_id/:user_id' component={WriteReview}/>
             <Route exact path='/:username' component={Main} />
-            <Route exact path='/review/:username/:restaurant_id/:reviewid' component={Review} />
+            <Route exact path='/review/:restaurant_name/:username/:restaurant_id/:reviewid' component={Review} />
             
           </Switch>
         </div>

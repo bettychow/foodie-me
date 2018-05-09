@@ -147,6 +147,32 @@ export const getUserInfo = (username) => {
   }
 }
 
+export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
+export const updateUserInfo = (updatedInfo, username) => {
+console.log('////////', updatedInfo, username)
+  return async dispatch => {
+    const response = await fetch(`http://localhost:8000/users/${username}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updatedInfo),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    const JSONres = await response.json()
+    console.log('JSONres in updateUserInfo', JSONres)
+    
+    dispatch({
+      type: UPDATE_USER_INFO,
+      payload: JSONres[0]
+
+    })
+
+  }
+
+}
+
 export const RECEIVE_USER_RESTAURANTS = 'RECEIVE_USER_RESTAURANTS'
 export const getUserRestaurants = (userId) => {
 

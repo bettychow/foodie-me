@@ -95,8 +95,8 @@ class WriteReview extends Component {
           <h1>{currentRestaurant.restaurant_name}</h1>
           <p>{currentRestaurant.address}</p>
           <p>{currentRestaurant.phone}</p>
-          </div>
-        <Form onSubmit={e => this.handleSubmit(e)}>
+        </div>
+        <Form className="write-review" onSubmit={e => this.handleSubmit(e)}>
           <FormGroup>
             <Label for="title">Title</Label>
             <Input
@@ -165,6 +165,42 @@ class WriteReview extends Component {
               id="pic_01-field"
               placeholder="image url"
               value={this.state.pic_01}
+              onChange={e => this.handlePic01Change(e)}
+            />
+            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
+          </FormGroup>
+          <FormGroup>
+            <Label for="pic_02">Pic_02</Label>
+            <Input
+              type="text"
+              name="pic_02"
+              id="pic_02-field"
+              placeholder="image url"
+              value={this.state.pic_02}
+              onChange={e => this.handlePic01Change(e)}
+            />
+            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
+          </FormGroup>
+          <FormGroup>
+            <Label for="pic_03">Pic_03</Label>
+            <Input
+              type="text"
+              name="pic_03"
+              id="pic_03-field"
+              placeholder="image url"
+              value={this.state.pic_03}
+              onChange={e => this.handlePic01Change(e)}
+            />
+            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
+          </FormGroup>
+          <FormGroup>
+            <Label for="pic_04">Pic_04</Label>
+            <Input
+              type="text"
+              name="pic_04"
+              id="pic_04-field"
+              placeholder="image url"
+              value={this.state.pic_04}
               onChange={e => this.handlePic01Change(e)}
             />
             {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
