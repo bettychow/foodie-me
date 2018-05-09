@@ -12,6 +12,7 @@ import Review from './components/Review'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import NavBar from './components/NavBar'
+import AllReviews from './components/AllReviews'
 import {
   BrowserRouter as Router,
   Route,
@@ -29,11 +30,12 @@ class App extends Component {
         <div className="App">
           <Switch>
             <Route exact path='/' component={Login} />
-            <Route path='/signup' component={SignUp} />
-            <Route path='/searchpage/:username' component={SearchPage} />
-            <Route exact path='/reviewform/:restaurant_id/:user_id' component={WriteReview}/>
-            <Route  exact path='/:username' component={Main} />
-            <Route path='/:username/:reviewid' component={Review} />
+            <Route exact path='/signup' component={SignUp} />
+            <Route exact path='/searchpage/:username' component={SearchPage} />
+            <Route exact path='/allreviews/:restaurant_id' component={AllReviews}/>
+            <Route exact path='/reviewform/:username/:restaurant_id/:user_id' component={WriteReview}/>
+            <Route exact path='/:username' component={Main} />
+            <Route exact path='/review/:username/:restaurant_id/:reviewid' component={Review} />
             
           </Switch>
         </div>

@@ -15,6 +15,11 @@ import { addReview, getRestaurant } from '../actions/index'
 
 class WriteReview extends Component {
 
+  componentDidMount() {
+    const restaurant_id = this.props.match.params.restaurant_id
+    this.props.getRestaurant(restaurant_id)
+  }
+
   state = {
     title: '',
     comment: '',
@@ -64,19 +69,33 @@ class WriteReview extends Component {
   }
 
   handleSubmit = e => {
-    const reviewObj = {...this.state}
+
+    console.log('????????????????', e)
+    const restaurant_id = this.props.match.params.restaurant_id
+    const user_id = this.props.match.params.user_id
+    const username = this.props.match.params.username
+    const yelp_id = this.props.currentRestaurant.yelp_id
+    const reviewObj = {...this.state, restaurant_id, user_id, username, username, yelp_id}
+
+    console.log('reviewObj in writereview', reviewObj)
     this.props.addReview(reviewObj)
   }
+
+  
   render() {
 
     //const { currentReview } = this.props
 
     console.log('mmmmmmmmmm', this.props.match.params)
-    const restaurant_id = this.props.match.params.restaurant_id
-    this.props.getRestaurant(restaurant_id)
+    const {currentRestaurant} =this.props
     
     return(
       <div>
+        <div>
+          <h1>{currentRestaurant.restaurant_name}</h1>
+          <p>{currentRestaurant.address}</p>
+          <p>{currentRestaurant.phone}</p>
+          </div>
         <Form onSubmit={e => this.handleSubmit(e)}>
           <FormGroup>
             <Label for="title">Title</Label>
@@ -157,10 +176,20 @@ class WriteReview extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  console.log(state)
+  return({
+  
+    currentRestaurant: state.restaurants.currentRestaurant
+  })
+}
+
+
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getRestaurant
+  getRestaurant,
+  addReview
 }, dispatch)
 
 
-export default connect(null, mapDispatchToProps)(WriteReview)
+export default connect(mapStateToProps, mapDispatchToProps)(WriteReview)

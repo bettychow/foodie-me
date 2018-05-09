@@ -9,7 +9,7 @@ const SearchBox = ({ searchString, inputSearch, search }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-      console.log('eeeeeeee', e.target.input)
+      console.log('eeeeeeeevent in Search Box', e.target.input)
 
       search(searchString)
   }

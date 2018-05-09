@@ -24,8 +24,6 @@ class Main extends Component {
 
   componentDidMount() {
     console.log('username from params', this.props.match.params.username)
-    //const username = this.props.match.params.username
-    //this.props.getUserInfo(username)
 
     const token = localStorage.getItem('authorization')
 
@@ -49,20 +47,29 @@ class Main extends Component {
   //console.log('username?????', jwtDecode(token).sub.username)
   const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
   this.props.getUserInfo(username)
-  const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
-console.log('userId++++++>', userId)
-    if(this.state.isAuth) {
-      
-      console.log('userId in Main is isAuth is true', userId)
-      //this.props.getUserInfo(username)
+    .then(result => {
+      const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
       this.props.getUserRestaurants(userId)
-      
-    } else {
-      //this.props.getUserInfo(this.props.match.params.username)
-      this.props.getUserRestaurants(this.props.userId)
-    }
+      this.props.getAllReviews()
+    })
+  
+    const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
 
-    this.props.getAllReviews()
+    console.log('FFFFFFFFFFFF', userId)
+    // if(this.state.isAuth) {
+      
+    //   console.log('userId in Main is isAuth is true', userId)
+    //   //this.props.getUserInfo(username)
+    //   this.props.getUserRestaurants(userId)
+      
+    // } else {
+    //   //this.props.getUserInfo(this.props.match.params.username)
+    //   this.props.getUserRestaurants(this.props.userId)
+    // }
+
+    
+
+    
   
     
     return (
@@ -71,7 +78,7 @@ console.log('userId++++++>', userId)
           <NavBar isAuth={this.state.isAuth}/>
           <div className="header">
             <div className="bg"></div>
-            <Link to={`/searchPage/${username}`}>Search Restaurants</Link>
+            <Link to={`/searchpage/${username}`}>Search Restaurants</Link>
             <Profile isAuth={this.state.isAuth} username={username}/>
           </div>
           <div className="main-flex-container">
@@ -92,34 +99,7 @@ console.log('userId++++++>', userId)
     )
 
       
-    // this.props.getUserRestaurants(userId)
-    // this.props.getAllReviews()
-
-    // return (
-    //   <div>
-    //     <div>
-    //       <NavBar />
-    //       <div className="header">
-    //         <div className="bg"></div>
-    //         <Link to={`/searchPage/${username}`}>Search Restaurants</Link>
-    //         <Profile />
-    //       </div>
-    //       <div className="main-flex-container">
-    //         <div className="about-me" >
-    //         <div>
-    //           <h2>About Me</h2>
-    //           <p>Write Something about you</p>
-    //           <Input type="textarea"/>
-    //           </div>
-    //           <div className="favorite-list"><FavoriteList userId={decoded.sub.id} /></div>
-    //         </div>
-            
-    //         <div id="map" ><Map /></div>  
-
-    //       </div>
-    //     </div>
-    //   </div>
-    // )
+    
   }
 
   

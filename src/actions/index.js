@@ -9,7 +9,7 @@ export const fetchLocation = () => {
     } 
 
     function showPosition (position) {
-      console.log( 'kkkkkk', position.coords.latitude, position.coords.longitude)
+      console.log( 'kkkkkk', typeof position.coords.latitude, position.coords.longitude)
       const coordinates = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -60,20 +60,73 @@ export const search = (searchString) => {
 }
 
 export const ADD_FAVORITE = 'ADD_FAVORITE'
-export const addToFavorite = (restaurant) => {
+export const addToFavorite = (user_id, restaurant) => {
   
-  return dispatch => {
+  return async dispatch => {
     console.log('restaurant in action', restaurant)
+
+    const response = await fetch(`http://localhost:8000/restaurants`, {
+      method: 'POST',
+      body: JSON.stringify(restaurant),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    const JSONres = await response.json()
+
+    console.log('JSONres in addToFavorite in action', JSONres)
+
+    let obj = {user_id, restaurant_id: JSONres[0].id}
+
+    console.log('objjjjjjj', obj)
+
+    const responseB = await fetch(`http://localhost:8000/favorite`, {
+      method: 'POST',
+      body: JSON.stringify(obj),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
       dispatch({
         type: ADD_FAVORITE,
-        payload: restaurant
+        payload: JSONres[0]
       })
   }
 
 }
 
+export const UPDATE_FAVORITES = 'UPDATE_FAVORITES'
+export const updateUserFavorites = (user_id, restaurant_id) => {
+  const obj = {user_id, restaurant_id}
+console.log('obj in updateUserFavorites in action', obj)
+  return async dispatch => {
+    console.log('=+++++++++++', obj)
+    const response = await fetch(`http://localhost:8000/favorite`, {
+      method: 'POST',
+      body: JSON.stringify(obj),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    dispatch({
+      type: UPDATE_FAVORITES
+    })
+  }
+
+
+
+}
+
 export const GET_USER_INFO = 'GET_USER_INFO'
 export const getUserInfo = (username) => {
+
+  console.log('username in getUserinfo action', username)
   return async dispatch => {
 
       const response = await fetch(`http://localhost:8000/users/${username}` , {
@@ -85,7 +138,7 @@ export const getUserInfo = (username) => {
       })
 
       const JSONres = await response.json()
-      console.log('jjjjjjjj', JSONres)
+      console.log('JSONres in getUserInfo', JSONres)
       
       dispatch({
         type: GET_USER_INFO,
@@ -97,9 +150,10 @@ export const getUserInfo = (username) => {
 export const RECEIVE_USER_RESTAURANTS = 'RECEIVE_USER_RESTAURANTS'
 export const getUserRestaurants = (userId) => {
 
-  console.log('userId in action', userId)
+  console.log('eeeeeeeeee', userId)
   return async dispatch => {
-    const response = await fetch(`http://localhost:8000/restaurants/${userId}`, {
+    console.log('userId in getUserRestaurants in action ========>', userId)
+    const response = await fetch(`http://localhost:8000/favorite/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -121,8 +175,21 @@ export const getUserRestaurants = (userId) => {
 export const GET_RESTAURANT = 'GET_RESTAURANT'
 export const getRestaurant = (restaurant_id) => {
   return async dispatch => {
+
+    const response = await fetch(`http://localhost:8000/restaurants/${restaurant_id}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    const JSONres = await response.json()
+    
+    console.log('JSONres in getRestaurant in action', JSONres)
     dispatch({
-      type: GET_RESTAURANT
+      type: GET_RESTAURANT,
+      payload: JSONres[0]
     })
   }
 }
@@ -327,53 +394,53 @@ console.log('obj in action login', obj )
   }
 }
 
-export const UP_VOTE = 'UP_VOTE'
-export const DOWN_VOTE = 'DOWN_VOTE'
+export const UPDATE_VOTES = 'UPDATE_VOTES'
 export const vote = (review_id, currentVote, status) => {
   console.log(review_id)
   
   return async dispatch => {
    
-
-    if(status === 'Thumbs Up') {
-      currentVote++
+    const updatedVotes = status === 'Thumbs Up'? currentVote + 1: currentVote -1
+   
+      
       const response = await fetch(`http://localhost:8000/reviews/${review_id}`, {
         method: 'PATCH',
-        body: JSON.stringify({currentVote}),
+        body: JSON.stringify({updatedVotes}),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json'
         }
-
-        
       })
-      const JSONres = await esponse.json()
+      const JSONres = await response.json()
 
       dispatch({
-      type: UP_VOTE
+      type: UPDATE_VOTES,
+      payload: JSONres[0]
     })
 
-    } else {
-      currentVote--
-
-      const response = await fetch(`http://localhost:8000/reviews/${review_id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({currentVote}),
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json'
-        }
-
-        
-      })
-      const JSONres = await esponse.json()
-
-      dispatch({
-      type: DOWN_VOTE
-    })
-
-    }
-
-    
   }
+}
+
+export const addReview = reviewObj => {
+
+  console.log('reviewObj in addReview action', reviewObj)
+
+  return async dispatch => {
+
+    const repsonse = await fetch(`http://localhost:8000/reviews`, {
+      method: 'POST',
+      body: JSON.stringify(reviewObj),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+
+
+
+  }
+   
+
+
 }

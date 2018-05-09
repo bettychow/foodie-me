@@ -23,7 +23,9 @@ render() {
 
   restaurants.forEach(restaurant => {
     userReviews.forEach(review => {
-      restaurant.restaurant_id === review.restaurant_id? restaurant.review = review: restaurant.review = null
+      if(restaurant.restaurant_id === review.restaurant_id ) {
+        restaurant.review = review
+      }
     })
   })
   
@@ -36,7 +38,7 @@ render() {
                  <h3>{restaurant.restaurant_name}</h3>
                  <p>{restaurant.address}</p>
                  <p>{restaurant.phone}</p>
-                 {restaurant.review? <Link to={`/${username}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link to={`/reviewform/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
+                 {restaurant.review? <Link to={`/review/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
                </li>
   })
   

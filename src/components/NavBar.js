@@ -13,18 +13,15 @@ import jwtDecode from'jwt-decode'
 import { getUserInfo } from '../actions/index'
 
 const NavBar = ({history, isAuth}) => {
-
-  // const token = localStorage.getItem('authorization')
-  // const decoded = jwtDecode(token)
-  // const username = decoded.sub.username
-
   
 
   const handleLogout = (e) => {
     localStorage.removeItem('authorization')
   }
+  
+  
 
-  const logoutButton = isAuth? 'Log Out': ''
+  const logoutButton = isAuth? 'Log Out': 'Log In'
   return(
     <nav>
       {/* <Link to={`/${username}`} >Home</Link> */}

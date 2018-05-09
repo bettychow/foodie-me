@@ -14,7 +14,10 @@ import { FETCH_LOCATION,
          INPUT_LOGIN_EMAIL,
          INPUT_LOGIN_PASSWORD,
          CHECK_LOGIN,
-         GET_REVIEW
+         GET_REVIEW,
+         UPDATE_REVIEW,
+         UPDATE_VOTES,
+         GET_RESTAURANT
        } from '../actions'
 
 const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
@@ -60,7 +63,7 @@ const favorites = (state = {restaurants: []}, action) => {
         restaurants: action.payload
       })
     case ADD_FAVORITE:
-    console.log('payloaddddd', action.payload)
+    console.log('payloaddddd in favorites', action.payload)
       return ({
         ...state,
         restaurants: [...state.restaurants, action.payload]
@@ -82,7 +85,16 @@ const reviews = (state = {reviews: [], currentReview: {}}, action) => {
         ...state,
         currentReview: action.payload[0]
       })
-    
+    case UPDATE_REVIEW:
+      return ({
+        ...state,
+        currentReview: action.payload[0]
+      })
+    case UPDATE_VOTES:
+      return ({
+        ...state,
+        currentReview: action.payload
+      })
   default:
     return state
   }
@@ -176,8 +188,17 @@ const currentUser = (state = {
     }
   }
 
-  const loggedInUser = () => {
+  const restaurants = (state = { currentRestaurant: {}}, action) => {
+    switch(action.type) {
+      case GET_RESTAURANT:
+      return {
+        ...state,
+        currentRestaurant: action.payload
 
+      }
+      default:
+        return state
+    }
   }
 
 
@@ -188,5 +209,6 @@ export default combineReducers({
   currentUser,
   reviews,
   signup,
-  login
+  login,
+  restaurants
 })

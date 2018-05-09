@@ -116,3 +116,10 @@ nav{
   height: 50px;
   background-color: gold;
 }
+
+.modal{
+  /* margin-left: 150px;
+  margin-top: 100px; */
+  padding: 20px;
+  color: red;
+}
