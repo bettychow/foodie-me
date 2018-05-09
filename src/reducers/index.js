@@ -18,7 +18,8 @@ import { FETCH_LOCATION,
          UPDATE_REVIEW,
          UPDATE_VOTES,
          GET_RESTAURANT,
-         UPDATE_USER_INFO
+         UPDATE_USER_INFO,
+         FILTER_RESTAURANTS
        } from '../actions'
 
 const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
@@ -69,6 +70,12 @@ const favorites = (state = {restaurants: []}, action) => {
         ...state,
         restaurants: [...state.restaurants, action.payload]
       })
+    case FILTER_RESTAURANTS:
+    return ({
+      ...state,
+      restaurants: action.payload
+    })
+    
     default:
       return state
   }

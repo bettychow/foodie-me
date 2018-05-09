@@ -60,7 +60,7 @@ class Main extends Component {
     
     const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     
-  
+    const displayMap = userFavorites[0] ? <Map favorites={userFavorites} lat={37.3230} lng={-122.0322}/>: <div>Map Loading.....</div>
     
     return (
       
@@ -76,13 +76,12 @@ class Main extends Component {
             <div className="about-me" >
          
               <div className="favorite-list">
-                
                 <FavoriteList userId={userId} isAuth={this.state.isAuth} />
               </div>
             </div>
             
-            <div id="map" ><Map favorites={userFavorites} lat={37.3230} lng={-122.0322}/></div>  
-
+            {/* <div id="map" ><Map favorites={userFavorites} lat={37.3230} lng={-122.0322}/></div>   */}
+            <div id="map" >{displayMap}</div>  
           </div>
         </div>
       </div>

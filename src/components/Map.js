@@ -35,8 +35,8 @@ class Map extends Component {
     isHovering: false,
     lat: 37.7749,
     lng: -122.4194,
-    center: {lat: 37.3230, lng: -122.0322},
-    zoom: 12
+    center: {lat: 37.0902, lng: -95.7129},
+    zoom: 4
   };
 
   componentDidMount() {
@@ -96,12 +96,12 @@ toggleHoverState(state) {
     })
     
     console.log('?????????', userFavorites[0])
-    // const lat = Number(userFavorites[0].lat)
-    // const lng = Number(userFavorites[0].lng)
+    const lat = Number(userFavorites[0].lat)
+    const lng = Number(userFavorites[0].lng)
 
-    // const coordinatesObj = {lat, lng }
+    const coordinatesObj = {lat, lng }
 
-    // console.log('CCCCCCC', coordinatesObj)
+     console.log('CCCCCCC', coordinatesObj)
 
    
 

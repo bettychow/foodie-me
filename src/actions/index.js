@@ -119,7 +119,17 @@ console.log('obj in updateUserFavorites in action', obj)
     })
   }
 
+}
 
+export const FILTER_RESTAURANTS = 'FILTER_RESTAURANTS'
+export const filterFavoriteRestaurants = (lastestRest) => {
+  return dispatch => {
+
+    dispatch({
+      type: FILTER_RESTAURANTS,
+      payload: lastestRest
+    })
+  }
 
 }
 

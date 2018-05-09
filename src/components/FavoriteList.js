@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import Filter from './Filter'
 
 
 class FavoriteList extends Component {
@@ -45,6 +46,7 @@ render() {
   return (
     <div>
       <h2>My Favorite Restaurants List</h2>
+      <Filter restaurants={restaurants}/>
       <ul>
       {displayList}
       </ul>
