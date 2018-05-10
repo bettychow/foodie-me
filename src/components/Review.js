@@ -10,7 +10,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import jwtDecode from'jwt-decode'
-import { getCurrentReview, vote, getRestaurant } from '../actions/index'
+import { getCurrentReview, vote, getRestaurant, deleteReview } from '../actions/index'
 import ReviewForm from './ReviewForm';
 
 class Review extends Component {
@@ -28,7 +28,13 @@ class Review extends Component {
     this.setState({isEditing: !this.state.isEditing})
   }
 
-  
+  handleDelete = (e) => {
+    const result = window.confirm("Want to delete?")
+    const review_id = this.props.currentReview.id
+    if(result) {
+      this.props.deleteReview(review_id)
+    }
+  }
 
   //this.toggleEdit = this.toggleEdit.bind(this)
 
@@ -36,7 +42,7 @@ class Review extends Component {
     this.toggleEdit = this.toggleEdit.bind(this)
     
     const { reviewid , username } = this.props.match.params
-    const { currentReview, currentRestaurant, getRestaurant, vote } = this.props
+    const { currentReview, currentRestaurant, getRestaurant, vote, deleteReview } = this.props
 
     
 
@@ -50,20 +56,21 @@ class Review extends Component {
 
     const handleVote = e => {
       vote(reviewid, currentReview.votes, e.target.innerHTML)
-      //getCurrentReview(reviewid)
     }
     
     const displayEditButton = token && jwtDecode(token).sub.username === username? <Button onClick={this.toggleEdit}>Edit</Button>: ''
+    const displayDeleteButton = token && jwtDecode(token).sub.username === username? <Button onClick={e => this.handleDelete(e)}>Delete</Button>: ''
     const displayUpVoteButton = token && jwtDecode(token).sub.username === username? '': <Button onClick={e => handleVote(e)}>Thumbs Up</Button>
     const displayDownVoteButton = token && jwtDecode(token).sub.username === username? '': <Button onClick={e => handleVote(e)}>Thumbs Down</Button>
 
     if(this.state.isEditing) {
       return(
-        <ReviewForm {...this.state} currentRestaurant={currentRestaurant} currentReview={currentReview} />
+        <ReviewForm {...this.state} currentRestaurant={currentRestaurant} currentReview={currentReview} toggleEdit={this.toggleEdit} />
       )
     } else {
       return(
         <div>
+          <Link to={`/${this.props.match.params.username}`}>Back</Link>
           <h3>{currentRestaurant.restaurant_name}</h3>
           <p>{currentRestaurant.address}</p>
           <p>{currentRestaurant.phone}</p>
@@ -80,7 +87,8 @@ class Review extends Component {
             <img className="food-image" src={currentReview.pic_02}/>
             <img className="food-image" src={currentReview.pic_03}/>
             <img className="food-image" src={currentReview.pic_04}/>
-            {displayEditButton}           
+            {displayEditButton}
+            {displayDeleteButton}           
           </div>
           <h5>Votes</h5>
           <span>{currentReview.votes}</span>
@@ -103,7 +111,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => bindActionCreators({
   getRestaurant,
   getCurrentReview,
-  vote
+  vote,
+  deleteReview
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Review)

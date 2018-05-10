@@ -14,7 +14,8 @@ import SearchResults from './SearchResults'
 class SearchPage extends Component {
 
   state = {
-    isAuth: false
+    isAuth: false,
+    clearResult: true
   }
 
   componentDidMount() {
@@ -37,13 +38,21 @@ class SearchPage extends Component {
     }
   }
 
+  handleClear = () => {
+    this.setState({
+      clearResult: !this.state.clearResult
+    })
+  }
+
   render() {
     
     return(
       <div>
         <Link to={`/${this.props.match.params.username}`}>Back</Link>
-        <SearchBox />
-        <SearchResults isAuth={this.state.isAuth} username={this.props.match.params.username} />
+        <SearchBox handleClear={this.handleClear}/>
+        <div className="search-results">
+          {this.state.clearResult? '': <SearchResults isAuth={this.state.isAuth} username={this.props.match.params.username} />}
+        </div>
       </div>
     )
   }

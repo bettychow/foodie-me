@@ -3,6 +3,7 @@ import { FETCH_LOCATION,
          INPUT_SEARCH, 
          SEARCH_RESULTS_RECEIVED, 
          ADD_FAVORITE, 
+         DELETE_FAVORITE,
          GET_USER_INFO, 
          RECEIVE_USER_RESTAURANTS, 
          RECEIEVE_ALL_REVIEWS,
@@ -16,6 +17,7 @@ import { FETCH_LOCATION,
          CHECK_LOGIN,
          GET_REVIEW,
          UPDATE_REVIEW,
+         DELETE_REVIEW,
          UPDATE_VOTES,
          GET_RESTAURANT,
          UPDATE_USER_INFO,
@@ -40,7 +42,7 @@ const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
 
 }
 
-const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4}, action) => {
+const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4.2}, action) => {
   switch(action.type) {
     case SET_MAP_LOCATION:
     return({
@@ -84,6 +86,15 @@ const favorites = (state = {restaurants: []}, action) => {
       return ({
         ...state,
         restaurants: [...state.restaurants, action.payload]
+      })
+    case DELETE_FAVORITE:
+      const favorite = state.restaurants
+      console.log('FFFFEEEEE in reducer', favorite )
+      console.log('action.payload in delete favorite', action.payload)
+      const updatedFavoriteList = favorite.filter(restaurant => restaurant.restaurant_id !== action.payload )
+      return ({
+        ...state,
+        restaurants: updatedFavoriteList
       })
     case LATEST_FIRST:
       const restaurantsA = state.restaurants.filter(restaurant => restaurant.review)
@@ -133,6 +144,13 @@ const reviews = (state = {reviews: [], currentReview: {}}, action) => {
         ...state,
         currentReview: action.payload
       })
+    case DELETE_REVIEW:
+      const reviews = state.reviews
+      const updatedReviewLIst = reviews.filter(review => review.id !== action.payload)
+      return ({
+        ...state,
+        reviews: updatedReviewLIst
+      })   
   default:
     return state
   }

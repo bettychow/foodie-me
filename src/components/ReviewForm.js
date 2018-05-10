@@ -105,11 +105,11 @@ class ReviewForm extends Component {
     this.props.updateReview(reviewObj)
     this.setState({ ...this.state, isEditing: false })
   }
+
   render() {
 
     const { currentReview, currentRestaurant } = this.props
-console.log('++++++++>>>>>>', this.props.currentReview)
-    console.log('bbbbbbbbb//////', currentRestaurant)
+
     return(
       <div>
         <div>
@@ -117,7 +117,7 @@ console.log('++++++++>>>>>>', this.props.currentReview)
           <p>{currentRestaurant.address}</p>
           <p>{currentRestaurant.phone}</p>
         </div>
-        <Form onSubmit={e => this.handleSubmit(e)}>
+        <Form className="review-form" onSubmit={e => this.handleSubmit(e)}>
           <FormGroup>
             <Label for="title">Title</Label>
             <Input
@@ -226,7 +226,7 @@ console.log('++++++++>>>>>>', this.props.currentReview)
             />
             {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
-          <Button>Submit</Button>
+          <Button>Submit</Button>  <Button onClick={this.props.toggleEdit}>Cancel</Button>
         </Form>
       </div>
     )

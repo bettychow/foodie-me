@@ -16,11 +16,11 @@ import Profile from './Profile'
 import { getUserInfo, getAllReviews, getUserRestaurants } from '../actions/index'
 import NavBar from './NavBar';
 
+
 class Main extends Component {
 
   state = {
-    isAuth: false,
-    
+    isAuth: false
   }
 
   componentDidMount() {
@@ -52,14 +52,8 @@ class Main extends Component {
   render() {
 
     const { userFavorites } = this.props
-
-  
     const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
-
-    console.log('FFFFFFFFFFFF', this.props.userId)
-    
     const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
-    
     const displayMap = userFavorites[0] ? <Map favorites={userFavorites} lat={37.3230} lng={-122.0322}/>: <div>Map Loading.....</div>
     
     return (
@@ -73,25 +67,15 @@ class Main extends Component {
             <Profile isAuth={this.state.isAuth} username={username} currentUser={this.props.currentUser} />
           </div>
           <div className="main-flex-container">
-            <div className="about-me" >
-         
-              <div className="favorite-list">
-                <FavoriteList userId={userId} isAuth={this.state.isAuth} />
-              </div>
-            </div>
-            
-            {/* <div id="map" ><Map favorites={userFavorites} lat={37.3230} lng={-122.0322}/></div>   */}
-            <div id="map" >{displayMap}</div>  
+            <div className="favorite-list">
+              <FavoriteList userId={userId} isAuth={this.state.isAuth} />
+            </div>            
+            <div id="map" >{displayMap}</div>       
           </div>
         </div>
       </div>
-    )
-
-      
-    
+    ) 
   }
-
-  
 }
 
 const mapStateToProps = state =>  {

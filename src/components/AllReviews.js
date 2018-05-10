@@ -39,7 +39,7 @@ class AllReviews extends Component {
         <div key={review.yelp_id}>
         <h2>{review.username}</h2>
         <p>{review.title}</p>
-        <Link to={`/review/${review.username}/${review.restaurant_id}/${review.user_id}`}>Read Review</Link>
+        <Link to={`/review/${review.restaurant_name}/${review.username}/${review.restaurant_id}/${review.user_id}`}>Read Review</Link>
       </div>
       ) 
       

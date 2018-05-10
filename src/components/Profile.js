@@ -88,7 +88,7 @@ class Profile extends Component {
     // const displayEditPicButton = isAuth ?  <Button onClick={e => this.toggleEditPic(e)}>Change Pic/Add Pic</Button>: ''
       
 
-    const displayEditButton = isAuth ? <Button className="edit-button" onClick={e => this.toggleEdit(e)} >Edit</Button>:''
+    const displayEditButton = isAuth ? <Button className="edit-button" onClick={e => this.toggleEdit(e)} >{this.state.isEditing? 'Cancel': 'Edit'}</Button>:''
     
     const displayInputBoxPic = this.state.isEditing? <Input type="text" style={inputStyle} onChange={e => this.handleEditPic(e)} value={this.state.imgURL}/> : ''
 

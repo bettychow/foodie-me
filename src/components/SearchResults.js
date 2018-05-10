@@ -118,7 +118,7 @@ console.log('xoxoxoxox', restaurants)
   })
 
    return (
-     <ul>
+     <ul className="search-list">
       {displayRestaurants}
 
      </ul>

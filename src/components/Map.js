@@ -17,18 +17,8 @@ const greatPlaceStyle = {
   borderRadius: 50,
 }
 
-
-// const AnyReactComponent = ({ text }) => <div  style={greatPlaceStyle} onMouseEnter={this.handleMouseHover}
-// onMouseLeave={this.handleMouseHover}>{text}</div>;
  
 class Map extends Component {
-
-  
-  // static defaultProps = {
-  //   // center: {lat: this.props.favorites[0]? this.props.favorites[0].lat: 37.3230, lng: this.props.favorites[0]? this.props.favorites[0].lng: -122.0322 },
-  //   center: {lat: 37.3230, lng: -122.0322},
-  //   zoom: 12
-  // };
 
   handleMouseHover = this.handleMouseHover.bind(this);
   state = {
@@ -38,24 +28,6 @@ class Map extends Component {
     center: {lat: 37.0902, lng: -95.7129},
     zoom: 4
   };
-
-  componentDidMount() {
-
-    //this.props.getUserRestaurants()
-    console.log('OOOOOOOOOO', this.props)
-
-    // if(this.props.userFavorites[0]) {
-    //   this.setState({
-    
-        
-    //       lat: Number(this.props.userFavorites[0].lat),
-    //       lng: Number(this.props.userFavorites[0].lng)
-      
-        
-    //   })
-    // }
-    
-  }
 
 
 handleMouseHover() {
@@ -68,16 +40,7 @@ toggleHoverState(state) {
   };
 }
 
-
-
- 
   render() {
-
-    console.log('PPPPPPPPPP',this.props.userFavorites)
-
-    console.log('TTTTTTT', this.state.center)
-
-    
 
     const RestaurantOnMap = ({ text }) => 
     <div>
@@ -86,7 +49,7 @@ toggleHoverState(state) {
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}>
       </div>
-      {this.state.isHovering && <div>{text}</div>}
+      {this.state.isHovering && <div style={{color: 'red'}}>{text}</div>}
     </div>;
 
     const { userFavorites, getUserRestaurants } = this.props
@@ -95,32 +58,22 @@ toggleHoverState(state) {
       return <RestaurantOnMap key={restaurant.yelp_id} lat={restaurant.lat} lng={restaurant.lng} text={restaurant.restaurant_name}/>
     })
     
-    console.log('?????????', userFavorites[0])
     const lat = Number(userFavorites[0].lat)
     const lng = Number(userFavorites[0].lng)
 
     const coordinatesObj = {lat, lng }
 
-     console.log('CCCCCCC', coordinatesObj)
-
-   console.log('zzzzzzzzoooom', this.props.zoom)
 
     return (
 
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAIfMFqTk-qZu7-bPuH2-haZC1lSzmEn7c' }}
-        defaultCenter={this.props.coordinates}
-        defaultZoom={this.props.zoom}
+        center={this.props.coordinates}
+        zoom={this.props.zoom}
       >
-        {/* <AnyReactComponent
-          lat={37.7876}
-          lng={-122.3966}
-          text={'Galvanize'}
-        /> */}
       
       {displayFavoritesOnMap}
-      
-      
+       
       </GoogleMapReact>
     );
   }

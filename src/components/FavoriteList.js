@@ -10,24 +10,42 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Filter from './Filter'
-import { setMapLocation } from '../actions/index'
+import { setMapLocation, deleteReview, deleteUserFavorite } from '../actions/index'
 
 
 class FavoriteList extends Component {
 
-handleClick = e => {
-  console.log('GGGGGGGGG', e.target.parentNode.getAttribute('lat'))
-  const lat = e.target.parentNode.getAttribute('lat')
-  const lng = e.target.parentNode.getAttribute('lng')
+handleLocate = e => {
+  const lat = Number(e.target.parentNode.getAttribute('lat'))
+  const lng = Number(e.target.parentNode.getAttribute('lng'))
 
   const coordinatesObj = {lat, lng}
 
   this.props.setMapLocation(coordinatesObj)
 }
 
+handleDelete = (e) => {
+  const result = window.confirm("Want to delete?")
+  const review_id = e.target.parentNode.getAttribute('reviewid')
+  const restaurant_id = e.target.parentNode.getAttribute('id')
+  const user_id = this.props.userId
+  
+
+  if(result) {
+    if(review_id > 0) {
+
+      console.log('>>>>>>>>><<<<<<<', review_id)
+      this.props.deleteReview(review_id)
+    }
+
+    const userRestaurantObj = { user_id, restaurant_id }
+    this.props.deleteUserFavorite( userRestaurantObj )
+  }
+}
+
 render() {
 
-  const { restaurants, allUserReviews, username, userId, isAuth, setMapLocation } = this.props
+  const { restaurants, allUserReviews, username, userId, isAuth, setMapLocation, deleteReview, deleteUserFavorite } = this.props
 
   const userReviews = allUserReviews.filter(review => review.user_id === userId)
 
@@ -42,16 +60,20 @@ render() {
   })
   
   console.log('zzzzzzz', restaurants)
+
+  const displayTrashIcon = isAuth?  <i className="fa fa-trash-o trash" onClick={e => this.handleDelete(e)}></i>: ''
   
   const displayList = restaurants.map(restaurant => {
     console.log('vvvvvv', restaurant)
-        return <li key={restaurant.yelp_id} id={restaurant.yelp_id} className="restaurant" lat={restaurant.lat} lng={restaurant.lng} >
-                 <img className="restaurant-img" src={restaurant.image} />
-                 <h3>{restaurant.restaurant_name}</h3>
-                 <p>{restaurant.address}</p>
-                 <p>{restaurant.phone}</p>
-                 <Button onClick={e => this.handleClick(e)}>Locate</Button>
-                 {restaurant.review? <Link to={`/review/${restaurant.restaurant_name}/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
+        return <li key={restaurant.yelp_id} id={restaurant.restaurant_id} className="restaurant" lat={restaurant.lat} lng={restaurant.lng} reviewid={restaurant.review? restaurant.review.id: 0} >
+                 <img className="restaurant-img" src={restaurant.pic} />
+                 <h3 className="restaurant-name">{restaurant.restaurant_name}</h3>
+                 <p className="restaurant-address">{restaurant.address}</p>
+                 <p className="restaurant-phone">{restaurant.phone}</p>
+                 <Button className="locate-button" onClick={e => this.handleLocate(e)}>Locate</Button>
+                 {restaurant.review? <Link className="read-review-link" to={`/review/${restaurant.restaurant_name}/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link className="write-review-link" to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
+                 {/* <i className="fa fa-trash-o trash" onClick={e => this.handleDelete(e)}></i> */}
+                 {displayTrashIcon}
                </li>
   })
   
@@ -59,7 +81,7 @@ render() {
     <div>
       <h2>My Favorite Restaurants List</h2>
       <Filter restaurants={restaurants}/>
-      <ul>
+      <ul className="favorite-list">
       {displayList}
       </ul>
     </div>
@@ -80,7 +102,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setMapLocation
+  setMapLocation,
+  deleteReview,
+  deleteUserFavorite
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoriteList)

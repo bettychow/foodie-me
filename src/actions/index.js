@@ -25,7 +25,7 @@ export const fetchLocation = () => {
 
 export const SET_MAP_LOCATION = 'SET_MAP_LOCATION'
 export const setMapLocation = (locationObj) => {
-
+console.log('locationObj in action', locationObj)
   return dispatch => {
 
     dispatch({
@@ -49,12 +49,14 @@ console.log('cccc', content)
 }
 
 export const SEARCH_RESULTS_RECEIVED = 'SEARCH_RESULTS_RECEIVED'
-export const search = (searchString) => {
+export const search = (searchString, location) => {
+
+  console.log('searchString and location in action', searchString, location)
  
   const access_token = "2bHIcYMU5Xn4FID8LCBYABCEwu7AhxhfmgsFYBr2ioT0x8Cml9Pi3gEFnok-xHnYNylTqj_7FKyRaXcZrpjayTnrtiosCiE7QdqOV8KSQeFgBNtUSoe5tY6kBDcKWnYx";
   return async dispatch => {
 
-  const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${searchString}+restaurant&location=cupertino`, {
+  const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${searchString}+restaurant&location=${location}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -89,11 +91,7 @@ export const addToFavorite = (user_id, restaurant) => {
 
     const JSONres = await response.json()
 
-    console.log('JSONres in addToFavorite in action', JSONres)
-
     let obj = {user_id, restaurant_id: JSONres[0].id}
-
-    console.log('objjjjjjj', obj)
 
     const responseB = await fetch(`http://localhost:8000/favorite`, {
       method: 'POST',
@@ -109,13 +107,32 @@ export const addToFavorite = (user_id, restaurant) => {
         payload: JSONres[0]
       })
   }
+}
 
+export const DELETE_FAVORITE = 'DELETE_FAVORITE'
+export const deleteUserFavorite = ( userRestaurantObj ) => {
+  return async dispatch => {
+     const response = await fetch(`http://localhost:8000/favorite`, {
+       method: 'DELETE',
+       body: JSON.stringify(userRestaurantObj),
+       headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+     })
+
+     dispatch({
+       type: DELETE_FAVORITE,
+       payload: Number( userRestaurantObj.restaurant_id )
+     })
+
+  }
 }
 
 export const UPDATE_FAVORITES = 'UPDATE_FAVORITES'
 export const updateUserFavorites = (user_id, restaurant_id) => {
   const obj = {user_id, restaurant_id}
-console.log('obj in updateUserFavorites in action', obj)
+
   return async dispatch => {
     console.log('=+++++++++++', obj)
     const response = await fetch(`http://localhost:8000/favorite`, {
@@ -327,7 +344,28 @@ export const updateReview = (reviewObj) => {
       type: UPDATE_REVIEW
     })
   }
+}
 
+export const DELETE_REVIEW = 'DELETE_REVIEW'
+export const deleteReview = review_id =>{
+  console.log('?????????////////', review_id)
+  return async dispatch => {
+    const response = await fetch(`http://localhost:8000/reviews/${review_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    dispatch({
+      type: DELETE_REVIEW,
+      payload: Number(review_id)
+    })
+
+  }
+
+  
 }
 
 export const INPUT_NAME = 'INPUT_NAME'
