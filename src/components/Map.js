@@ -41,7 +41,7 @@ class Map extends Component {
 
   componentDidMount() {
 
-    this.props.getUserRestaurants()
+    //this.props.getUserRestaurants()
     console.log('OOOOOOOOOO', this.props)
 
     // if(this.props.userFavorites[0]) {
@@ -103,13 +103,14 @@ toggleHoverState(state) {
 
      console.log('CCCCCCC', coordinatesObj)
 
-   
+   console.log('zzzzzzzzoooom', this.props.zoom)
 
     return (
+
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAIfMFqTk-qZu7-bPuH2-haZC1lSzmEn7c' }}
-        defaultCenter={this.state.center}
-        defaultZoom={this.state.zoom}
+        defaultCenter={this.props.coordinates}
+        defaultZoom={this.props.zoom}
       >
         {/* <AnyReactComponent
           lat={37.7876}
@@ -129,7 +130,9 @@ const mapStateToProps = state => {
   console.log('state in map', state)
 
   return({
-    userFavorites: state.favorites.restaurants
+    userFavorites: state.favorites.restaurants,
+    coordinates: state.mapLocation.coordinates,
+    zoom: state.mapLocation.zoom
   })
 }
 

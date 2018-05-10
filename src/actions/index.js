@@ -23,6 +23,19 @@ export const fetchLocation = () => {
   }
 }
 
+export const SET_MAP_LOCATION = 'SET_MAP_LOCATION'
+export const setMapLocation = (locationObj) => {
+
+  return dispatch => {
+
+    dispatch({
+      type: SET_MAP_LOCATION,
+      payload: locationObj
+    })
+  }
+
+}
+
 export const INPUT_SEARCH = 'INPUT_SEARCH'
 export const inputSearch = content => {
 console.log('cccc', content)
@@ -121,16 +134,39 @@ console.log('obj in updateUserFavorites in action', obj)
 
 }
 
-export const FILTER_RESTAURANTS = 'FILTER_RESTAURANTS'
-export const filterFavoriteRestaurants = (lastestRest) => {
+// export const FILTER_RESTAURANTS = 'FILTER_RESTAURANTS'
+// export const filterFavoriteRestaurants = (filter) => {
+//   return dispatch => {
+
+//     dispatch({
+//       type: FILTER_RESTAURANTS,
+//       payload: lastestRest
+//     })
+//   }
+
+// }
+
+export const LATEST_FIRST = 'LATEST_FIRST'
+export const OLDEST_FIRST = 'OLDEST_FIRST'
+export const All_RESTAURANTS = 'All_RESTAURANTS'
+export const sortByTime = (filter) => {
+  
   return dispatch => {
 
-    dispatch({
-      type: FILTER_RESTAURANTS,
-      payload: lastestRest
-    })
+    if(filter === 'latestFirst') {
+      dispatch({
+        type: LATEST_FIRST
+      })
+    } else if (filter === 'oldestFirst') {
+      dispatch({
+        type: OLDEST_FIRST
+      })
+    } else {
+      dispatch({
+        type: All_RESTAURANTS
+      })
+    }
   }
-
 }
 
 export const GET_USER_INFO = 'GET_USER_INFO'

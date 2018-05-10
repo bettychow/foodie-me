@@ -10,13 +10,24 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Filter from './Filter'
+import { setMapLocation } from '../actions/index'
 
 
 class FavoriteList extends Component {
 
+handleClick = e => {
+  console.log('GGGGGGGGG', e.target.parentNode.getAttribute('lat'))
+  const lat = e.target.parentNode.getAttribute('lat')
+  const lng = e.target.parentNode.getAttribute('lng')
+
+  const coordinatesObj = {lat, lng}
+
+  this.props.setMapLocation(coordinatesObj)
+}
+
 render() {
 
-  const { restaurants, allUserReviews, username, userId, isAuth } = this.props
+  const { restaurants, allUserReviews, username, userId, isAuth, setMapLocation } = this.props
 
   const userReviews = allUserReviews.filter(review => review.user_id === userId)
 
@@ -34,11 +45,12 @@ render() {
   
   const displayList = restaurants.map(restaurant => {
     console.log('vvvvvv', restaurant)
-        return <li key={restaurant.yelp_id} id={restaurant.yelp_id} className="restaurant" lat={restaurant.lat} lng={restaurant.lng}>
+        return <li key={restaurant.yelp_id} id={restaurant.yelp_id} className="restaurant" lat={restaurant.lat} lng={restaurant.lng} >
                  <img className="restaurant-img" src={restaurant.image} />
                  <h3>{restaurant.restaurant_name}</h3>
                  <p>{restaurant.address}</p>
                  <p>{restaurant.phone}</p>
+                 <Button onClick={e => this.handleClick(e)}>Locate</Button>
                  {restaurant.review? <Link to={`/review/${restaurant.restaurant_name}/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
                </li>
   })
@@ -67,4 +79,8 @@ const mapStateToProps = state => {
   })
 }
 
-export default connect(mapStateToProps, null)(FavoriteList)
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setMapLocation
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteList)

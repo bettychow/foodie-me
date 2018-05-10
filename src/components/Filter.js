@@ -9,106 +9,45 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { filterFavoriteRestaurants } from '../actions/index'
+import { sortByTime, getUserRestaurants } from '../actions/index'
 
 class Filter extends Component {
 
+  handleChangeTime = (event) => {
 
-  toggle = this.toggle.bind(this);
-  state = {
-    dropdownOpen: false,
-    dropDownValue: 'Filter By'
-  };
-
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
+    if(event.target.value === 'allRestaurants') {
+      this.props.getUserRestaurants(this.props.userId)
+    } else {
+      this.props.sortByTime(event.target.value)
+    }
   }
 
-  changeValue = e => {
-    
-  this.setState({dropDownValue: e.target.textContent})
+  render() {
 
-  if(this.state.dropDownValue === 'Latest first') {
-    
-    const restaurants = this.props.restaurants
-
-    const filteredRest = restaurants.filter(restaurant => {
-      return restaurant.review
-    })
-
-    console.log("FIIIIIILLLLLL",  filteredRest)
-
-    const lastestRest = filteredRest.sort((a,b) => {
-      return a.review.created_at > b.review.created_at
-    })
-
-    filterFavoriteRestaurants(lastestRest)
-
+    return(
+      <form>
+      <label>
+       Filter by :
+        <select className="dropDown" onChange={this.handleChangeTime}>
+          <option value="allRestaurants">All Restaurants</option>
+          <option value="latestFirst">Latest Reviews First</option>
+          <option value="oldestFirst">Oldest Reviews First</option>
+        </select>
+      </label>
+    </form>
+    )
   }
-
-  }
-
-  
-
-  
-
-render() {
-  const { filterFavoriteRestaurants } = this.props
-  console.log('VVVVVVVVVV', this.state.dropDownValue)
-
-  console.log(':::::::::::::', this.props)
-
-  
-
-  
-
-  //this.changeValue = this.changeValue.bind(this)
-console.log('DROPDOWN====>', this.state.dropdownOpen)
-console.log('DROPDOWN VALUE====>', this.state.dropDownValue)
-
-
-
-
-  return(
-    <div>
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>
-          {this.state.dropDownValue}
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem onClick={e => this.changeValue(e)}>
-            Latest first
-          </DropdownItem>
-          <DropdownItem onClick={e => this.changeValue(e)}>
-            Oldest first
-          </DropdownItem>
-          <DropdownItem onClick={e => this.changeValue(e)}>
-            Reviews available
-          </DropdownItem>
-          <DropdownItem onClick={e => this.changeValue(e)}>
-            Alphabetic Order Ascending
-          </DropdownItem>
-          <DropdownItem onClick={e => this.changeValue(e)}>
-            Alphabetic Order Descending
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      <Input type="text" />
-    </div>
-  )
-}
-
 }
 
 const mapStateToProps = state => ({
-  //restaurants: state.favorites.restaurants
+  restaurants: state.favorites.restaurants,
+  userId: state.currentUser.id,
 })
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  filterFavoriteRestaurants
+   sortByTime,
+   getUserRestaurants
 }, dispatch)
 
-export default connect(null, mapDispatchToProps)(Filter)
+export default connect(mapStateToProps, mapDispatchToProps)(Filter)

@@ -19,7 +19,11 @@ import { FETCH_LOCATION,
          UPDATE_VOTES,
          GET_RESTAURANT,
          UPDATE_USER_INFO,
-         FILTER_RESTAURANTS
+         FILTER_RESTAURANTS,
+         SET_MAP_LOCATION,
+         LATEST_FIRST,
+         OLDEST_FIRST,
+         All_RESTAURANTS
        } from '../actions'
 
 const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
@@ -34,6 +38,19 @@ const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
         return state
     }
 
+}
+
+const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4}, action) => {
+  switch(action.type) {
+    case SET_MAP_LOCATION:
+    return({
+      ...state,
+      coordinates: action.payload,
+      zoom: 12
+    })
+    default:
+      return state
+  }
 }
 
 const search = (state = {content: '', businesses: []}, action) => {
@@ -59,22 +76,35 @@ const favorites = (state = {restaurants: []}, action) => {
   switch(action.type) {
 
     case RECEIVE_USER_RESTAURANTS:
-    console.log('action.paylaod favorite', action.payload)
       return ({
         ...state,
         restaurants: action.payload
       })
     case ADD_FAVORITE:
-    console.log('payloaddddd in favorites', action.payload)
       return ({
         ...state,
         restaurants: [...state.restaurants, action.payload]
       })
-    case FILTER_RESTAURANTS:
-    return ({
-      ...state,
-      restaurants: action.payload
-    })
+    case LATEST_FIRST:
+      const restaurantsA = state.restaurants.filter(restaurant => restaurant.review)
+      const sortedRestaurantsA = restaurantsA.sort((a,b) => {
+        return a.review.created_at < b.review.created_at
+      })
+
+      return ({
+        ...state,
+        restaurants: sortedRestaurantsA
+      })
+    case OLDEST_FIRST:
+      const restaurantsB = state.restaurants.filter(restaurant => restaurant.review)
+      const sortedRestaurantsB = restaurantsB.sort((a,b) => {
+        return a.review.created_at > b.review.created_at
+      })
+
+      return ({
+        ...state,
+        restaurants: sortedRestaurantsB
+      })
     
     default:
       return state
@@ -222,6 +252,7 @@ const currentUser = (state = {
   }
 
 
+
 export default combineReducers({
   location,
   search,
@@ -230,5 +261,6 @@ export default combineReducers({
   reviews,
   signup,
   login,
-  restaurants
+  restaurants,
+  mapLocation
 })
