@@ -37,7 +37,7 @@ const Login = ({ email, password, isError, inputLoginEmail, inputLoginPassword, 
       })
     
   }
-  document.body.style.backgroundColor = "#FDD835";
+  document.body.style.backgroundColor = "#ff9966";
   return(
     <div className="login">
 

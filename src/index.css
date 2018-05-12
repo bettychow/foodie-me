@@ -83,7 +83,7 @@ html{
 }
 
 .nav{
-  background-color: #FDD835;
+  background-color: #ff9966;
   height: 100px;
   position: relative;
 }
@@ -150,7 +150,7 @@ ul {
 
 nav{
   height: 50px;
-  background-color: gold;
+  background-color: #ff9966;
 }
 
 .modal{
