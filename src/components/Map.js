@@ -30,15 +30,15 @@ class Map extends Component {
   };
 
 
-handleMouseHover() {
-  this.setState(this.toggleHoverState);
-}
+  handleMouseHover() {
+    this.setState(this.toggleHoverState);
+  }
 
-toggleHoverState(state) {
-  return {
-    isHovering: !state.isHovering,
-  };
-}
+  toggleHoverState(state) {
+    return {
+      isHovering: !state.isHovering,
+    };
+  }
 
   render() {
 
@@ -54,18 +54,19 @@ toggleHoverState(state) {
 
     const { userFavorites, getUserRestaurants } = this.props
 
-    const displayFavoritesOnMap = userFavorites.map(restaurant => {
+    const displayFavoritesOnMap = userFavorites.length > 0? userFavorites.map(restaurant => {
       return <RestaurantOnMap key={restaurant.yelp_id} lat={restaurant.lat} lng={restaurant.lng} text={restaurant.restaurant_name}/>
-    })
+    }) :''
     
-    const lat = Number(userFavorites[0].lat)
-    const lng = Number(userFavorites[0].lng)
+    // const lat = Number(userFavorites[0].lat)
+    // const lng = Number(userFavorites[0].lng)
 
-    const coordinatesObj = {lat, lng }
+    // const coordinatesObj = {lat, lng }
 
 
     return (
 
+    
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAIfMFqTk-qZu7-bPuH2-haZC1lSzmEn7c' }}
         center={this.props.coordinates}
@@ -75,6 +76,7 @@ toggleHoverState(state) {
       {displayFavoritesOnMap}
        
       </GoogleMapReact>
+    
     );
   }
 }

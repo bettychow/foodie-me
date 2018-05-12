@@ -23,10 +23,12 @@ const NavBar = ({history, isAuth}) => {
 
   const logoutButton = isAuth? 'Log Out': 'Log In'
   return(
-    <nav>
+    <div className="nav">
+    
+      <div className="logo">foodie<i className="fas fa-crown"></i>me</div>
       {/* <Link to={`/${username}`} >Home</Link> */}
-      <Link to={'/'} onClick={e => handleLogout(e)}>{logoutButton}</Link>
-    </nav>
+      <Link to={'/'} onClick={e => handleLogout(e)} className="logout">{logoutButton}</Link>
+    </div>
   )
 }
 

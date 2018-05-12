@@ -20,6 +20,7 @@ handleLocate = e => {
   const lng = Number(e.target.parentNode.getAttribute('lng'))
 
   const coordinatesObj = {lat, lng}
+  
 
   this.props.setMapLocation(coordinatesObj)
 }
@@ -61,7 +62,7 @@ render() {
   
   console.log('zzzzzzz', restaurants)
 
-  const displayTrashIcon = isAuth?  <i className="fa fa-trash-o trash" onClick={e => this.handleDelete(e)}></i>: ''
+  const displayTrashIcon = isAuth?  <i className="far fa-trash-alt trash" onClick={e => this.handleDelete(e)}></i>: ''
   
   const displayList = restaurants.map(restaurant => {
     console.log('vvvvvv', restaurant)
@@ -72,14 +73,14 @@ render() {
                  <p className="restaurant-phone">{restaurant.phone}</p>
                  <Button className="locate-button" onClick={e => this.handleLocate(e)}>Locate</Button>
                  {restaurant.review? <Link className="read-review-link" to={`/review/${restaurant.restaurant_name}/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link className="write-review-link" to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
-                 {/* <i className="fa fa-trash-o trash" onClick={e => this.handleDelete(e)}></i> */}
                  {displayTrashIcon}
                </li>
   })
   
   return (
     <div>
-      <h2>My Favorite Restaurants List</h2>
+      <h2 style={{marginTop: 20}}>My Favorite Restaurants List</h2>
+      <Link to={`/searchpage/${username}`}>Search Restaurants</Link>
       <Filter restaurants={restaurants}/>
       <ul className="favorite-list">
       {displayList}

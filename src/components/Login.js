@@ -37,19 +37,23 @@ const Login = ({ email, password, isError, inputLoginEmail, inputLoginPassword, 
       })
     
   }
-   
+  document.body.style.backgroundColor = "#FDD835";
   return(
-    <Container className="main-wrapper">
+    <div className="login">
+
+    <div className="big-logo" >foodie<i className="fas fa-crown"></i>me</div>
+      <Container className="main-wrapper">
     <Row style={{ marginTop: '15vh' }}>
       <Col
         lg={{ size: 6, offset: 3 }}
         style={{
           border: '1px solid #c9c5c2',
           padding: 35,
-          boxShadow: '3px 3px 47px 0px rgba(0,0,0,0.5)'
+          boxShadow: '3px 3px 47px 0px rgba(0,0,0,0.5)',
+          backgroundColor: 'white'
         }}
       >
-        <Form onSubmit={e => handleSubmit(e)}>
+        <Form className="login-form" onSubmit={e => handleSubmit(e)}>
           <FormGroup>
             <Label for="email-field">Email</Label>
             <Input
@@ -85,9 +89,9 @@ const Login = ({ email, password, isError, inputLoginEmail, inputLoginPassword, 
         </Form>
       </Col>
     </Row>
+    </Container>
+  </div>
     
-
-  </Container>
 
   )
 }

@@ -20,9 +20,11 @@ import { FETCH_LOCATION,
          DELETE_REVIEW,
          UPDATE_VOTES,
          GET_RESTAURANT,
+         GET_ALL_RESTAURANTS,
          UPDATE_USER_INFO,
          FILTER_RESTAURANTS,
          SET_MAP_LOCATION,
+         RESET_MAP_LOCATION,
          LATEST_FIRST,
          OLDEST_FIRST,
          All_RESTAURANTS
@@ -50,6 +52,12 @@ const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom:
       coordinates: action.payload,
       zoom: 12
     })
+    case RESET_MAP_LOCATION:
+      return({
+        ...state,
+        coordinates: { lat: 37.0902, lng: -95.7129},
+        zoom: 4.2
+      })
     default:
       return state
   }
@@ -256,7 +264,7 @@ const currentUser = (state = {
     }
   }
 
-  const restaurants = (state = { currentRestaurant: {}}, action) => {
+  const restaurants = (state = { currentRestaurant: {}, allRestaurants: []}, action) => {
     switch(action.type) {
       case GET_RESTAURANT:
       return {
@@ -264,6 +272,12 @@ const currentUser = (state = {
         currentRestaurant: action.payload
 
       }
+      case GET_ALL_RESTAURANTS:
+        return {
+          ...state,
+          allRestaurants: action.payload
+
+        }
       default:
         return state
     }

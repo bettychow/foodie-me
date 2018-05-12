@@ -13,7 +13,7 @@ import jwtDecode from'jwt-decode'
 import FavoriteList from './FavoriteList'
 import Map from './Map'
 import Profile from './Profile'
-import { getUserInfo, getAllReviews, getUserRestaurants } from '../actions/index'
+import { getUserInfo, getAllReviews, getUserRestaurants, getAllRestaurants, setMapLocation, resetMapLocation } from '../actions/index'
 import NavBar from './NavBar';
 
 
@@ -47,30 +47,44 @@ class Main extends Component {
         this.props.getUserRestaurants(userId)
         this.props.getAllReviews()
       })
+    
+      this.props.getAllRestaurants()
+
   }
 
+  resetMap = () => {
+    
+    this.props.resetMapLocation()
+  }
+
+  
+
   render() {
+    document.body.style.backgroundColor = "white";
 
     const { userFavorites } = this.props
     const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
     const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
-    const displayMap = userFavorites[0] ? <Map favorites={userFavorites} lat={37.3230} lng={-122.0322}/>: <div>Map Loading.....</div>
+    const displayMap = <Map favorites={userFavorites} />
     
     return (
       
       <div>
-        <div>
+        <div className="main">
           <NavBar isAuth={this.state.isAuth}/>
           <div className="header">
             <div className="bg"></div>
-            <Link to={`/searchpage/${username}`}>Search Restaurants</Link>
             <Profile isAuth={this.state.isAuth} username={username} currentUser={this.props.currentUser} />
           </div>
           <div className="main-flex-container">
             <div className="favorite-list">
               <FavoriteList userId={userId} isAuth={this.state.isAuth} />
             </div>            
-            <div id="map" >{displayMap}</div>       
+            <div id="map" >
+              {displayMap}
+              <Button onClick={this.resetMap}>Reset Map</Button> 
+            </div>
+                  
           </div>
         </div>
       </div>
@@ -90,7 +104,10 @@ const mapStateToProps = state =>  {
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUserInfo,
   getUserRestaurants,
-  getAllReviews
+  getAllReviews,
+  getAllRestaurants,
+  setMapLocation,
+  resetMapLocation
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

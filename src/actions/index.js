@@ -26,6 +26,7 @@ export const fetchLocation = () => {
 export const SET_MAP_LOCATION = 'SET_MAP_LOCATION'
 export const setMapLocation = (locationObj) => {
 console.log('locationObj in action', locationObj)
+
   return dispatch => {
 
     dispatch({
@@ -34,6 +35,17 @@ console.log('locationObj in action', locationObj)
     })
   }
 
+}
+
+export const RESET_MAP_LOCATION = 'RESET_MAP_LOCATION'
+export const resetMapLocation = () => {
+  return dispatch => {
+
+    dispatch({
+      type: RESET_MAP_LOCATION
+      
+    })
+  }
 }
 
 export const INPUT_SEARCH = 'INPUT_SEARCH'
@@ -75,8 +87,8 @@ export const search = (searchString, location) => {
 }
 
 export const ADD_FAVORITE = 'ADD_FAVORITE'
-export const addToFavorite = (user_id, restaurant) => {
-  
+export const addFavoriteAndRestaurant = (user_id, restaurant) => {
+  console.log("KKKKKKKKKing", user_id, restaurant)
   return async dispatch => {
     console.log('restaurant in action', restaurant)
 
@@ -91,6 +103,8 @@ export const addToFavorite = (user_id, restaurant) => {
 
     const JSONres = await response.json()
 
+    console.log("JJJJJJOOOOO", JSONres)
+
     let obj = {user_id, restaurant_id: JSONres[0].id}
 
     const responseB = await fetch(`http://localhost:8000/favorite`, {
@@ -101,6 +115,28 @@ export const addToFavorite = (user_id, restaurant) => {
         'Accept': 'application/json'
       }
     })
+
+      dispatch({
+        type: ADD_FAVORITE,
+        payload: JSONres[0]
+      })
+  }
+}
+
+export const addFavorite = (user_id, restaurant_id) => {
+  return async dispatch => {
+    let obj = {user_id, restaurant_id}
+
+    const response = await fetch(`http://localhost:8000/favorite`, {
+      method: 'POST',
+      body: JSON.stringify(obj),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    const JSONres = await response.json()
 
       dispatch({
         type: ADD_FAVORITE,
@@ -234,6 +270,27 @@ console.log('////////', updatedInfo, username)
 
   }
 
+}
+
+export const GET_ALL_RESTAURANTS =' GET_ALL_RESTAURANTS'
+export const getAllRestaurants = () => {
+  return async dispatch => {
+    const response = await fetch(`http://localhost:8000/restaurants`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    const JSONres = await response.json()
+
+    dispatch({
+      type: GET_ALL_RESTAURANTS,
+      payload: JSONres
+    })
+
+  }
 }
 
 export const RECEIVE_USER_RESTAURANTS = 'RECEIVE_USER_RESTAURANTS'
@@ -545,12 +602,5 @@ export const addReview = reviewObj => {
         'Accept': 'application/json'
       }
     })
-
-
-
-
   }
-   
-
-
 }

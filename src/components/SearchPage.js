@@ -7,9 +7,12 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import jwtDecode from'jwt-decode'
 import SearchBox from './SearchBox'
 import SearchResults from './SearchResults'
+import { getAllRestaurants } from '../actions/index'
 
 class SearchPage extends Component {
 
@@ -36,6 +39,8 @@ class SearchPage extends Component {
         })
       }
     }
+
+    this.props.getAllRestaurants()
   }
 
   handleClear = () => {
@@ -45,6 +50,7 @@ class SearchPage extends Component {
   }
 
   render() {
+    document.body.style.backgroundColor = "white";
     
     return(
       <div>
@@ -66,4 +72,8 @@ const mapStateToProps = state => {
   })
 }
 
-export default SearchPage
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getAllRestaurants
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage)

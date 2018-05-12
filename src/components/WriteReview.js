@@ -69,7 +69,7 @@ class WriteReview extends Component {
   }
 
   handleSubmit = e => {
-
+    e.preventDefault()
     console.log('????????????????', e)
     const restaurant_id = this.props.match.params.restaurant_id
     const user_id = this.props.match.params.user_id
@@ -79,6 +79,8 @@ class WriteReview extends Component {
 
     console.log('reviewObj in writereview', reviewObj)
     this.props.addReview(reviewObj)
+
+    this.props.history.push(`/${username}`)
   }
 
   

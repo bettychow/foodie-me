@@ -19,8 +19,21 @@ class Review extends Component {
   
 
   componentDidMount() {
+    console.log('reviewid in Review', this.props.match.params.reviewid)
     this.props.getCurrentReview(this.props.match.params.reviewid)
     this.props.getRestaurant(this.props.match.params.restaurant_id)
+
+    const token = localStorage.getItem('authorization')
+
+    // if(token) {
+    //   const decoded = jwtDecode(token)
+    //   const userId = decoded.sub.id
+    //   const username = decoded.sub.username
+
+    // }
+
+    
+    
     
   }
 
@@ -31,22 +44,27 @@ class Review extends Component {
   handleDelete = (e) => {
     const result = window.confirm("Want to delete?")
     const review_id = this.props.currentReview.id
+
+    console.log('{{{{{{', review_id)
     if(result) {
       this.props.deleteReview(review_id)
+      const username = this.props.match.params.username
+      this.props.history.push(`/${username}`)
     }
   }
 
+  
   //this.toggleEdit = this.toggleEdit.bind(this)
 
   render() {
     this.toggleEdit = this.toggleEdit.bind(this)
-    
+    const token = localStorage.getItem('authorization')
     const { reviewid , username } = this.props.match.params
     const { currentReview, currentRestaurant, getRestaurant, vote, deleteReview } = this.props
-
+    const currentUsername = token? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     
-
-    const token = localStorage.getItem('authorization')
+    console.log('curretnUserNAame ?????', currentUsername)
+    
     // const decoded = jwtDecode(token)
     // const currentUser = decoded.sub.username
 
@@ -63,6 +81,7 @@ class Review extends Component {
     const displayUpVoteButton = token && jwtDecode(token).sub.username === username? '': <Button onClick={e => handleVote(e)}>Thumbs Up</Button>
     const displayDownVoteButton = token && jwtDecode(token).sub.username === username? '': <Button onClick={e => handleVote(e)}>Thumbs Down</Button>
 
+    console.log('HHHHHHHH', this.props.currentUser)
     if(this.state.isEditing) {
       return(
         <ReviewForm {...this.state} currentRestaurant={currentRestaurant} currentReview={currentReview} toggleEdit={this.toggleEdit} />
@@ -70,7 +89,8 @@ class Review extends Component {
     } else {
       return(
         <div>
-          <Link to={`/${this.props.match.params.username}`}>Back</Link>
+          <Link to={`/allreviews/${currentUsername}/${currentRestaurant.id}`}>See all reviews of {currentRestaurant.restaurant_name}</Link>
+          <Link to={`/${currentUsername}`}>Back to Home</Link>
           <h3>{currentRestaurant.restaurant_name}</h3>
           <p>{currentRestaurant.address}</p>
           <p>{currentRestaurant.phone}</p>
@@ -104,7 +124,8 @@ const mapStateToProps = state => {
   console.log('state in Review', state)
   return ({
     currentReview: state.reviews.currentReview,
-    currentRestaurant: state.restaurants.currentRestaurant
+    currentRestaurant: state.restaurants.currentRestaurant,
+    currentUser: state.currentUser.username
   })
 }
 

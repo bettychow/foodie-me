@@ -10,6 +10,13 @@ import {
   Alert,
   Input
 } from 'reactstrap'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -19,7 +26,6 @@ import {
   inputPassword,
   inputVerifyPassword,
   signup
-
 } from '../actions/index'
 
 const SignUp = ({ name, username, email, password, verifypassword, inputName, inputUsername, inputEmail, inputPassword, inputVerifyPassword, signup }) => {
@@ -42,6 +48,8 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
 
   }
 
+  document.body.style.backgroundColor = "#FDD835";
+
   return(
     <div>
       <Container className="main-wrapper">
@@ -51,7 +59,8 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
             style={{
               border: '1px solid #c9c5c2',
               padding: 35,
-              boxShadow: '3px 3px 47px 0px rgba(0,0,0,0.5)'
+              boxShadow: '3px 3px 47px 0px rgba(0,0,0,0.5)',
+              backgroundColor: 'white'
             }}
           >
             <Form onSubmit={userSignup}>
@@ -120,6 +129,7 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
               <Button color="primary" type="submit">
                 Submit
               </Button>
+              <Link to={'/'}>Back to login</Link>
             </Form>
           </Col>
         </Row>

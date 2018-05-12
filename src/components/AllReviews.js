@@ -8,7 +8,8 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
-import { getAllReviews } from '../actions/index'
+import jwtDecode from'jwt-decode'
+import { getAllReviews, getRestaurant } from '../actions/index'
 
 
 
@@ -16,18 +17,22 @@ class AllReviews extends Component {
 
   componentDidMount() {
     this.props.getAllReviews()
+    this.props.getRestaurant(this.props.match.params.restaurant_id)
+
+    
   }
   
   render() {
 
-    const { allReviews } = this.props
+    const { allReviews, currentRestaurant } = this.props
 
-    console.log('cccccccc', allReviews)
+    const token = localStorage.getItem('authorization')
 
-    console.log('iiiiiiddddd', this.props.match.params.restaurant_id)
+    const currentUsername = token? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
+    
 
     const allRestaurantReviews = allReviews.filter(review => {
-      console.log('lllll', review) 
+      
       
       return review.restaurant_id === Number(this.props.match.params.restaurant_id)
     })
@@ -36,10 +41,11 @@ class AllReviews extends Component {
     const displayReviews = allRestaurantReviews.map(review => {
       console.log('xxxxxx', review)
       return(
-        <div key={review.yelp_id}>
+        <div key={review.username}>
         <h2>{review.username}</h2>
         <p>{review.title}</p>
-        <Link to={`/review/${review.restaurant_name}/${review.username}/${review.restaurant_id}/${review.user_id}`}>Read Review</Link>
+        <Link to={`/review/${currentRestaurant.restaurant_name}/${review.username}/${review.restaurant_id}/${review.id}`}>Read Review</Link>
+        
       </div>
       ) 
       
@@ -48,7 +54,11 @@ class AllReviews extends Component {
 
 
     return(
-      <div>{displayReviews}</div>
+      <div>
+        <Link to={`/searchpage/${this.props.match.params.username}`} >Back to Search Restaurants</Link>
+        <Link to={`/${currentUsername}`}>Back to Home</Link>
+        {displayReviews}
+      </div>
     )
   }
 
@@ -59,12 +69,14 @@ class AllReviews extends Component {
 const mapStateToProps = state => {
   console.log('state in AllReviews', state)
   return({
-    allReviews: state.reviews.reviews
+    allReviews: state.reviews.reviews,
+    currentRestaurant: state.restaurants.currentRestaurant
   })
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getAllReviews
+  getAllReviews,
+  getRestaurant
 }, dispatch)
 
 

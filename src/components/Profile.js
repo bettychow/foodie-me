@@ -9,15 +9,11 @@ class Profile extends Component {
 
   state = {
     isEditing: false,
-    // isEditBio: false,
     imgURL: '',
     bio: ''
   }
 
   componentDidMount() {
-    console.log('#####################', this.props.currentUser)
-    // const token = localStorage.getItem('authorization')
-    // const decoded = jwtDecode(token)
 
     this.props.getUserInfo(this.props.username)
       .then(result => {
@@ -26,13 +22,6 @@ class Profile extends Component {
           bio: this.props.currentUserInfo.bio
         })
       })
-    
-
-    console.log('WHYYYYYYYYYYYY', this.props.currentUserInfo)
-    
-    // //console.log(this.props.match.params.username)
-    // const username = this.props.match.params.username
-    // this.props.getUserInfo(username)
   }
 
   
@@ -44,8 +33,6 @@ class Profile extends Component {
   }
 
   handleEditPic = e => {
-
-    console.log('kkkkkkkkkkkkkk')
     this.setState({
       imgURL: e.target.value
     })
@@ -68,12 +55,7 @@ class Profile extends Component {
     })
  }
 
-  
-
   render() {
-
-    
-    
 
     const { currentUserInfo, username, isAuth, updateUserInfo} = this.props
 
@@ -83,16 +65,11 @@ class Profile extends Component {
       display: 'inline-block'
     }
     
-    console.log('YOOOOOOOOOY', this.state.imgURL)
-
-    // const displayEditPicButton = isAuth ?  <Button onClick={e => this.toggleEditPic(e)}>Change Pic/Add Pic</Button>: ''
-      
-
-    const displayEditButton = isAuth ? <Button className="edit-button" onClick={e => this.toggleEdit(e)} >{this.state.isEditing? 'Cancel': 'Edit'}</Button>:''
+    const displayEditButton = isAuth ? <Button className="edit-button" onClick={e => this.toggleEdit(e)} >{this.state.isEditing? 'Cancel': 'Edit Profile'}</Button>:''
     
-    const displayInputBoxPic = this.state.isEditing? <Input type="text" style={inputStyle} onChange={e => this.handleEditPic(e)} value={this.state.imgURL}/> : ''
+    const displayInputBoxPic = this.state.isEditing? <Input type="text" placeholder={'  url of your profile picture'} style={inputStyle} onChange={e => this.handleEditPic(e)} value={this.state.imgURL}/> : ''
 
-    const displayInputBoxBio = this.state.isEditing? <Input type="text" style={inputStyle} onChange={e => this.handleEditBio(e)} value={this.state.bio}/> : ''
+    const displayInputBoxBio = this.state.isEditing? <Input type="text" placeholder={'  About you'} style={inputStyle} onChange={e => this.handleEditBio(e)} value={this.state.bio}/> : ''
     const displaySaveButton = this.state.isEditing? <Button onClick={e => this.handleSave(e)}>Save</Button>: ''
 
     
@@ -108,16 +85,14 @@ class Profile extends Component {
         {displaySaveButton}
         
       </div>
-
       
     )
   }
-
 }
 
 const mapStateToProps = state => {
 
-  console.log('fffffff', state)
+  console.log('state in profile', state)
   return({
     currentUserInfo: state.currentUser
   })
