@@ -82,7 +82,7 @@ class Main extends Component {
             </div>            
             <div id="map" >
               {displayMap}
-              <Button onClick={this.resetMap}>Reset Map</Button> 
+              <Button className="reset-map-button" onClick={this.resetMap}>Reset Map</Button> 
             </div>
                   
           </div>

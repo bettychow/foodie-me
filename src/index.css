@@ -20,8 +20,6 @@ html{
   height: 1000px;
 }
 
-
-
 .restaurant{
   border: solid;
   border-width: thin;
@@ -68,7 +66,7 @@ html{
 .favorite-list{
   display: inline-block;
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left: 20px;
 }
 
 .search-box{
@@ -242,4 +240,8 @@ nav{
 
 .login-form{
   background-color: white;
+}
+
+.reset-map-button{
+  margin-top: 20px;
 }
