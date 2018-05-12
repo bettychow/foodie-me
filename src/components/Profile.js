@@ -75,7 +75,7 @@ class Profile extends Component {
     
 
     return(
-      <div>
+      <div className="profile">
         <h3 className="username" >Hi {currentUserInfo.username}</h3>
         <img className="profile-pic" src={currentUserInfo.profile_pic}/>
         {displayInputBoxPic}

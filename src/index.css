@@ -20,6 +20,8 @@ html{
   height: 1000px;
 }
 
+
+
 .restaurant{
   border: solid;
   border-width: thin;
@@ -156,9 +158,14 @@ nav{
   color: red;
 }
 
+.profile{
+  padding-top: 20px;
+}
+
 .profile-pic{
   width: 200px;
-  margin-top: 100px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .profile-input{
