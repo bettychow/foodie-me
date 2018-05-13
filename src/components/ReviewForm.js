@@ -100,9 +100,9 @@ class ReviewForm extends Component {
   }
 
   handleSubmit = e => {
-    const id = this.props.currentReview.id
-    const reviewObj = {...this.state, id}
-    this.props.updateReview(reviewObj)
+    const review_id = this.props.currentReview.id
+    const reviewObj = {...this.state}
+    this.props.updateReview(reviewObj, review_id)
     this.setState({ ...this.state, isEditing: false })
   }
 

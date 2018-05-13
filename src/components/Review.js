@@ -22,19 +22,7 @@ class Review extends Component {
     console.log('reviewid in Review', this.props.match.params.reviewid)
     this.props.getCurrentReview(this.props.match.params.reviewid)
     this.props.getRestaurant(this.props.match.params.restaurant_id)
-
-    const token = localStorage.getItem('authorization')
-
-    // if(token) {
-    //   const decoded = jwtDecode(token)
-    //   const userId = decoded.sub.id
-    //   const username = decoded.sub.username
-
-    // }
-
-    
-    
-    
+ 
   }
 
   toggleEdit() {

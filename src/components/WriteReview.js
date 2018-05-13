@@ -75,7 +75,7 @@ class WriteReview extends Component {
     const user_id = this.props.match.params.user_id
     const username = this.props.match.params.username
     const yelp_id = this.props.currentRestaurant.yelp_id
-    const reviewObj = {...this.state, restaurant_id, user_id, username, username, yelp_id}
+    const reviewObj = {...this.state, restaurant_id, user_id, username, yelp_id}
 
     console.log('reviewObj in writereview', reviewObj)
     this.props.addReview(reviewObj)

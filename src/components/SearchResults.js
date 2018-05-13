@@ -90,14 +90,7 @@ console.log('YELP_ID', yelp_id)
     }
 
     console.log('heart.....', e.target.html)
-    // if(e.target.innerHTML === '♥' && restaurantAlreadySaved.length === 0) {
-    //   console.log('IIIIIIIIIIIII', e.target.innerHTML )
-    //   console.log('IIIIIIIIIIIII', restaurantAlreadySaved.length )
-    //   this.props.addFavoriteAndRestaurant(userId, restaurantObj)
-    // } else if (e.target.innerHTML === '♥' && restaurantAlreadySaved.length > 0) {
-    //   console.log('YYYYYYYYYYPPPPPPPP')
-    //   this.props.addFavorite(userId, restaurantAlreadySaved[0].id)
-    // }
+  
 
   }
 

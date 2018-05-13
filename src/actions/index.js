@@ -383,13 +383,13 @@ console.log('JOSONres in getCurrent Review Action', JSONres)
 
 
 export const UPDATE_REVIEW = 'UPDATE_REVIEW'
-export const updateReview = (reviewObj) => {
+export const updateReview = (reviewObj, review_id) => {
 
   console.log('reviewObj in action', reviewObj )
   return async dispatch => {
 
-    const response = await fetch(`http://localhost:8000/reviews/${reviewObj.id}`, {
-      method: 'PUT',
+    const response = await fetch(`http://localhost:8000/reviews/${review_id}`, {
+      method: 'PATCH',
       body: JSON.stringify(reviewObj),
       headers: {
         'Content-type': 'application/json',
@@ -485,7 +485,6 @@ export const inputVerifyPassword = password => {
 export const SIGN_UP = 'SIGN_UP'
 export const signup = userObj => {
 
-  
     return async dispatch => {
 
       const response = await fetch(`http://localhost:8000/signup`, {
@@ -495,7 +494,6 @@ export const signup = userObj => {
           'Content-type': 'application/json',
           'Accept': 'application/json'
         }
-        
       })
 
       dispatch({
@@ -534,7 +532,7 @@ export const checkLogin = (email, password) => {
   const obj = { email, password }
 
   return async dispatch => {
-console.log('obj in action login', obj )
+
     const response = await fetch('http://localhost:8000/login', {
     method: 'POST',
     body: JSON.stringify(obj),
@@ -545,8 +543,6 @@ console.log('obj in action login', obj )
   })
 
    const JSONres = await response.json()
-
-   console.log('jjjjjjjjjj', JSONres)
 
   if(!JSONres.error) {
     localStorage.setItem("authorization", JSON.stringify(JSONres))
@@ -563,14 +559,12 @@ console.log('obj in action login', obj )
 
 export const UPDATE_VOTES = 'UPDATE_VOTES'
 export const vote = (review_id, currentVote, status) => {
-  console.log(review_id)
   
   return async dispatch => {
    
     const updatedVotes = status === 'Thumbs Up'? currentVote + 1: currentVote -1
-   
       
-      const response = await fetch(`http://localhost:8000/reviews/${review_id}`, {
+      const response = await fetch(`http://localhost:8000/votes/${review_id}`, {
         method: 'PATCH',
         body: JSON.stringify({updatedVotes}),
         headers: {
@@ -584,7 +578,6 @@ export const vote = (review_id, currentVote, status) => {
       type: UPDATE_VOTES,
       payload: JSONres[0]
     })
-
   }
 }
 
