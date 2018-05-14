@@ -92,7 +92,7 @@ export const addFavoriteAndRestaurant = (user_id, restaurant) => {
   return async dispatch => {
     console.log('restaurant in action', restaurant)
 
-    const response = await fetch(`http://localhost:8000/restaurants`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/restaurants`, {
       method: 'POST',
       body: JSON.stringify(restaurant),
       headers: {
@@ -107,7 +107,7 @@ export const addFavoriteAndRestaurant = (user_id, restaurant) => {
 
     let obj = {user_id, restaurant_id: JSONres[0].id}
 
-    const responseB = await fetch(`http://localhost:8000/favorite`, {
+    const responseB = await fetch(`${process.env.REACT_APP_API_URL}/favorite`, {
       method: 'POST',
       body: JSON.stringify(obj),
       headers: {
@@ -127,7 +127,7 @@ export const addFavorite = (user_id, restaurant_id) => {
   return async dispatch => {
     let obj = {user_id, restaurant_id}
 
-    const response = await fetch(`http://localhost:8000/favorite`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/favorite`, {
       method: 'POST',
       body: JSON.stringify(obj),
       headers: {
@@ -148,7 +148,7 @@ export const addFavorite = (user_id, restaurant_id) => {
 export const DELETE_FAVORITE = 'DELETE_FAVORITE'
 export const deleteUserFavorite = ( userRestaurantObj ) => {
   return async dispatch => {
-     const response = await fetch(`http://localhost:8000/favorite`, {
+     const response = await fetch(`${process.env.REACT_APP_API_URL}/favorite`, {
        method: 'DELETE',
        body: JSON.stringify(userRestaurantObj),
        headers: {
@@ -171,7 +171,7 @@ export const updateUserFavorites = (user_id, restaurant_id) => {
 
   return async dispatch => {
     console.log('=+++++++++++', obj)
-    const response = await fetch(`http://localhost:8000/favorite`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/favorite`, {
       method: 'POST',
       body: JSON.stringify(obj),
       headers: {
@@ -228,7 +228,7 @@ export const getUserInfo = (username) => {
   console.log('username in getUserinfo action', username)
   return async dispatch => {
 
-      const response = await fetch(`http://localhost:8000/users/${username}` , {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${username}` , {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
@@ -250,7 +250,7 @@ export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
 export const updateUserInfo = (updatedInfo, username) => {
 console.log('////////', updatedInfo, username)
   return async dispatch => {
-    const response = await fetch(`http://localhost:8000/users/${username}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${username}`, {
       method: 'PATCH',
       body: JSON.stringify(updatedInfo),
       headers: {
@@ -275,7 +275,7 @@ console.log('////////', updatedInfo, username)
 export const GET_ALL_RESTAURANTS =' GET_ALL_RESTAURANTS'
 export const getAllRestaurants = () => {
   return async dispatch => {
-    const response = await fetch(`http://localhost:8000/restaurants`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/restaurants`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -299,7 +299,7 @@ export const getUserRestaurants = (userId) => {
   console.log('eeeeeeeeee', userId)
   return async dispatch => {
     console.log('userId in getUserRestaurants in action ========>', userId)
-    const response = await fetch(`http://localhost:8000/favorite/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/favorite/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -322,7 +322,7 @@ export const GET_RESTAURANT = 'GET_RESTAURANT'
 export const getRestaurant = (restaurant_id) => {
   return async dispatch => {
 
-    const response = await fetch(`http://localhost:8000/restaurants/${restaurant_id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/restaurants/${restaurant_id}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -343,7 +343,7 @@ export const getRestaurant = (restaurant_id) => {
 export const RECEIEVE_ALL_REVIEWS = 'RECEIEVE_ALL_REVIEWS'
 export const getAllReviews = () => {
   return async dispatch => {
-    const response = await fetch(`http://localhost:8000/reviews/`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/reviews/`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -364,7 +364,7 @@ export const GET_REVIEW = 'GET_REVIEW'
 export const getCurrentReview = (reviewId) => {
   console.log("%%$#@@@@@@", reviewId)
   return async dispatch => {
-    const response = await fetch(`http://localhost:8000/reviews/${reviewId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/reviews/${reviewId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -388,7 +388,7 @@ export const updateReview = (reviewObj, review_id) => {
   console.log('reviewObj in action', reviewObj )
   return async dispatch => {
 
-    const response = await fetch(`http://localhost:8000/reviews/${review_id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/reviews/${review_id}`, {
       method: 'PATCH',
       body: JSON.stringify(reviewObj),
       headers: {
@@ -407,7 +407,7 @@ export const DELETE_REVIEW = 'DELETE_REVIEW'
 export const deleteReview = review_id =>{
   console.log('?????????////////', review_id)
   return async dispatch => {
-    const response = await fetch(`http://localhost:8000/reviews/${review_id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/reviews/${review_id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',
@@ -487,7 +487,7 @@ export const signup = userObj => {
 
     return async dispatch => {
 
-      const response = await fetch(`http://localhost:8000/signup`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/signup`, {
         method: 'POST',
         body: JSON.stringify(userObj),
         headers: {
@@ -533,7 +533,7 @@ export const checkLogin = (email, password) => {
 
   return async dispatch => {
 
-    const response = await fetch('http://localhost:8000/login', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
     method: 'POST',
     body: JSON.stringify(obj),
     headers: {
@@ -564,7 +564,7 @@ export const vote = (review_id, currentVote, status) => {
    
     const updatedVotes = status === 'Thumbs Up'? currentVote + 1: currentVote -1
       
-      const response = await fetch(`http://localhost:8000/votes/${review_id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/votes/${review_id}`, {
         method: 'PATCH',
         body: JSON.stringify({updatedVotes}),
         headers: {
@@ -587,7 +587,7 @@ export const addReview = reviewObj => {
 
   return async dispatch => {
 
-    const repsonse = await fetch(`http://localhost:8000/reviews`, {
+    const repsonse = await fetch(`${process.env.REACT_APP_API_URL}/reviews`, {
       method: 'POST',
       body: JSON.stringify(reviewObj),
       headers: {

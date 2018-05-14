@@ -62,6 +62,11 @@ class Review extends Component {
 
     const handleVote = e => {
       vote(reviewid, currentReview.votes, e.target.innerHTML)
+      if(localStorage[`votedForReview${currentReview.id}`] === true) {
+        return
+      } else {
+        localStorage[`votedForReview${currentReview.id}`] = true
+      }
     }
     
     const displayEditButton = token && jwtDecode(token).sub.username === username? <Button onClick={this.toggleEdit}>Edit</Button>: ''
