@@ -1,3 +1,5 @@
+/*global FB*/
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -23,17 +25,17 @@ class Review extends Component {
     console.log('reviewid in Review', this.props.match.params.reviewid)
     this.props.getCurrentReview(this.props.match.params.reviewid)
     this.props.getRestaurant(this.props.match.params.restaurant_id)
-    const FB = window.FB;
-    window.fbAsyncInit = function() {
-      //SDK loaded, initialize it
-      FB.init({
-          appId      : '207666283375899',
-          xfbml      : true,
-          version    : 'v2.6'
-      });
-      //JS SDK initialized, now you can use it
-      FB.XFBML.parse();
-  };
+  //   const FB = window.FB;
+  //   window.fbAsyncInit = function() {
+  //     //SDK loaded, initialize it
+  //     FB.init({
+  //         appId      : '207666283375899',
+  //         xfbml      : true,
+  //         version    : 'v2.6'
+  //     });
+  //     //JS SDK initialized, now you can use it
+  //     FB.XFBML.parse();
+  // };
 
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
