@@ -46,11 +46,7 @@ handleDelete = (e) => {
 
 render() {
 
-  const { restaurants, allUserReviews, username, userId, isAuth, setMapLocation, deleteReview, deleteUserFavorite } = this.props
-
-  const userReviews = allUserReviews.filter(review => review.user_id === userId)
-
-  console.log('uuuuuuu====/', userReviews)
+  const { restaurants, allUserReviews, username, userId, isAuth, setMapLocation, deleteReview, deleteUserFavorite, userReviews } = this.props
 
   restaurants.forEach(restaurant => {
     userReviews.forEach(review => {

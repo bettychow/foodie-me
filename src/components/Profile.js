@@ -15,13 +15,13 @@ class Profile extends Component {
 
   componentDidMount() {
 
-    this.props.getUserInfo(this.props.username)
-      .then(result => {
-        this.setState({
-          imgURL: this.props.currentUserInfo.profile_pic,
-          bio: this.props.currentUserInfo.bio
-        })
-      })
+    // this.props.getUserInfo(this.props.username)
+    //   .then(result => {
+    //     this.setState({
+    //       imgURL: this.props.currentUserInfo.profile_pic,
+    //       bio: this.props.currentUserInfo.bio
+    //     })
+    //   })
   }
 
   
@@ -57,7 +57,17 @@ class Profile extends Component {
 
   render() {
 
-    const { currentUserInfo, username, isAuth, updateUserInfo} = this.props
+    const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo} = this.props
+    
+    const totalVotes = userReviews.reduce((sum, review) => {
+      console.log('review in reduce profile========>', review.votes)
+      return sum + review.votes
+    }, 0)
+
+    console.log('TTTTTTVVVVVV', totalVotes)
+    console.log('UUUUUUUUUUUU', userReviews.length)
+
+    const displayCrown = totalVotes > 8 && userReviews.length > 0? <div className="crown" ><i className="fas fa-crown"></i></div>: ''
 
     const inputStyle = {
       backgroundColor: 'white',
@@ -71,15 +81,18 @@ class Profile extends Component {
 
     const displayInputBoxBio = this.state.isEditing? <Input type="text" placeholder={'  About you'} style={inputStyle} onChange={e => this.handleEditBio(e)} value={this.state.bio}/> : ''
     const displaySaveButton = this.state.isEditing? <Button onClick={e => this.handleSave(e)}>Save</Button>: ''
+    const displayFollowButton = isAuth? '': <Button>Follow</Button>
 
-    
+    console.log()
 
     return(
       <div className="profile">
-        <h3 className="username" >Hi {currentUserInfo.username}</h3>
-        <img className="profile-pic" src={currentUserInfo.profile_pic}/>
+        <h3 className="username" >Hi {displayUserInfo.username}</h3>
+        {displayCrown}
+        <img className="profile-pic" src={displayUserInfo.profile_pic}/>
+        {displayFollowButton}
         {displayInputBoxPic}
-        <p className="bio">{currentUserInfo.bio}</p>
+        <p className="bio">{displayUserInfo.bio}</p>
         {displayInputBoxBio}
         {displayEditButton}
         {displaySaveButton}
@@ -94,7 +107,8 @@ const mapStateToProps = state => {
 
   console.log('state in profile', state)
   return({
-    currentUserInfo: state.currentUser
+    currentUserInfo: state.currentUser,
+    displayUserInfo: state.displayUser
   })
 }
 

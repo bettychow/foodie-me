@@ -13,7 +13,7 @@ import jwtDecode from'jwt-decode'
 import FavoriteList from './FavoriteList'
 import Map from './Map'
 import Profile from './Profile'
-import { getUserInfo, getAllReviews, getUserRestaurants, getAllRestaurants, setMapLocation, resetMapLocation } from '../actions/index'
+import { getUserInfo, getAllReviews, getUserRestaurants, getAllRestaurants, setMapLocation, resetMapLocation, getDisplayUser } from '../actions/index'
 import NavBar from './NavBar';
 
 
@@ -40,17 +40,39 @@ class Main extends Component {
       }
     }
 
-    const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
-    this.props.getUserInfo(username)
-      .then(result => {
-        const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
-        this.props.getUserRestaurants(userId)
-        this.props.getAllReviews()
-      })
-    
+    console.log('AAAAAUTH=====', this.state.isAuth)
+
+    const username = jwtDecode(localStorage.getItem('authorization')).sub.username
+    if (token && username === this.props.match.params.username) {
+
+      console.log('XXXXXXXXX________', username)
+      const decoded = jwtDecode(token)
+      const userId = decoded.sub.id
+      const username = decoded.sub.username
+     
+        this.props.getUserInfo(username)
+        .then(result => {
+          const userId = this.props.userId
+          this.props.getUserRestaurants(userId)
+        })
+      } else {
+
+        console.log('OOOOOOOOO=====>', this.props.match.params.username)
+      this.props.getDisplayUser(this.props.match.params.username)
+          .then(result => {
+            const displayUserId = this.props.displayUserId
+            this.props.getUserRestaurants(displayUserId)
+          })
+    }
+  
+   
+      this.props.getAllReviews()
       this.props.getAllRestaurants()
 
-  }
+      
+        this.props.getDisplayUser(this.props.match.params.username)
+
+}
 
   resetMap = () => {
     
@@ -62,10 +84,11 @@ class Main extends Component {
   render() {
     document.body.style.backgroundColor = "white";
 
-    const { userFavorites } = this.props
+    const { userFavorites, allReviews } = this.props
     const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
     const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     const displayMap = <Map favorites={userFavorites} />
+    const userReviews = allReviews.filter(review => review.user_id === userId)
     
     return (
       
@@ -74,11 +97,11 @@ class Main extends Component {
           <NavBar isAuth={this.state.isAuth}/>
           <div className="header">
             <div className="bg"></div>
-            <Profile isAuth={this.state.isAuth} username={username} currentUser={this.props.currentUser} />
+            <Profile isAuth={this.state.isAuth} username={username} currentUser={this.props.currentUser} userReviews={userReviews}  />
           </div>
           <div className="main-flex-container">
             <div className="favorite-list">
-              <FavoriteList userId={userId} isAuth={this.state.isAuth} />
+              <FavoriteList userId={userId} isAuth={this.state.isAuth} userReviews={userReviews} />
             </div>            
             <div id="map" >
               {displayMap}
@@ -96,8 +119,10 @@ const mapStateToProps = state =>  {
   console.log('sssssss', state)
   return {
     userId: state.currentUser.id,
+    displayUserId: state.displayUser.id,
     currentUser: state.currentUser,
-    userFavorites: state.favorites.restaurants
+    userFavorites: state.favorites.restaurants,
+    allReviews: state.reviews.reviews
   }
 }
 
@@ -107,7 +132,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getAllReviews,
   getAllRestaurants,
   setMapLocation,
-  resetMapLocation
+  resetMapLocation,
+  getDisplayUser
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

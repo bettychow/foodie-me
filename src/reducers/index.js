@@ -5,6 +5,7 @@ import { FETCH_LOCATION,
          ADD_FAVORITE, 
          DELETE_FAVORITE,
          GET_USER_INFO, 
+         GET_DISPLAY_USER,
          RECEIVE_USER_RESTAURANTS, 
          RECEIEVE_ALL_REVIEWS,
          INPUT_NAME,
@@ -203,6 +204,35 @@ const currentUser = (state = {
       }
   }
 
+  const displayUser = (state = {
+    id: 0,
+    username: '',
+    name: '',
+    email: '',
+    password: '',
+    bio: '',
+    profile_pic: ''
+  }, action) => {
+    switch(action.type) {
+      
+      case GET_DISPLAY_USER:
+      const newObj = action.payload
+         return {
+           ...state,
+            id: newObj.id,
+            username: newObj.username,
+            name: newObj.name,
+            email: newObj.email,
+            password: newObj.password,
+            bio: newObj.bio,
+            profile_pic: newObj.profile_pic
+         }
+      default:
+        return state
+    }
+
+  }
+
   const signup = (state= {
     name: '',
     username: '',
@@ -290,6 +320,7 @@ export default combineReducers({
   search,
   favorites,
   currentUser,
+  displayUser,
   reviews,
   signup,
   login,

@@ -163,13 +163,18 @@ nav{
 
 .profile-pic{
   width: 200px;
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .profile-input{
   width: 400px;
   background-color: white;
+}
+
+.crown{
+  color: gold;
+  font-size: 20px;
 }
 
 .write-review, .review-form, #search-box, #location {
@@ -232,6 +237,7 @@ nav{
   color: white;
   margin-left: 20px;
   margin-top: 10px;
+  display: inline-block;
 }
 
 .login{
@@ -245,4 +251,12 @@ nav{
 
 .reset-map-button{
   margin-top: 20px;
+}
+
+/* .username-nav{
+  margin-top: 20px;
+} */
+
+.avator{
+  width:30px;
 }

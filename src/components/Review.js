@@ -12,7 +12,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import jwtDecode from'jwt-decode'
-import { FacebookShareButton, FacebookIcon, FacebookShareCount } from 'react-share'
+import { FacebookShareButton, FacebookIcon, FacebookShareCount, PinterestShareButton } from 'react-share'
 import DocumentMeta from 'react-document-meta'
 import { getCurrentReview, vote, getRestaurant, deleteReview } from '../actions/index'
 import ReviewForm from './ReviewForm';
@@ -80,9 +80,9 @@ class Review extends Component {
   render() {
 
     const meta = {
-      title: 'Some Meta Title',
+      title: `${this.props.match.params.username}\'s review on ${this.props.currentRestaurant.restaurant_name}`,
       description: 'I am a description, and I can create multiple tags',
-      canonical: 'https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow/1/1',
+      canonical: `https://gentle-taiga-80518.herokuapp.com/review/${this.props.currentRestaurant.restaurant_name}/${this.props.match.params.username}/1/1`,
       meta: {
         charset: 'utf-8',
         name: {
@@ -108,18 +108,20 @@ class Review extends Component {
     console.log('zzzzzzzz', restaurant_ID)
 
     const handleVote = e => {
-      vote(reviewid, currentReview.votes, e.target.innerHTML)
-      if(localStorage[`votedForReview${currentReview.id}`] === true) {
-        return
-      } else {
-        localStorage[`votedForReview${currentReview.id}`] = true
-      }
+    
+        if(!localStorage.getItem(`votedForReview${currentReview.id}`)) { 
+          console.log('?????????', localStorage.getItem(`votedForReview${currentReview.id}`))
+          vote(reviewid, currentReview.votes, e.target.innerHTML)
+          localStorage[`votedForReview${currentReview.id}`] = true
+        }
+     
     }
     
     const displayEditButton = token && jwtDecode(token).sub.username === username? <Button onClick={this.toggleEdit}>Edit</Button>: ''
     const displayDeleteButton = token && jwtDecode(token).sub.username === username? <Button onClick={e => this.handleDelete(e)}>Delete</Button>: ''
     const displayUpVoteButton = token && jwtDecode(token).sub.username === username? '': <Button onClick={e => handleVote(e)}>Thumbs Up</Button>
     const displayDownVoteButton = token && jwtDecode(token).sub.username === username? '': <Button onClick={e => handleVote(e)}>Thumbs Down</Button>
+    const displayVoteMessage = localStorage.getItem(`votedForReview${currentReview.id}`)? '  Thank you for your vote!': ''
 
     console.log('HHHHHHHH', this.props.currentUser)
     if(this.state.isEditing) {
@@ -131,6 +133,7 @@ class Review extends Component {
         <DocumentMeta {...meta}>
         
           <div>
+            {/* <DocumentMeta {...meta} /> */}
             <Link to={`/allreviews/${currentUsername}/${currentRestaurant.id}`}>See all reviews of {currentRestaurant.restaurant_name}</Link>
             <Link to={`/${currentUsername}`}>Back to Home</Link>
             <h3>{currentRestaurant.restaurant_name}</h3>
@@ -156,10 +159,11 @@ class Review extends Component {
             <span>{currentReview.votes}</span>
             {displayUpVoteButton}
             {displayDownVoteButton}
+            {displayVoteMessage}
             {/* <div id="fb-root"></div>
             <div className="fb-share-button" data-href="https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow/1/1" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgentle-taiga-80518.herokuapp.com%2Freview%2FGochi%2520Japanese%2520Fusion%2520Tapas%2Fbettychow%2F1%2F1&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
-            <FacebookShareButton
-            url={'https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow/1/1'}
+          <FacebookShareButton
+            url={'https://gentle-taiga-80518.herokuapp.com'}
             quote={'hello'}
             className="Demo__some-network__share-button">
             <FacebookIcon
@@ -167,13 +171,11 @@ class Review extends Component {
               round />
           </FacebookShareButton>
 
-          <FacebookShareCount
-            url={'https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow/1/1'}
-            className="Demo__some-network__share-count">
-            {count => count}
-          </FacebookShareCount>
+        
+          {/* <a data-pin-do="buttonPin" data-pin-count="above" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fgentle-taiga-80518.herokuapp.com%2Freview%2FGochi%2520Japanese%2520Fusion%2520Tapas%2Fbettychow%2F1%2F1&media=https%3A%2F%2Fs.hdnux.com%2Fphotos%2F54%2F01%2F23%2F11539661%2F11%2FrawImage.jpg&description=Next%20stop%3A%20Meow"></a> */}
+          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
           </div>
-        </DocumentMeta>
+         </DocumentMeta>
       )
     }
   }

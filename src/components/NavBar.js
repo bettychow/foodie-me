@@ -12,24 +12,34 @@ import { bindActionCreators } from 'redux'
 import jwtDecode from'jwt-decode'
 import { getUserInfo } from '../actions/index'
 
-const NavBar = ({history, isAuth}) => {
+class NavBar extends Component {
   
 
-  const handleLogout = (e) => {
-    localStorage.removeItem('authorization')
+  render() {
+    const handleLogout = (e) => {
+      localStorage.removeItem('authorization')
+    }
+    
+    
+    const token = localStorage.getItem('authorization')
+    const logoutButton = token? 'Log Out': 'Log In'
+
+    const {history, isAuth, currentUser} = this.props
+    return(
+      <div className="nav">
+      
+        <div className="logo">foodie<i className="fas fa-crown"></i>me</div>
+        {/* <Link to={`/${username}`} >Home</Link> */}
+        <span className="logout">{currentUser.username}<img className="avator" src={`${currentUser.profile_pic}`}/><Link to={'/'} onClick={e => handleLogout(e)} >{logoutButton}</Link></span>
+        
+      </div>
+    )
   }
   
-  
-
-  const logoutButton = isAuth? 'Log Out': 'Log In'
-  return(
-    <div className="nav">
-    
-      <div className="logo">foodie<i className="fas fa-crown"></i>me</div>
-      {/* <Link to={`/${username}`} >Home</Link> */}
-      <Link to={'/'} onClick={e => handleLogout(e)} className="logout">{logoutButton}</Link>
-    </div>
-  )
 }
 
-export default NavBar
+const mapStateToProps = state => ({
+  currentUser: state.currentUser 
+})
+
+export default connect(mapStateToProps, null)(NavBar)

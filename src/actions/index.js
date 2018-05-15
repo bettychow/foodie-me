@@ -228,22 +228,54 @@ export const getUserInfo = (username) => {
   console.log('username in getUserinfo action', username)
   return async dispatch => {
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${username}` , {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${username}` , {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
 
-      const JSONres = await response.json()
-      console.log('JSONres in getUserInfo', JSONres)
-      
-      dispatch({
-        type: GET_USER_INFO,
-        payload: JSONres[0]
-      })
+    const JSONres = await response.json()
+    console.log('JSONres in getUserInfo', JSONres)
+
+
+  
+    
+    dispatch({
+      type: GET_USER_INFO,
+      payload: JSONres[0]
+    })
   }
+}
+
+
+export const GET_DISPLAY_USER = 'GET_DISPLAY_USER'
+export const getDisplayUser = (username) => {
+
+  console.log('username in getDisplayUser in action+++++++', username)
+  return async dispatch => {
+
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${username}` , {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    const JSONres = await response.json()
+    console.log('JSONres in getUserInfo', JSONres)
+
+
+  
+    
+    dispatch({
+      type: GET_DISPLAY_USER,
+      payload: JSONres[0]
+    })
+  }
+  
 }
 
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
