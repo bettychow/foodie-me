@@ -84,11 +84,11 @@ class Main extends Component {
   render() {
     document.body.style.backgroundColor = "white";
 
-    const { userFavorites, allReviews } = this.props
+    const { userFavorites, allReviews, displayUserId } = this.props
     const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
     const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     const displayMap = <Map favorites={userFavorites} />
-    const userReviews = allReviews.filter(review => review.user_id === userId)
+    const userReviews = allReviews.filter(review => review.user_id === displayUserId)
     
     return (
       

@@ -68,7 +68,7 @@ render() {
                  <p className="restaurant-address">{restaurant.address}</p>
                  <p className="restaurant-phone">{restaurant.phone}</p>
                  <Button className="locate-button" onClick={e => this.handleLocate(e)}>Locate</Button>
-                 {restaurant.review? <Link className="read-review-link" to={`/review/${restaurant.restaurant_name}/${username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link className="write-review-link" to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
+                 {restaurant.review? <Link className="read-review-link" to={`/review/${restaurant.restaurant_name}/${restaurant.review.username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link className="write-review-link" to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
                  {displayTrashIcon}
                </li>
   })
@@ -94,7 +94,8 @@ const mapStateToProps = state => {
   return ({
     restaurants: state.favorites.restaurants,
     allUserReviews: state.reviews.reviews,
-    username: state.currentUser.username
+    username: state.currentUser.username,
+    displayUserId: state.displayUser.id
   })
 }
 

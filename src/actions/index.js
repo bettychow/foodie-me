@@ -629,3 +629,19 @@ export const addReview = reviewObj => {
     })
   }
 }
+
+export const ADD_FOLLOW_PAIR = 'ADD_FOLLOW_PAIR'
+export const addFollowPair = (followed_id, follower_id) => {
+
+  console.log('FFFFFFOOOOOO', followed_id, follower_id)
+  return async dispatch => {
+    const response = await fetch(`$${process.env.REACT_APP_API_URL}/follow`, {
+      method: 'POST',
+      body: JSON.stringify({followed_id, follower_id}),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+  }
+}

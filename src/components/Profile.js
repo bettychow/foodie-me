@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import jwtDecode from'jwt-decode'
-import { getUserInfo, updateUserInfo } from '../actions/index'
+import { getUserInfo, updateUserInfo, addFollowPair } from '../actions/index'
 
 class Profile extends Component {
 
@@ -55,9 +55,16 @@ class Profile extends Component {
     })
  }
 
+ handleFollow = () => {
+   const followed = this.props.displayUserInfo.id
+   const follower = this.props.currentUserInfo.id
+
+   this.props.addFollowPair(followed, follower)
+
+ }
   render() {
 
-    const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo} = this.props
+    const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo, addFollowPair} = this.props
     
     const totalVotes = userReviews.reduce((sum, review) => {
       console.log('review in reduce profile========>', review.votes)
@@ -81,7 +88,7 @@ class Profile extends Component {
 
     const displayInputBoxBio = this.state.isEditing? <Input type="text" placeholder={'  About you'} style={inputStyle} onChange={e => this.handleEditBio(e)} value={this.state.bio}/> : ''
     const displaySaveButton = this.state.isEditing? <Button onClick={e => this.handleSave(e)}>Save</Button>: ''
-    const displayFollowButton = isAuth? '': <Button>Follow</Button>
+    const displayFollowButton = isAuth? '': <Button onClick={this.handleFollow}>Follow</Button>
 
     console.log()
 
@@ -114,7 +121,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUserInfo,
-  updateUserInfo
+  updateUserInfo,
+  addFollowPair
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
