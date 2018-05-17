@@ -29,32 +29,32 @@ class Review extends Component {
     
 
     //console.log('????????', FB)
-    window.fbAsyncInit = function() {
-      //SDK loaded, initialize it
+  //   window.fbAsyncInit = function() {
+  //     //SDK loaded, initialize it
 
-      FB.init({
-        appId      : '207666283375899',
-        status     : true,
-        xfbml      : true,
-        version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
-      });
+  //     FB.init({
+  //       appId      : '207666283375899',
+  //       status     : true,
+  //       xfbml      : true,
+  //       version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
+  //     });
 
-      // FB.init({
-      //     appId      : '207666283375899',
-      //     xfbml      : true,
-      //     version    : 'v2.7'
-      // });
-      //JS SDK initialized, now you can use it
-      FB.XFBML.parse();
-  };
+  //     // FB.init({
+  //     //     appId      : '207666283375899',
+  //     //     xfbml      : true,
+  //     //     version    : 'v2.7'
+  //     // });
+  //     //JS SDK initialized, now you can use it
+  //     FB.XFBML.parse();
+  // };
 
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=207666283375899';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'))
+  //   (function(d, s, id) {
+  //     var js, fjs = d.getElementsByTagName(s)[0];
+  //     if (d.getElementById(id)) return;
+  //     js = d.createElement(s); js.id = id;
+  //     js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=207666283375899';
+  //     fjs.parentNode.insertBefore(js, fjs);
+  //   }(document, 'script', 'facebook-jssdk'))
  
 
     window.twttr = (function(d, s, id) {
@@ -176,7 +176,7 @@ class Review extends Component {
             {displayDownVoteButton}
             {displayVoteMessage}
             <div id="fb-root"></div>
-            <div className="fb-share-button" data-href="https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow/1/1" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgentle-taiga-80518.herokuapp.com%2Freview%2FGochi%2520Japanese%2520Fusion%2520Tapas%2Fbettychow%2F1%2F1&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div>
+            {/* <div className="fb-share-button" data-href="https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow/1/1" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgentle-taiga-80518.herokuapp.com%2Freview%2FGochi%2520Japanese%2520Fusion%2520Tapas%2Fbettychow%2F1%2F1&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
           {/* <FacebookShareButton
             url={'https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow'}
             quote={'hello'}
