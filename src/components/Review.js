@@ -56,6 +56,23 @@ class Review extends Component {
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'))
  
+
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+    
+      return t;
+    }(document, "script", "twitter-wjs"));
   }
 
   toggleEdit() {
@@ -109,20 +126,10 @@ class Review extends Component {
 
     const handleVote = e => {
       
-      // if(localStorage[`votedForReview${currentReview.id}`] === true) {
-      //   return
-      // } else {
-
-
-
-      console.log('LOCAL >>>>>>>', localStorage[`votedForReview${currentReview.id}`])
         if(!localStorage.getItem(`votedForReview${currentReview.id}`)) { 
-          console.log('?????????', localStorage.getItem(`votedForReview${currentReview.id}`))
           vote(reviewid, currentReview.votes, e.target.innerHTML)
           localStorage[`votedForReview${currentReview.id}`] = true
         }
-       
-      // }
     }
     
     const displayEditButton = token && jwtDecode(token).sub.username === username? <Button onClick={this.toggleEdit}>Edit</Button>: ''
@@ -190,6 +197,7 @@ class Review extends Component {
 
         
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
+        {/* <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script> */}
           </div>
           </DocumentMeta>
       )

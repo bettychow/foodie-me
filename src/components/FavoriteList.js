@@ -35,7 +35,6 @@ handleDelete = (e) => {
   if(result) {
     if(review_id > 0) {
 
-      console.log('>>>>>>>>><<<<<<<', review_id)
       this.props.deleteReview(review_id)
     }
 
@@ -55,13 +54,10 @@ render() {
       }
     })
   })
-  
-  console.log('zzzzzzz', restaurants)
 
   const displayTrashIcon = isAuth?  <i className="far fa-trash-alt trash" onClick={e => this.handleDelete(e)}></i>: ''
   
   const displayList = restaurants.map(restaurant => {
-    console.log('vvvvvv', restaurant)
         return <li key={restaurant.yelp_id} id={restaurant.restaurant_id} className="restaurant" lat={restaurant.lat} lng={restaurant.lng} reviewid={restaurant.review? restaurant.review.id: 0} >
                  <img className="restaurant-img" src={restaurant.pic} />
                  <h3 className="restaurant-name">{restaurant.restaurant_name}</h3>

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { FETCH_LOCATION, 
+import { 
          INPUT_SEARCH, 
          SEARCH_RESULTS_RECEIVED, 
          ADD_FAVORITE, 
@@ -28,22 +28,24 @@ import { FETCH_LOCATION,
          RESET_MAP_LOCATION,
          LATEST_FIRST,
          OLDEST_FIRST,
-         All_RESTAURANTS
+         All_RESTAURANTS,
+         GET_FOLLOWED_USERS,
+         FOLLOWED
        } from '../actions'
 
-const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
-    switch(action.type) {
-      case FETCH_LOCATION:
-      console.log('>>>>>>>', action.payload)
-        return ({
-          ...state,
-          coordinates: action.payload
-        })
-      default:
-        return state
-    }
+// const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
+//     switch(action.type) {
+//       case FETCH_LOCATION:
+//       console.log('>>>>>>>', action.payload)
+//         return ({
+//           ...state,
+//           coordinates: action.payload
+//         })
+//       default:
+//         return state
+//     }
 
-}
+// }
 
 const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4.2}, action) => {
   switch(action.type) {
@@ -313,10 +315,32 @@ const currentUser = (state = {
     }
   }
 
+  const follow = (state = {followedUsers: [], isFollowed: false}, action) => {
+  switch(action.type) {
+   
+    case GET_FOLLOWED_USERS:
+    
+      return {
+        ...state,
+        followedUsers: action.payload
+      }
+    case FOLLOWED:
+      return {
+        ...state,
+        isFollowed: true
+      }
+
+    default:
+      return state
+  }
+  }
+
+  
+
 
 
 export default combineReducers({
-  location,
+  //location,
   search,
   favorites,
   currentUser,
@@ -325,5 +349,6 @@ export default combineReducers({
   signup,
   login,
   restaurants,
-  mapLocation
+  mapLocation,
+  follow
 })

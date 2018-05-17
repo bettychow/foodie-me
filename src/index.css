@@ -49,7 +49,7 @@ html{
 }
 
 #map{
-  width: 50%;
+  width: 100%;
   height: 500px;
   margin-left: auto;
   margin-right: auto;
@@ -64,10 +64,10 @@ html{
   flex-wrap: wrap;
 }
 
-.favorite-list{
+.left-container{
   display: inline-block;
-  margin-top: 20px;
-  margin-left: 20px;
+  width: 46%;
+  
 }
 
 .search-box{
@@ -88,7 +88,7 @@ html{
 }
 
 li{
-  margin: auto;
+  margin-left: 20px;
   float: left;
 }
 
@@ -259,4 +259,10 @@ nav{
 
 .avator{
   width:30px;
+}
+
+.right-flex-container{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 }

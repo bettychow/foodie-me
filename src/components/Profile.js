@@ -15,13 +15,7 @@ class Profile extends Component {
 
   componentDidMount() {
 
-    // this.props.getUserInfo(this.props.username)
-    //   .then(result => {
-    //     this.setState({
-    //       imgURL: this.props.currentUserInfo.profile_pic,
-    //       bio: this.props.currentUserInfo.bio
-    //     })
-    //   })
+   
   }
 
   
@@ -55,13 +49,22 @@ class Profile extends Component {
     })
  }
 
- handleFollow = () => {
-   const followed = this.props.displayUserInfo.id
-   const follower = this.props.currentUserInfo.id
-
-   this.props.addFollowPair(followed, follower)
-
+ handleFollow = e => {
+  const followed = this.props.displayUserInfo.id
+  const follower = this.props.currentUserInfo.id
+console.log('EEEEEE', e.target.innerHTML)
+  if(e.target.innerHTML === 'Follow') {
+    this.props.addFollowPair(followed, follower)
+    e.target.innerHTML = 'Unfollow'
+  } else {
+    e.target.innerHTML = 'Follow'
+    
+  }
+  
  }
+
+ 
+
   render() {
 
     const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo, addFollowPair} = this.props
@@ -70,9 +73,6 @@ class Profile extends Component {
       console.log('review in reduce profile========>', review.votes)
       return sum + review.votes
     }, 0)
-
-    console.log('TTTTTTVVVVVV', totalVotes)
-    console.log('UUUUUUUUUUUU', userReviews.length)
 
     const displayCrown = totalVotes > 8 && userReviews.length > 0? <div className="crown" ><i className="fas fa-crown"></i></div>: ''
 
@@ -88,13 +88,14 @@ class Profile extends Component {
 
     const displayInputBoxBio = this.state.isEditing? <Input type="text" placeholder={'  About you'} style={inputStyle} onChange={e => this.handleEditBio(e)} value={this.state.bio}/> : ''
     const displaySaveButton = this.state.isEditing? <Button onClick={e => this.handleSave(e)}>Save</Button>: ''
-    const displayFollowButton = isAuth? '': <Button onClick={this.handleFollow}>Follow</Button>
+    const displayFollowedOrNot = this.props.isFollowed ? 'Unfollow': 'Follow'
+    const displayFollowButton = isAuth? '': <Button onClick={e => this.handleFollow(e)}>{displayFollowedOrNot}</Button>
 
     console.log()
 
     return(
       <div className="profile">
-        <h3 className="username" >Hi {displayUserInfo.username}</h3>
+        <h3 className="username" >{displayUserInfo.username}</h3>
         {displayCrown}
         <img className="profile-pic" src={displayUserInfo.profile_pic}/>
         {displayFollowButton}
@@ -115,7 +116,8 @@ const mapStateToProps = state => {
   console.log('state in profile', state)
   return({
     currentUserInfo: state.currentUser,
-    displayUserInfo: state.displayUser
+    displayUserInfo: state.displayUser,
+    isFollowed: state.follow.isFollowed
   })
 }
 

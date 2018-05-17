@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import store from './store'
 import registerServiceWorker from './registerServiceWorker';
-import { fetchLocation, getUserInfo } from './actions/index'
+import { getUserInfo } from './actions/index'
 import 'bootswatch/dist/materia/bootstrap.min.css'
 import jwtDecode from'jwt-decode'
 
@@ -19,7 +19,7 @@ const token = localStorage.getItem('authorization')
 
 
 
-store.dispatch(fetchLocation())
+// store.dispatch(fetchLocation())
 
 ReactDOM.render(
   <Provider store={store}>

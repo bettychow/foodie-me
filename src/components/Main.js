@@ -13,7 +13,8 @@ import jwtDecode from'jwt-decode'
 import FavoriteList from './FavoriteList'
 import Map from './Map'
 import Profile from './Profile'
-import { getUserInfo, getAllReviews, getUserRestaurants, getAllRestaurants, setMapLocation, resetMapLocation, getDisplayUser } from '../actions/index'
+import FollowedUsers from './FollowedUsers'
+import { getUserInfo, getAllReviews, getUserRestaurants, getAllRestaurants, setMapLocation, resetMapLocation, getDisplayUser, getFollowedUsers } from '../actions/index'
 import NavBar from './NavBar';
 
 
@@ -40,20 +41,18 @@ class Main extends Component {
       }
     }
 
-    console.log('AAAAAUTH=====', this.state.isAuth)
-
     const username = jwtDecode(localStorage.getItem('authorization')).sub.username
     if (token && username === this.props.match.params.username) {
 
-      console.log('XXXXXXXXX________', username)
       const decoded = jwtDecode(token)
       const userId = decoded.sub.id
       const username = decoded.sub.username
      
         this.props.getUserInfo(username)
         .then(result => {
-          const userId = this.props.userId
+          const userId = jwtDecode(localStorage.getItem('authorization')).sub.id
           this.props.getUserRestaurants(userId)
+          this.props.getFollowedUsers('displayPage', userId)
         })
       } else {
 
@@ -62,16 +61,23 @@ class Main extends Component {
           .then(result => {
             const displayUserId = this.props.displayUserId
             this.props.getUserRestaurants(displayUserId)
+            this.props.getFollowedUsers('displayPage', displayUserId)
+
+            console.log('LLLLLLLLLLL-----', displayUserId)
+            console.log('LLLLLLLLLLLLLL----', this.props.currentUser.id)
+            if(token && jwtDecode(localStorage.getItem('authorization')).sub.id !== this.props.displayUserId) {
+              this.props.getFollowedUsers('decidedFollow', jwtDecode(localStorage.getItem('authorization')).sub.id)
+            }
           })
     }
-  
-   
+
+    
+    
+
       this.props.getAllReviews()
       this.props.getAllRestaurants()
-
+      this.props.getDisplayUser(this.props.match.params.username)
       
-        this.props.getDisplayUser(this.props.match.params.username)
-
 }
 
   resetMap = () => {
@@ -100,13 +106,19 @@ class Main extends Component {
             <Profile isAuth={this.state.isAuth} username={username} currentUser={this.props.currentUser} userReviews={userReviews}  />
           </div>
           <div className="main-flex-container">
-            <div className="favorite-list">
+            <div className="left-container">
               <FavoriteList userId={userId} isAuth={this.state.isAuth} userReviews={userReviews} />
-            </div>            
-            <div id="map" >
-              {displayMap}
-              <Button className="reset-map-button" onClick={this.resetMap}>Reset Map</Button> 
             </div>
+            <div className="right-flex-container">            
+              <div id="map" >
+                {displayMap}
+                <Button className="reset-map-button" onClick={this.resetMap}>Reset Map</Button> 
+              </div>
+              <div>
+                <FollowedUsers followedUsers={this.props.followedUsers} />
+              </div>
+            </div>
+            
                   
           </div>
         </div>
@@ -122,7 +134,8 @@ const mapStateToProps = state =>  {
     displayUserId: state.displayUser.id,
     currentUser: state.currentUser,
     userFavorites: state.favorites.restaurants,
-    allReviews: state.reviews.reviews
+    allReviews: state.reviews.reviews,
+    followedUsers: state.follow.followedUsers
   }
 }
 
@@ -133,7 +146,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getAllRestaurants,
   setMapLocation,
   resetMapLocation,
-  getDisplayUser
+  getDisplayUser,
+  getFollowedUsers
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
