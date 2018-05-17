@@ -30,7 +30,8 @@ import {
          OLDEST_FIRST,
          All_RESTAURANTS,
          GET_FOLLOWED_USERS,
-         FOLLOWED
+         FOLLOWED,
+         UNFOLLOW
        } from '../actions'
 
 // const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
@@ -329,7 +330,11 @@ const currentUser = (state = {
         ...state,
         isFollowed: true
       }
-
+    case UNFOLLOW:
+    return {
+      ...state,
+      isFollowed: false
+    }
     default:
       return state
   }

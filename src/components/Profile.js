@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import jwtDecode from'jwt-decode'
-import { getUserInfo, updateUserInfo, addFollowPair } from '../actions/index'
+import { getUserInfo, updateUserInfo, addFollowPair, deleteFollowPair } from '../actions/index'
 
 class Profile extends Component {
 
@@ -58,7 +58,7 @@ console.log('EEEEEE', e.target.innerHTML)
     e.target.innerHTML = 'Unfollow'
   } else {
     e.target.innerHTML = 'Follow'
-    
+    this.props.deleteFollowPair(followed, follower)
   }
   
  }
@@ -67,7 +67,7 @@ console.log('EEEEEE', e.target.innerHTML)
 
   render() {
 
-    const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo, addFollowPair} = this.props
+    const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo, addFollowPair, deleteFollowPair} = this.props
     
     const totalVotes = userReviews.reduce((sum, review) => {
       console.log('review in reduce profile========>', review.votes)
@@ -124,7 +124,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUserInfo,
   updateUserInfo,
-  addFollowPair
+  addFollowPair,
+  deleteFollowPair
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

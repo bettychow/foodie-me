@@ -658,14 +658,24 @@ export const getFollowedUsers = (purpose, follower_id) => {
       }
     }  
   }
-
 }
 
+export const UNFOLLOW = 'UNFOLLOW'
+export const deleteFollowPair = (followed_id, follower_id) => {
+  const obj = {followed_id, follower_id}
+  return async dispatch => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/follow`, {
+      method: 'DELETE',
+      body: JSON.stringify(obj),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
 
-// export const GET_FOLLOWED_USER_INFO = ''
-// export const getFollowedUsersInfo =() => {
+    dispatch({
+      type: UNFOLLOW
+    })
+  }
 
-//   return async dispatch => {
-
-//   }
-// }
+}
