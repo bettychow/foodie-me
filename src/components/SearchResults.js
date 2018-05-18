@@ -17,16 +17,24 @@ class SearchResults extends Component {
 
   componentDidMount () {
   
-    const username = this.props.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.username
+  //   const username = this.props.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.username
+  //   this.props.getAllReviews()
+  //   this.props.getUserInfo(username)
+  //     .then(result => {
+  //       this.props.getUserRestaurants(this.props.userId)
+  //     })
+   
+  //     this.props.getAllRestaurants()
+  // }
+  
+  const user_id = this.props.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.displayUserId
     this.props.getAllReviews()
-    this.props.getUserInfo(username)
-      .then(result => {
-        this.props.getUserRestaurants(this.props.userId)
-      })
+    
+        this.props.getUserRestaurants(user_id)
+  
    
       this.props.getAllRestaurants()
   }
-  
 
 render() {
 
@@ -129,7 +137,7 @@ console.log('YELP_ID', yelp_id)
               <h3>{restaurant.name}</h3>
               <p>{`${restaurant.location.display_address[0]} ${restaurant.location.display_address[1]}`}</p>
               <p>{restaurant.display_phone}</p>
-              {isAuth && !restaurant.is_favorite ? <span className="heart" onClick={e => handleFavoriteToggle(e) }>&#9825;</span>: token? <span className="heart">&hearts;</span> : ''} 
+              {isAuth && !restaurant.is_favorite ? <span className="heart" onClick={e => handleFavoriteToggle(e) }>&#9825;</span>: isAuth && restaurant.is_favorite? <span className="heart">&hearts;</span> : ''} 
               {restaurant.review.length === 0 ? '': <Link to={`/allreviews/${this.props.username}/${restaurant.review[0].restaurant_id}`} >Read Reviews</Link>}
            </li>
   })
@@ -154,7 +162,8 @@ const mapStateToProps = state => {
     allRestaurants: state.restaurants.allRestaurants,
     allReviews: state.reviews.reviews,
     userId: state.currentUser.id,
-    userFavorites: state.favorites.restaurants
+    userFavorites: state.favorites.restaurants,
+    displayUserId: state.displayUser.id
   })
 }
 

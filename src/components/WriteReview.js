@@ -83,6 +83,9 @@ class WriteReview extends Component {
     this.props.history.push(`/${username}`)
   }
 
+  handleCanel = () => {
+    this.props.history.goBack()
+  }
   
   render() {
 
@@ -207,8 +210,9 @@ class WriteReview extends Component {
             />
             {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
-          <Button>Submit</Button>
+          <Button>Submit</Button> <Button onClick={this.handleCanel}>Cancel</Button>
         </Form>
+        
       </div>
     )
   }

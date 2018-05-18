@@ -178,9 +178,8 @@ this.props.history.goBack()
           <div>
             <DocumentMeta {...meta} />
             <Link to={`/allreviews/${currentUsername}/${currentRestaurant.id}`}>See all reviews of {currentRestaurant.restaurant_name}</Link>
-            <Link to={`/${currentUsername}`}>Back to Home</Link>
-            <Button onClick={handleGoBack}>Back</Button>
-            <h3>{currentRestaurant.restaurant_name}</h3>
+            <Button className="back-button" onClick={handleGoBack}>Back</Button>
+            <h3>{this.props.match.params.username}'s review on {currentRestaurant.restaurant_name}</h3>
             <p>{currentRestaurant.address}</p>
             <p>{currentRestaurant.phone}</p>
             <div className="review-body">
@@ -199,8 +198,10 @@ this.props.history.goBack()
               {displayEditButton}
               {displayDeleteButton}           
             </div>
-            <h5>Votes</h5>
-            <span>{currentReview.votes}</span>
+            <div className="votes">
+              <h5 className="votes-title">Votes</h5>
+              <span>{currentReview.votes}</span>
+            </div>
             {displayUpVoteButton}
             {displayDownVoteButton}
             {displayVoteMessage}
@@ -215,17 +216,18 @@ this.props.history.goBack()
               round />
           </FacebookShareButton> */}
 
-          <TwitterShareButton
+          {/* <TwitterShareButton
             url={sharedURL}
             title={'hello'}
             className="Demo__some-network__share-button">
             <TwitterIcon
               size={32}
               round />
-          </TwitterShareButton>
+          </TwitterShareButton> */}
 
-        
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
+        <div className="twitter-button">
+          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
+        </div>
         {/* <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script> */}
           </div>
           </DocumentMeta>

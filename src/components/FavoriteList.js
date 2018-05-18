@@ -77,16 +77,12 @@ render() {
   })
 
   const token = localStorage.getItem('authorization')
-console.log('JJJJJJJJJJJJJ', jwtDecode(token).sub.username)
-console.log('USERANEM++++++++', username)
-console.log('DISPLAYUSER+++++++', displayUsername)
 
-console.log('True or false', username === displayUsername)
   const urlUsername = token? username === displayUsername? jwtDecode(token).sub.username: displayUsername : this.props.paramsUsername
   
   return (
     <div>
-      <h2 style={{marginTop: 20}}>My Favorite Restaurants List</h2>
+      <h2 style={{marginTop: 50}}>My Favorite Restaurants List</h2>
       <Link to={`/searchpage/${urlUsername}`}>Search Restaurants</Link>
       <Filter restaurants={restaurants}/>
       <ul className="favorite-list">
