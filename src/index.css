@@ -58,14 +58,8 @@ html{
   margin-bottom: 100px;
 }
 
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .left-container{
-  display: inline-block;
+  display: flex;
   width: 46%;
   
 }
@@ -130,7 +124,7 @@ ul {
 
 @media screen and (max-width:990px) {
   .main-flex-container { flex-wrap: wrap-reverse;  }
-  .item:first-child { flex-basis: 100%; }
+  .right-flex-container { flex-basis: 100%; }
 }
 
 
@@ -265,4 +259,32 @@ nav{
   width: 50%;
   display: flex;
   flex-direction: column;
+}
+
+.login-logout{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 10px;
+  color: white;
+  margin-right: 20px;
+}
+
+.home-button{
+  margin-right: 200px;
+  color: white;
+}
+
+.signup{
+  margin-left: 20px;
+}
+
+.followed-user-pic{
+  width: 100px;
+}
+
+.followed-user{
+  border: solid;
+  border-width: thin;
+  border-color: lightgray;
 }

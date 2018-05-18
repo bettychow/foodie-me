@@ -1,28 +1,5 @@
 const baseURL = 'http://localhost:8000/'
 
-
-// export const FETCH_LOCATION = 'FETCH_LOCATION'
-// export const fetchLocation = () => {
-//   return dispatch => {
-//     if (navigator.geolocation) {
-//       navigator.geolocation.getCurrentPosition(showPosition);
-//     } 
-
-//     function showPosition (position) {
-//       console.log( 'kkkkkk', typeof position.coords.latitude, position.coords.longitude)
-//       const coordinates = {
-//         lat: position.coords.latitude,
-//         lng: position.coords.longitude
-//       }
-
-//       dispatch({
-//         type: FETCH_LOCATION,
-//         payload: coordinates
-//       })
-//     }
-//   }
-// }
-
 export const SET_MAP_LOCATION = 'SET_MAP_LOCATION'
 export const setMapLocation = (locationObj) => {
 
@@ -68,7 +45,7 @@ export const search = (searchString, location) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${access_token}`,
+        "Authorization": `Bearer ${access_token}`
       }}) 
     
     const JSONres = await response.json()
@@ -136,14 +113,17 @@ export const addFavorite = (user_id, restaurant_id) => {
 }
 
 export const DELETE_FAVORITE = 'DELETE_FAVORITE'
-export const deleteUserFavorite = ( userRestaurantObj ) => {
+export const deleteUserFavorite = ( userRestaurantObj, token ) => {
+
+  console.log('TTTTTOOOOOOOO++++++ toekn deleteUserFav in ac', token)
   return async dispatch => {
      const response = await fetch(`${process.env.REACT_APP_API_URL}/favorite`, {
        method: 'DELETE',
        body: JSON.stringify(userRestaurantObj),
        headers: {
         'Content-type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'authorization': token
       }
      })
 
@@ -176,17 +156,6 @@ export const updateUserFavorites = (user_id, restaurant_id) => {
 
 }
 
-// export const FILTER_RESTAURANTS = 'FILTER_RESTAURANTS'
-// export const filterFavoriteRestaurants = (filter) => {
-//   return dispatch => {
-
-//     dispatch({
-//       type: FILTER_RESTAURANTS,
-//       payload: lastestRest
-//     })
-//   }
-
-// }
 
 export const LATEST_FIRST = 'LATEST_FIRST'
 export const OLDEST_FIRST = 'OLDEST_FIRST'

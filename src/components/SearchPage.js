@@ -49,12 +49,19 @@ class SearchPage extends Component {
     })
   }
 
+  
+
   render() {
     document.body.style.backgroundColor = "white";
+
+    const handleGoBack = () => {
+      this.props.history.goBack()
+          }
     
     return(
       <div>
-        <Link to={`/${this.props.match.params.username}`}>Back</Link>
+        <Button onClick={handleGoBack}>Back</Button>
+        {/* <Link to={`/${this.props.match.params.username}`}>Back</Link> */}
         <SearchBox handleClear={this.handleClear}/>
         <div className="search-results">
           {this.state.clearResult? '': <SearchResults isAuth={this.state.isAuth} username={this.props.match.params.username} />}

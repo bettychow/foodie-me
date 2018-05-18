@@ -68,13 +68,14 @@ console.log('EEEEEE', e.target.innerHTML)
   render() {
 
     const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo, addFollowPair, deleteFollowPair} = this.props
-    
+    console.log("&&&&&&&&&&", userReviews)
+    const token = localStorage.getItem('authorization')
     const totalVotes = userReviews.reduce((sum, review) => {
       console.log('review in reduce profile========>', review.votes)
       return sum + review.votes
     }, 0)
 
-    const displayCrown = totalVotes > 8 && userReviews.length > 0? <div className="crown" ><i className="fas fa-crown"></i></div>: ''
+    const displayCrown = totalVotes > 4 && userReviews.length > 0? <div className="crown" ><i className="fas fa-crown"></i></div>: ''
 
     const inputStyle = {
       backgroundColor: 'white',
@@ -89,7 +90,7 @@ console.log('EEEEEE', e.target.innerHTML)
     const displayInputBoxBio = this.state.isEditing? <Input type="text" placeholder={'  About you'} style={inputStyle} onChange={e => this.handleEditBio(e)} value={this.state.bio}/> : ''
     const displaySaveButton = this.state.isEditing? <Button onClick={e => this.handleSave(e)}>Save</Button>: ''
     const displayFollowedOrNot = this.props.isFollowed ? 'Unfollow': 'Follow'
-    const displayFollowButton = isAuth? '': <Button onClick={e => this.handleFollow(e)}>{displayFollowedOrNot}</Button>
+    const displayFollowButton = isAuth || !token? '': <Button onClick={e => this.handleFollow(e)}>{displayFollowedOrNot}</Button>
 
     console.log()
 

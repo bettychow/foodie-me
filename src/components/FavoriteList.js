@@ -9,11 +9,14 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import jwtDecode from'jwt-decode'
 import Filter from './Filter'
 import { setMapLocation, deleteReview, deleteUserFavorite } from '../actions/index'
 
 
 class FavoriteList extends Component {
+
+
 
 handleLocate = e => {
   const lat = Number(e.target.parentNode.getAttribute('lat'))
@@ -26,6 +29,7 @@ handleLocate = e => {
 }
 
 handleDelete = (e) => {
+  const token = localStorage.getItem('authorization')
   const result = window.confirm("Want to delete?")
   const review_id = e.target.parentNode.getAttribute('reviewid')
   const restaurant_id = e.target.parentNode.getAttribute('id')
@@ -39,13 +43,13 @@ handleDelete = (e) => {
     }
 
     const userRestaurantObj = { user_id, restaurant_id }
-    this.props.deleteUserFavorite( userRestaurantObj )
+    this.props.deleteUserFavorite( userRestaurantObj, token )
   }
 }
 
 render() {
 
-  const { restaurants, allUserReviews, username, userId, isAuth, setMapLocation, deleteReview, deleteUserFavorite, userReviews } = this.props
+  const { restaurants, allUserReviews, username, userId, isAuth, setMapLocation, deleteReview, deleteUserFavorite, userReviews, displayUsername } = this.props
 
   restaurants.forEach(restaurant => {
     userReviews.forEach(review => {
@@ -55,6 +59,9 @@ render() {
     })
   })
 
+  const handleUpdate = () => {
+    this.forceUpdate().bind(this)
+  }
   const displayTrashIcon = isAuth?  <i className="far fa-trash-alt trash" onClick={e => this.handleDelete(e)}></i>: ''
   
   const displayList = restaurants.map(restaurant => {
@@ -64,15 +71,23 @@ render() {
                  <p className="restaurant-address">{restaurant.address}</p>
                  <p className="restaurant-phone">{restaurant.phone}</p>
                  <Button className="locate-button" onClick={e => this.handleLocate(e)}>Locate</Button>
-                 {restaurant.review? <Link className="read-review-link" to={`/review/${restaurant.restaurant_name}/${restaurant.review.username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link className="write-review-link" to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
+                 {restaurant.review? <Link onClick={handleUpdate} className="read-review-link" to={`/review/${restaurant.restaurant_name}/${restaurant.review.username}/${restaurant.restaurant_id}/${restaurant.review.id}`}>Read Review</Link>: isAuth? <Link className="write-review-link" to={`/reviewform/${username}/${restaurant.restaurant_id}/${userId}`}>Write Review</Link>: ''}
                  {displayTrashIcon}
                </li>
   })
+
+  const token = localStorage.getItem('authorization')
+console.log('JJJJJJJJJJJJJ', jwtDecode(token).sub.username)
+console.log('USERANEM++++++++', username)
+console.log('DISPLAYUSER+++++++', displayUsername)
+
+console.log('True or false', username === displayUsername)
+  const urlUsername = token? username === displayUsername? jwtDecode(token).sub.username: displayUsername : this.props.paramsUsername
   
   return (
     <div>
       <h2 style={{marginTop: 20}}>My Favorite Restaurants List</h2>
-      <Link to={`/searchpage/${username}`}>Search Restaurants</Link>
+      <Link to={`/searchpage/${urlUsername}`}>Search Restaurants</Link>
       <Filter restaurants={restaurants}/>
       <ul className="favorite-list">
       {displayList}
@@ -91,7 +106,7 @@ const mapStateToProps = state => {
     restaurants: state.favorites.restaurants,
     allUserReviews: state.reviews.reviews,
     username: state.currentUser.username,
-    displayUserId: state.displayUser.id
+    displayUsername: state.displayUser.username,
   })
 }
 

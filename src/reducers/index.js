@@ -34,20 +34,6 @@ import {
          UNFOLLOW
        } from '../actions'
 
-// const location = (state = {coordinates: { lat: 0, lng: 0 }}, action) => {
-//     switch(action.type) {
-//       case FETCH_LOCATION:
-//       console.log('>>>>>>>', action.payload)
-//         return ({
-//           ...state,
-//           coordinates: action.payload
-//         })
-//       default:
-//         return state
-//     }
-
-// }
-
 const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4.2}, action) => {
   switch(action.type) {
     case SET_MAP_LOCATION:
@@ -101,8 +87,6 @@ const favorites = (state = {restaurants: []}, action) => {
       })
     case DELETE_FAVORITE:
       const favorite = state.restaurants
-      console.log('FFFFEEEEE in reducer', favorite )
-      console.log('action.payload in delete favorite', action.payload)
       const updatedFavoriteList = favorite.filter(restaurant => restaurant.restaurant_id !== action.payload )
       return ({
         ...state,
@@ -345,7 +329,6 @@ const currentUser = (state = {
 
 
 export default combineReducers({
-  //location,
   search,
   favorites,
   currentUser,

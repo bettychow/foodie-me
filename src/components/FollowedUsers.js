@@ -15,13 +15,17 @@ class FollowedUsers extends Component {
 
 render() {
 
-  console.log('DDDDDDDDDD', this.props.followedUsers)
+  const goToFollowed = () => {
+
+    console.log('WWWWWWWWHAT IS THIS'), this
+    this.forceUpdate().bind(this)
+  }
 
   const displayFollowedUsers = this.props.followedUsers.map(user => {
-    return  <li key={user.followed_id}>
+    return  <li className="followed-user" key={user.followed_id}>
               <h2>{user.username}</h2>
-              <img src={user.profile_pic}/>
-              <Link to={`/${user.username}`} target="_blank">Go to {user.username}'s blog</Link>
+              <img className="followed-user-pic" src={user.profile_pic}/>
+              <Link to={`/${user.username}`} onClick={goToFollowed}>Go to {user.username}'s blog</Link>
             </li>
    
   })
@@ -36,9 +40,5 @@ render() {
 }
 
 }
-
-
-
-
 
 export default FollowedUsers

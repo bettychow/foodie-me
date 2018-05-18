@@ -11,6 +11,8 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
+
+import '../index.css'
 import jwtDecode from'jwt-decode'
 import { FacebookShareButton, FacebookIcon, FacebookShareCount,  TwitterShareButton, TwitterIcon } from 'react-share'
 import DocumentMeta from 'react-document-meta'
@@ -23,7 +25,6 @@ class Review extends Component {
   
 
   componentDidMount() {
-    console.log('reviewid in Review', this.props.match.params.reviewid)
     this.props.getCurrentReview(this.props.match.params.reviewid)
     this.props.getRestaurant(this.props.match.params.restaurant_id)
     
@@ -70,10 +71,40 @@ class Review extends Component {
       t.ready = function(f) {
         t._e.push(f);
       };
+
+      console.log("Review componentDidMount is happening!!!! ***")
     
       return t;
     }(document, "script", "twitter-wjs"));
   }
+
+  shouldComponentUpdate() {
+
+    console.log('YYYYYYY shouldComponentUodate+++++++++++>')
+    return true
+  }
+
+  componentDidUpdate() {
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      console.log("Review componentDidUpdate is happening!!!! ***")
+    
+      return t;
+    }(document, "script", "twitter-wjs"));
+  }
+  
 
   toggleEdit() {
     this.setState({isEditing: !this.state.isEditing})
@@ -83,7 +114,6 @@ class Review extends Component {
     const result = window.confirm("Want to delete?")
     const review_id = this.props.currentReview.id
 
-    console.log('{{{{{{', review_id)
     if(result) {
       this.props.deleteReview(review_id)
       const username = this.props.match.params.username
@@ -115,14 +145,8 @@ class Review extends Component {
     const { currentReview, currentRestaurant, getRestaurant, vote, deleteReview } = this.props
     const currentUsername = token? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     
-    console.log('curretnUserNAame ?????', currentUsername)
-    
-    // const decoded = jwtDecode(token)
-    // const currentUser = decoded.sub.username
 
     const restaurant_ID = this.props.match.params.restaurant_id
-
-    console.log('zzzzzzzz', restaurant_ID)
 
     const handleVote = e => {
       
@@ -131,6 +155,10 @@ class Review extends Component {
           localStorage[`votedForReview${currentReview.id}`] = true
         }
     }
+
+    const handleGoBack = () => {
+this.props.history.goBack()
+    }
     
     const displayEditButton = token && jwtDecode(token).sub.username === username? <Button onClick={this.toggleEdit}>Edit</Button>: ''
     const displayDeleteButton = token && jwtDecode(token).sub.username === username? <Button onClick={e => this.handleDelete(e)}>Delete</Button>: ''
@@ -138,7 +166,7 @@ class Review extends Component {
     const displayDownVoteButton = token && jwtDecode(token).sub.username === username? '': <Button onClick={e => handleVote(e)}>Thumbs Down</Button>
     const displayVoteMessage = localStorage.getItem(`votedForReview${currentReview.id}`)? '  Thank you for your vote!': ''
 
-    console.log('HHHHHHHH', this.props.currentUser)
+    const sharedURL = `http://localhost:3000/review/${currentRestaurant.restaurant_name}/bettychow/1/1`
     if(this.state.isEditing) {
       return(
         <ReviewForm {...this.state} currentRestaurant={currentRestaurant} currentReview={currentReview} toggleEdit={this.toggleEdit} />
@@ -151,6 +179,7 @@ class Review extends Component {
             <DocumentMeta {...meta} />
             <Link to={`/allreviews/${currentUsername}/${currentRestaurant.id}`}>See all reviews of {currentRestaurant.restaurant_name}</Link>
             <Link to={`/${currentUsername}`}>Back to Home</Link>
+            <Button onClick={handleGoBack}>Back</Button>
             <h3>{currentRestaurant.restaurant_name}</h3>
             <p>{currentRestaurant.address}</p>
             <p>{currentRestaurant.phone}</p>
@@ -187,7 +216,7 @@ class Review extends Component {
           </FacebookShareButton> */}
 
           <TwitterShareButton
-            url={`http://localhost:3000/review/${currentRestaurant.restaurant_name}/bettychow/1/1`}
+            url={sharedURL}
             title={'hello'}
             className="Demo__some-network__share-button">
             <TwitterIcon

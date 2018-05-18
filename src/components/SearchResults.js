@@ -118,8 +118,9 @@ console.log('YELP_ID', yelp_id)
   })
 
 
-console.log('xoxoxoxox', restaurants)
- 
+
+
+ const token = localStorage.getItem('authorization')
 
   const displayRestaurants = 
   restaurants.map(restaurant => {
@@ -128,7 +129,7 @@ console.log('xoxoxoxox', restaurants)
               <h3>{restaurant.name}</h3>
               <p>{`${restaurant.location.display_address[0]} ${restaurant.location.display_address[1]}`}</p>
               <p>{restaurant.display_phone}</p>
-              {isAuth && !restaurant.is_favorite ? <span className="heart" onClick={e => handleFavoriteToggle(e) }>&#9825;</span>: <span className="heart">&hearts;</span>}
+              {isAuth && !restaurant.is_favorite ? <span className="heart" onClick={e => handleFavoriteToggle(e) }>&#9825;</span>: token? <span className="heart">&hearts;</span> : ''} 
               {restaurant.review.length === 0 ? '': <Link to={`/allreviews/${this.props.username}/${restaurant.review[0].restaurant_id}`} >Read Reviews</Link>}
            </li>
   })

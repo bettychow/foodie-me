@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import '../index.css'
 import jwtDecode from'jwt-decode'
 import FavoriteList from './FavoriteList'
 import Map from './Map'
@@ -25,7 +26,6 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    console.log('username from params', this.props.match.params.username)
 
     const token = localStorage.getItem('authorization')
 
@@ -41,9 +41,13 @@ class Main extends Component {
       }
     }
 
-    const username = jwtDecode(localStorage.getItem('authorization')).sub.username
-    if (token && username === this.props.match.params.username) {
+    console.log('UUUUUUUUYYYYYYYYYY', this.props.match.params.username)
 
+    //const username = jwtDecode(localStorage.getItem('authorization')).sub.username
+
+    //console.log('NNNNNNNNAME', username)
+    if (token && jwtDecode(localStorage.getItem('authorization')).sub.username === this.props.match.params.username) {
+console.log('GEEEEEEEEEEEE')
       const decoded = jwtDecode(token)
       const userId = decoded.sub.id
       const username = decoded.sub.username
@@ -55,16 +59,13 @@ class Main extends Component {
           this.props.getFollowedUsers('displayPage', userId)
         })
       } else {
-
-        console.log('OOOOOOOOO=====>', this.props.match.params.username)
+console.log('UUUUUUUUYYYYYYYYYY//////////', this.props.match.params.username)
       this.props.getDisplayUser(this.props.match.params.username)
           .then(result => {
             const displayUserId = this.props.displayUserId
             this.props.getUserRestaurants(displayUserId)
             this.props.getFollowedUsers('displayPage', displayUserId)
 
-            console.log('LLLLLLLLLLL-----', displayUserId)
-            console.log('LLLLLLLLLLLLLL----', this.props.currentUser.id)
             if(token && jwtDecode(localStorage.getItem('authorization')).sub.id !== this.props.displayUserId) {
               this.props.getFollowedUsers('decidedFollow', jwtDecode(localStorage.getItem('authorization')).sub.id)
             }
@@ -94,20 +95,21 @@ class Main extends Component {
     const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
     const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     const displayMap = <Map favorites={userFavorites} />
+    console.log('#############', displayUserId)
     const userReviews = allReviews.filter(review => review.user_id === displayUserId)
     
     return (
       
       <div>
         <div className="main">
-          <NavBar isAuth={this.state.isAuth}/>
+          <NavBar isAuth={this.state.isAuth} urlUsername={this.props.match.params.username}/>
           <div className="header">
             <div className="bg"></div>
             <Profile isAuth={this.state.isAuth} username={username} currentUser={this.props.currentUser} userReviews={userReviews}  />
           </div>
           <div className="main-flex-container">
             <div className="left-container">
-              <FavoriteList userId={userId} isAuth={this.state.isAuth} userReviews={userReviews} />
+              <FavoriteList userId={userId} isAuth={this.state.isAuth} userReviews={userReviews} paramsUsername={this.props.match.params.username} />
             </div>
             <div className="right-flex-container">            
               <div id="map" >
@@ -115,6 +117,7 @@ class Main extends Component {
                 <Button className="reset-map-button" onClick={this.resetMap}>Reset Map</Button> 
               </div>
               <div>
+                <h2>Users Followed</h2>
                 <FollowedUsers followedUsers={this.props.followedUsers} />
               </div>
             </div>

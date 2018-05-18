@@ -48,7 +48,7 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
 
   }
 
-  document.body.style.backgroundColor = "#FDD835";
+  document.body.style.backgroundColor = "#ff9966";
 
   return(
     <div>

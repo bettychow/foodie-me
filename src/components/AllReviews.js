@@ -8,6 +8,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import jwtDecode from'jwt-decode'
 import { getAllReviews, getRestaurant } from '../actions/index'
 
@@ -52,10 +53,15 @@ class AllReviews extends Component {
         
     })
 
+    const handleGoBack = () => {
+      this.props.history.goBack()
+          }
+
 
     return(
       <div>
-        <Link to={`/searchpage/${this.props.match.params.username}`} >Back to Search Restaurants</Link>
+        <Button onClick={handleGoBack}>Back</Button>
+        {/* <Link to={`/searchpage/${this.props.match.params.username}`} >Back to Search Restaurants</Link> */}
         <Link to={`/${currentUsername}`}>Back to Home</Link>
         {displayReviews}
       </div>
