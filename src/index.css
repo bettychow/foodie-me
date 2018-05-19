@@ -46,6 +46,11 @@ html{
 
 .heart{
   color: red;
+  font-size: 20px;
+}
+
+.hollow-heart{
+  color: red;
 }
 
 #map{
@@ -67,10 +72,12 @@ html{
   margin-top: 20px;
 }
 
+.search-link{
+  font-size: 20px;
+}
+
 .search-box{
-  width: 33%;
-  margin: auto;
-  display: inline-block
+  margin-top: 30px;
 }
 
 .search-results{
@@ -295,6 +302,7 @@ nav{
   border-width: thin;
   border-color: lightgray;
   padding: 5px;
+  margin-bottom: 20px;
 }
 
 .votes-title{
@@ -318,6 +326,6 @@ nav{
   margin-left: 20px;
 }
 
-.review-bidy{
+.review-body{
   margin-top: 40px;
 }

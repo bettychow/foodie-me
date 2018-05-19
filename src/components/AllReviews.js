@@ -19,8 +19,6 @@ class AllReviews extends Component {
   componentDidMount() {
     this.props.getAllReviews()
     this.props.getRestaurant(this.props.match.params.restaurant_id)
-
-    
   }
   
   render() {
@@ -33,8 +31,6 @@ class AllReviews extends Component {
     
 
     const allRestaurantReviews = allReviews.filter(review => {
-      
-      
       return review.restaurant_id === Number(this.props.match.params.restaurant_id)
     })
 

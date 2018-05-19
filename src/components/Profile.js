@@ -96,7 +96,7 @@ console.log('EEEEEE', e.target.innerHTML)
 
     return(
       <div className="profile">
-        <h3 className="username" >{displayUserInfo.username}</h3>
+        <h2 className="username" >{displayUserInfo.username}</h2>
         {displayCrown}
         <img className="profile-pic" src={displayUserInfo.profile_pic}/>
         {displayFollowButton}

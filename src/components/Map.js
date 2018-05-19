@@ -58,25 +58,14 @@ class Map extends Component {
       return <RestaurantOnMap key={restaurant.yelp_id} lat={restaurant.lat} lng={restaurant.lng} text={restaurant.restaurant_name}/>
     }) :''
     
-    // const lat = Number(userFavorites[0].lat)
-    // const lng = Number(userFavorites[0].lng)
-
-    // const coordinatesObj = {lat, lng }
-
-
     return (
-
-    
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAIfMFqTk-qZu7-bPuH2-haZC1lSzmEn7c' }}
         center={this.props.coordinates}
         zoom={this.props.zoom}
       >
-      
-      {displayFavoritesOnMap}
-       
+         {displayFavoritesOnMap}
       </GoogleMapReact>
-    
     );
   }
 }

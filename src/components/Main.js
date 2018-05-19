@@ -71,10 +71,6 @@ console.log('UUUUUUUUYYYYYYYYYY//////////', this.props.match.params.username)
             }
           })
     }
-
-    
-    
-
       this.props.getAllReviews()
       this.props.getAllRestaurants()
       this.props.getDisplayUser(this.props.match.params.username)
@@ -121,8 +117,6 @@ console.log('UUUUUUUUYYYYYYYYYY//////////', this.props.match.params.username)
                 <FollowedUsers followedUsers={this.props.followedUsers} />
               </div>
             </div>
-            
-                  
           </div>
         </div>
       </div>

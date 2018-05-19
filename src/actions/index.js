@@ -41,7 +41,7 @@ export const search = (searchString, location) => {
   const access_token = "2bHIcYMU5Xn4FID8LCBYABCEwu7AhxhfmgsFYBr2ioT0x8Cml9Pi3gEFnok-xHnYNylTqj_7FKyRaXcZrpjayTnrtiosCiE7QdqOV8KSQeFgBNtUSoe5tY6kBDcKWnYx";
   return async dispatch => {
 
-  const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${searchString}+restaurant&location=${location}`, {
+  const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${searchString}+restaurant&location=${location}&limit=50`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

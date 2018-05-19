@@ -17,33 +17,15 @@ class SearchResults extends Component {
 
   componentDidMount () {
   
-  //   const username = this.props.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.username
-  //   this.props.getAllReviews()
-  //   this.props.getUserInfo(username)
-  //     .then(result => {
-  //       this.props.getUserRestaurants(this.props.userId)
-  //     })
-   
-  //     this.props.getAllRestaurants()
-  // }
-  
   const user_id = this.props.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.displayUserId
-    this.props.getAllReviews()
-    
-        this.props.getUserRestaurants(user_id)
-  
-   
-      this.props.getAllRestaurants()
+    this.props.getAllReviews() 
+    this.props.getUserRestaurants(user_id) 
+    this.props.getAllRestaurants()
   }
 
 render() {
 
- 
-
   const { restaurants, allReviews, addFavorite, isAuth, getAllReviews, userId, userFavorites, updateUserFavorites, getAllRestaurants } = this.props
-
- 
-
 
   const handleFavoriteToggle = (e) => {
     console.log('event in favorite', e.target.parentNode)
@@ -73,8 +55,6 @@ render() {
     const lat = e.target.parentNode.getAttribute('lat')
     const lng = e.target.parentNode.getAttribute('lng')
     const yelp_id = e.target.parentNode.getAttribute('id')
-    
-console.log('YELP_ID', yelp_id)
 
     const restaurantAlreadySaved = this.props.allRestaurants.filter(restaurant => restaurant.yelp_id === yelp_id)
 
@@ -89,11 +69,8 @@ console.log('YELP_ID', yelp_id)
     }
 
     if(e.target.innerHTML === '♥' && restaurantAlreadySaved.length === 0) {
-      console.log('IIIIIIIIIIIII', e.target.innerHTML )
-      console.log('IIIIIIIIIIIII', restaurantAlreadySaved.length )
       this.props.addFavoriteAndRestaurant(userId, restaurantObj)
     } else if (e.target.innerHTML === '♥' && restaurantAlreadySaved.length > 0) {
-      console.log('YYYYYYYYYYPPPPPPPP')
       this.props.addFavorite(userId, restaurantAlreadySaved[0].id)
     }
 
@@ -137,15 +114,14 @@ console.log('YELP_ID', yelp_id)
               <h3>{restaurant.name}</h3>
               <p>{`${restaurant.location.display_address[0]} ${restaurant.location.display_address[1]}`}</p>
               <p>{restaurant.display_phone}</p>
-              {isAuth && !restaurant.is_favorite ? <span className="heart" onClick={e => handleFavoriteToggle(e) }>&#9825;</span>: isAuth && restaurant.is_favorite? <span className="heart">&hearts;</span> : ''} 
-              {restaurant.review.length === 0 ? '': <Link to={`/allreviews/${this.props.username}/${restaurant.review[0].restaurant_id}`} >Read Reviews</Link>}
+              {isAuth && !restaurant.is_favorite ? <span className="hollow-heart" onClick={e => handleFavoriteToggle(e) }>&#9825;</span>: isAuth && restaurant.is_favorite? <span className="heart">&#9829;</span> : ''} 
+              {restaurant.review.length === 0 ? '': <Link to={`/allreviews/${this.props.username}/${restaurant.review[0].restaurant_id}`} >Read ALL Users' Reviews</Link>}
            </li>
   })
 
    return (
      <ul className="search-list">
       {displayRestaurants}
-
      </ul>
    )
 

@@ -50,7 +50,7 @@ render () {
 
 
   return (
-    <div>
+    <div className="search-box">
       <Form onSubmit={e => this.handleSubmit(e)}>
         <FormGroup>
           <Label for="search-box">What do you want to eat?</Label>
