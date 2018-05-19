@@ -19,7 +19,7 @@ PostgreSQL
 - there will be ranking of foodies based on votes earned on their reviews and quantities of reviews. The top ranked foodies are 'Elite Foodies'!
 
 
-![Alt text](../src/gourmet_02a.jpg)
+![Alt text](src/gourmet_02a.jpg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
