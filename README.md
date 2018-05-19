@@ -1,6 +1,7 @@
+`Project Description`
 Foodie Me is a web app where user can sign up as member and has own web page with customized url for writing reviews on restaurants. Other members and visitors can vote on reviews of the user. The user will gain a honor of foodie of foodies if user's reviews' quantity and the number of votes gained meet certain criteria. User can share reviews via social media say Facebook. I am still fine tuning the app, although the app is actually already fully function. After deployment of the app, I will build the share via social media feature.
 
-Technologies used:
+`Technologies used`
 Javascript (ES6)
 HTML,
 CSS,
@@ -8,9 +9,14 @@ React,
 Redux,
 PostgreSQL
 
-To start this project:
+`To start this project`
 - fork and clone (Please also fork and clone the backend https://github.com/bettychow/foodie-me-backend)
 - npm start
+
+`Future Features`
+- users can find restaurants in between two or more users' locations
+- users can form groups to try out restaurants
+- there will be ranking of foodies based on votes earned on their reviews and quantities of reviews. The top ranked foodies are 'Elite Foodies'!
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
