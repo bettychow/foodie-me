@@ -18,6 +18,9 @@ PostgreSQL
 - users can form groups to try out restaurants
 - there will be ranking of foodies based on votes earned on their reviews and quantities of reviews. The top ranked foodies are 'Elite Foodies'!
 
+
+![Alt text](../src/gourmet.jpg)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
