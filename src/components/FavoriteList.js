@@ -82,9 +82,11 @@ render() {
   
   return (
     <div>
-      <h2 style={{marginTop: 50}}>My Favorite Restaurants List</h2>
-      <Link className="search-link" to={`/searchpage/${urlUsername}`}>Search Restaurants</Link>
-      <Filter restaurants={restaurants}/>
+      <div className="favorite-list-title">
+        <h2 style={{marginTop: 50}}>My Favorite Restaurants List</h2>
+        <Link className="search-link" to={`/searchpage/${urlUsername}`}>Search Restaurants</Link>
+        <Filter restaurants={restaurants}/>
+      </div>
       <ul className="favorite-list">
       {displayList}
       </ul>

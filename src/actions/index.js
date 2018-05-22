@@ -60,7 +60,6 @@ export const search = (searchString, location) => {
 export const ADD_FAVORITE = 'ADD_FAVORITE'
 export const addFavoriteAndRestaurant = (user_id, restaurant) => {
   return async dispatch => {
-
     const response = await fetch(`${process.env.REACT_APP_API_URL}/restaurants`, {
       method: 'POST',
       body: JSON.stringify(restaurant),
@@ -71,7 +70,6 @@ export const addFavoriteAndRestaurant = (user_id, restaurant) => {
     })
 
     const JSONres = await response.json()
-
     let obj = {user_id, restaurant_id: JSONres[0].id}
 
     const responseB = await fetch(`${process.env.REACT_APP_API_URL}/favorite`, {

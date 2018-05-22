@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import store from './store'
 import registerServiceWorker from './registerServiceWorker';
-import { getUserInfo } from './actions/index'
+import { getUserInfo, setMapLocation } from './actions/index'
 import 'bootswatch/dist/materia/bootstrap.min.css'
 import jwtDecode from'jwt-decode'
 
@@ -18,9 +18,9 @@ console.log('TOKKKKKKKKK', token)
     store.dispatch(getUserInfo(username))
   }
 
+const coordinatesObj = { lat: 37.0902, lng: -95.7129}
 
-
-// store.dispatch(fetchLocation())
+// store.dispatch(setMapLocation(coordinatesObj))
 
 ReactDOM.render(
   <Provider store={store}>

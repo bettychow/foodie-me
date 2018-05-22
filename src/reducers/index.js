@@ -34,7 +34,7 @@ import {
          UNFOLLOW
        } from '../actions'
 
-const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4.2}, action) => {
+const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4}, action) => {
   switch(action.type) {
     case SET_MAP_LOCATION:
     return({
@@ -46,7 +46,7 @@ const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom:
       return({
         ...state,
         coordinates: { lat: 37.0902, lng: -95.7129},
-        zoom: 4.2
+        zoom: 4
       })
     default:
       return state

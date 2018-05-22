@@ -17,7 +17,8 @@ import jwtDecode from'jwt-decode'
 import { FacebookShareButton, FacebookIcon, FacebookShareCount,  TwitterShareButton, TwitterIcon } from 'react-share'
 import DocumentMeta from 'react-document-meta'
 import { getCurrentReview, vote, getRestaurant, deleteReview } from '../actions/index'
-import ReviewForm from './ReviewForm';
+import ReviewForm from './ReviewForm'
+import NavBar from './NavBar';
 
 class Review extends Component {
 
@@ -80,7 +81,6 @@ class Review extends Component {
 
   shouldComponentUpdate() {
 
-    console.log('YYYYYYY shouldComponentUodate+++++++++++>')
     return true
   }
 
@@ -120,9 +120,6 @@ class Review extends Component {
       this.props.history.push(`/${username}`)
     }
   }
-
-  
-  //this.toggleEdit = this.toggleEdit.bind(this)
 
   render() {
 
@@ -177,7 +174,9 @@ this.props.history.goBack()
         
           <div>
             <DocumentMeta {...meta} />
-            <Link to={`/allreviews/${currentUsername}/${currentRestaurant.id}`}>See all reviews of {currentRestaurant.restaurant_name}</Link>
+            <NavBar isAuth={this.state.isAuth} urlUsername={this.props.match.params.username}/>
+            <Link className="link-to-allreviews" to={`/allreviews/${currentUsername}/${this.props.match.params.restaurant_name}/${currentRestaurant.id}`}>See all reviews of {currentRestaurant.restaurant_name}</Link>
+            <Link to={`/${this.props.match.params.username}`}>Go to {this.props.match.params.username}'s blog</Link>
             <Button className="back-button" onClick={handleGoBack}>Back</Button>
             <h3>{this.props.match.params.username}'s review on {currentRestaurant.restaurant_name}</h3>
             <p>{currentRestaurant.address}</p>

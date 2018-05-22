@@ -27,9 +27,7 @@ render() {
 
   const { restaurants, allReviews, addFavorite, isAuth, getAllReviews, userId, userFavorites, updateUserFavorites, getAllRestaurants } = this.props
 
-  const handleFavoriteToggle = (e) => {
-    console.log('event in favorite', e.target.parentNode)
-
+  const handleAddFavorite = (e) => {
     if(!e.target.parentNode.classList.contains('chosen')) {
       e.target.parentNode.classList.add('chosen')
     } 
@@ -43,9 +41,6 @@ render() {
     else {
       e.target.innerHTML = '&#9825;'
     }
-      
-    console.log(e.target.parentNode.getAttribute('lat'))
-    console.log('wwwww', e.target.parentNode.children)
 
     const restaurantInfo = e.target.parentNode.children
     const restaurant_name = restaurantInfo[1].innerHTML
@@ -73,14 +68,7 @@ render() {
     } else if (e.target.innerHTML === '♥' && restaurantAlreadySaved.length > 0) {
       this.props.addFavorite(userId, restaurantAlreadySaved[0].id)
     }
-
-    console.log('heart.....', e.target.html)
-  
-
   }
-
- 
-  
 
   restaurants.forEach(restaurant => {
     restaurant.review = []
@@ -92,7 +80,6 @@ render() {
   })
 
   restaurants.forEach(restaurant => {
-    
     restaurant.is_favorite = false
     userFavorites.forEach(favorite => {
       if(restaurant.id === favorite.yelp_id) {
@@ -114,8 +101,8 @@ render() {
               <h3>{restaurant.name}</h3>
               <p>{`${restaurant.location.display_address[0]} ${restaurant.location.display_address[1]}`}</p>
               <p>{restaurant.display_phone}</p>
-              {isAuth && !restaurant.is_favorite ? <span className="hollow-heart" onClick={e => handleFavoriteToggle(e) }>&#9825;</span>: isAuth && restaurant.is_favorite? <span className="heart">&#9829;</span> : ''} 
-              {restaurant.review.length === 0 ? '': <Link to={`/allreviews/${this.props.username}/${restaurant.review[0].restaurant_id}`} >Read ALL Users' Reviews</Link>}
+              {isAuth && !restaurant.is_favorite ? <span className="hollow-heart" onClick={e => handleAddFavorite(e) }>&#9825;</span>: isAuth && restaurant.is_favorite? <span className="heart">&#9829;</span> : ''} 
+              {restaurant.review.length === 0 ? '': <Link to={`/allreviews/${this.props.username}/${restaurant.name}/${restaurant.review[0].restaurant_id}`} >Read ALL Users' Reviews</Link>}
            </li>
   })
 

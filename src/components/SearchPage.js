@@ -13,6 +13,7 @@ import jwtDecode from'jwt-decode'
 import SearchBox from './SearchBox'
 import SearchResults from './SearchResults'
 import { getAllRestaurants } from '../actions/index'
+import NavBar from './NavBar'
 
 class SearchPage extends Component {
 
@@ -23,9 +24,6 @@ class SearchPage extends Component {
 
   componentDidMount() {
     console.log('username from params in Search page', this.props.match.params.username)
-    //const username = this.props.match.params.username
-    //this.props.getUserInfo(username)
-
     const token = localStorage.getItem('authorization')
 
     if(token) {
@@ -60,7 +58,8 @@ class SearchPage extends Component {
     
     return(
       <div>
-        <Button onClick={handleGoBack}>Back</Button>
+        <NavBar isAuth={this.state.isAuth} urlUsername={this.props.match.params.username}/>
+        <Button className="back-button" onClick={handleGoBack}>Back</Button>
         {/* <Link to={`/${this.props.match.params.username}`}>Back</Link> */}
         <SearchBox handleClear={this.handleClear}/>
         <div className="search-results">

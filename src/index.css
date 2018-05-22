@@ -65,11 +65,19 @@ html{
 
 .left-container{
   display: flex;
-  width: 46%;
+  width: 55%;
+  flex-direction: column;
+}
+
+.favorite-list-title-con{
+ text-align: center;
+ padding-left: 10px;
 }
 
 .favorite-list{
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search-link{
@@ -270,9 +278,10 @@ nav{
 }
 
 .right-flex-container{
-  width: 50%;
+  width: 45%;
   display: flex;
   flex-direction: column;
+  padding-right: 50px;
 }
 
 .login-logout{
@@ -328,4 +337,19 @@ nav{
 
 .review-body{
   margin-top: 40px;
+}
+
+.review-allReviews{
+  border: solid;
+  border-color: lightgray;
+  border-width: thin;
+  width: 20%;
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+.link-to-allreviews{
+  margin-right: 20px;
+  font-size: 15px;
 }
