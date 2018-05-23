@@ -46,11 +46,12 @@ html{
 
 .heart{
   color: red;
-  font-size: 20px;
+  font-size: 40px;
 }
 
 .hollow-heart{
   color: red;
+  font-size: 30px;
 }
 
 #map{
@@ -65,7 +66,7 @@ html{
 
 .left-container{
   display: flex;
-  width: 55%;
+  width: 40%;
   flex-direction: column;
 }
 
@@ -278,10 +279,10 @@ nav{
 }
 
 .right-flex-container{
-  width: 45%;
+  width: 55%;
   display: flex;
   flex-direction: column;
-  padding-right: 50px;
+  padding-right: 40px;
 }
 
 .login-logout{

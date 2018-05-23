@@ -41,40 +41,33 @@ class Main extends Component {
       }
     }
 
-    console.log('UUUUUUUUYYYYYYYYYY', this.props.match.params.username)
-
-    //const username = jwtDecode(localStorage.getItem('authorization')).sub.username
-
-    //console.log('NNNNNNNNAME', username)
-    if (token && jwtDecode(localStorage.getItem('authorization')).sub.username === this.props.match.params.username) {
-console.log('GEEEEEEEEEEEE')
+    if (token && jwtDecode(token).sub.username === this.props.match.params.username) {
       const decoded = jwtDecode(token)
       const userId = decoded.sub.id
       const username = decoded.sub.username
      
-        this.props.getUserInfo(username)
+      this.props.getUserInfo(username)
         .then(result => {
-          const userId = jwtDecode(localStorage.getItem('authorization')).sub.id
+          const userId = jwtDecode(token).sub.id
           this.props.getUserRestaurants(userId)
           this.props.getFollowedUsers('displayPage', userId)
         })
       } else {
-console.log('UUUUUUUUYYYYYYYYYY//////////', this.props.match.params.username)
-      this.props.getDisplayUser(this.props.match.params.username)
+        this.props.getDisplayUser(this.props.match.params.username)
           .then(result => {
             const displayUserId = this.props.displayUserId
             this.props.getUserRestaurants(displayUserId)
             this.props.getFollowedUsers('displayPage', displayUserId)
 
-            if(token && jwtDecode(localStorage.getItem('authorization')).sub.id !== this.props.displayUserId) {
-              this.props.getFollowedUsers('decidedFollow', jwtDecode(localStorage.getItem('authorization')).sub.id)
+            if(token && jwtDecode(token).sub.id !== this.props.displayUserId) {
+              this.props.getFollowedUsers('decidedFollow', jwtDecode(token).sub.id)
             }
           })
-    }
+      }
+      
       this.props.getAllReviews()
       this.props.getAllRestaurants()
       this.props.getDisplayUser(this.props.match.params.username)
-      
 }
 
   resetMap = () => {
