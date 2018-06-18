@@ -13,13 +13,6 @@ class Profile extends Component {
     bio: ''
   }
 
-  componentDidMount() {
-
-   
-  }
-
-  
-
   toggleEdit = (e) => {
     this.setState({
       isEditing: !this.state.isEditing
@@ -52,7 +45,7 @@ class Profile extends Component {
  handleFollow = e => {
   const followed = this.props.displayUserInfo.id
   const follower = this.props.currentUserInfo.id
-console.log('EEEEEE', e.target.innerHTML)
+
   if(e.target.innerHTML === 'Follow') {
     this.props.addFollowPair(followed, follower)
     e.target.innerHTML = 'Unfollow'
@@ -68,10 +61,8 @@ console.log('EEEEEE', e.target.innerHTML)
   render() {
 
     const { currentUserInfo, username, isAuth, updateUserInfo, userReviews, displayUserInfo, addFollowPair, deleteFollowPair} = this.props
-    console.log("&&&&&&&&&&", userReviews)
     const token = localStorage.getItem('authorization')
     const totalVotes = userReviews.reduce((sum, review) => {
-      console.log('review in reduce profile========>', review.votes)
       return sum + review.votes
     }, 0)
 
@@ -88,11 +79,12 @@ console.log('EEEEEE', e.target.innerHTML)
     const displayInputBoxPic = this.state.isEditing? <Input type="text" placeholder={'  url of your profile picture'} style={inputStyle} onChange={e => this.handleEditPic(e)} value={this.state.imgURL}/> : ''
 
     const displayInputBoxBio = this.state.isEditing? <Input type="text" placeholder={'  About you'} style={inputStyle} onChange={e => this.handleEditBio(e)} value={this.state.bio}/> : ''
+    
     const displaySaveButton = this.state.isEditing? <Button onClick={e => this.handleSave(e)}>Save</Button>: ''
+    
     const displayFollowedOrNot = this.props.isFollowed ? 'Unfollow': 'Follow'
+    
     const displayFollowButton = isAuth || !token? '': <Button onClick={e => this.handleFollow(e)}>{displayFollowedOrNot}</Button>
-
-    console.log()
 
     return(
       <div className="profile">
@@ -105,16 +97,12 @@ console.log('EEEEEE', e.target.innerHTML)
         {displayInputBoxBio}
         {displayEditButton}
         {displaySaveButton}
-        
       </div>
-      
     )
   }
 }
 
 const mapStateToProps = state => {
-
-  console.log('state in profile', state)
   return({
     currentUserInfo: state.currentUser,
     displayUserInfo: state.displayUser,

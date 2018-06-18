@@ -12,7 +12,6 @@ import {
 import jwtDecode from'jwt-decode'
 import { getCurrentReview, updateReview } from '../actions/index'
 
-
 class ReviewForm extends Component {
 
   state = {
@@ -29,8 +28,6 @@ class ReviewForm extends Component {
 
   componentDidMount () {
     const { id, title, comment, dishes, food_rating, service_rating, pic_01, pic_02, pic_03, pic_04 } = this.props.currentReview
-    
-    console.log(this.props.currentReview, this.props.currentRestaurant)
     
     this.setState({
       title,
@@ -128,7 +125,6 @@ class ReviewForm extends Component {
               value={this.state.title}
               onChange={e => this.handleTitleChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="comment">Comment</Label>
@@ -140,7 +136,6 @@ class ReviewForm extends Component {
               value={this.state.comment}
               onChange={e => this.handleCommentChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="dishes">Recommended Dishes</Label>
@@ -152,7 +147,6 @@ class ReviewForm extends Component {
               value={this.state.dishes}
               onChange={e => this.handleDishesChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="food">Food Rating</Label>
@@ -164,7 +158,6 @@ class ReviewForm extends Component {
               value={this.state.food_rating}
               onChange={e => this.handleFoodRatingChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="service">Service Rating</Label>
@@ -176,7 +169,6 @@ class ReviewForm extends Component {
               value={this.state.service_rating}
               onChange={e => this.handleServiceRatingChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_01">Pic_01</Label>
@@ -188,7 +180,6 @@ class ReviewForm extends Component {
               value={this.state.pic_01}
               onChange={e => this.handlePic01Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_02">Pic_02</Label>
@@ -200,7 +191,6 @@ class ReviewForm extends Component {
               value={this.state.pic_02}
               onChange={e => this.handlePic02Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_03">Pic_03</Label>
@@ -212,7 +202,6 @@ class ReviewForm extends Component {
               value={this.state.pic_03}
               onChange={e => this.handlePic03Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_04">Pic_04</Label>
@@ -224,7 +213,6 @@ class ReviewForm extends Component {
               value={this.state.pic_04}
               onChange={e => this.handlePic04Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <Button>Submit</Button>  <Button onClick={this.props.toggleEdit}>Cancel</Button>
         </Form>
@@ -232,7 +220,6 @@ class ReviewForm extends Component {
     )
   }
 }
-
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   updateReview

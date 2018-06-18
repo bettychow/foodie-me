@@ -4,7 +4,6 @@ import GoogleMapReact from 'google-map-react';
 import { bindActionCreators } from 'redux'
 import { getUserRestaurants } from '../actions/index'
  
-
 const MARKER_SIZE = 10;
 const greatPlaceStyle = {
   position: 'absolute',
@@ -17,7 +16,6 @@ const greatPlaceStyle = {
   borderRadius: 50,
 }
 
- 
 class Map extends Component {
 
   handleMouseHover = this.handleMouseHover.bind(this);
@@ -28,7 +26,6 @@ class Map extends Component {
     center: {lat: 37.0902, lng: -95.7129},
     zoom: 4
   };
-
 
   handleMouseHover() {
     this.setState(this.toggleHoverState);
@@ -58,8 +55,6 @@ class Map extends Component {
       return <RestaurantOnMap key={restaurant.yelp_id} lat={restaurant.lat} lng={restaurant.lng} text={restaurant.restaurant_name}/>
     }) :''
     
-    console.log('CCCCCCOOOOO', this.props.coordinates)
-    console.log('CCCCCCOOOOO', this.props.zoom)
     return (
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAIfMFqTk-qZu7-bPuH2-haZC1lSzmEn7c' }}
@@ -73,8 +68,6 @@ class Map extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state in map', state)
-
   return({
     userFavorites: state.favorites.restaurants,
     coordinates: state.mapLocation.coordinates,

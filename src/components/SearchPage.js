@@ -23,7 +23,6 @@ class SearchPage extends Component {
   }
 
   componentDidMount() {
-    console.log('username from params in Search page', this.props.match.params.username)
     const token = localStorage.getItem('authorization')
 
     if(token) {
@@ -47,14 +46,12 @@ class SearchPage extends Component {
     })
   }
 
-  
-
   render() {
     document.body.style.backgroundColor = "white";
 
     const handleGoBack = () => {
       this.props.history.goBack()
-          }
+    }
     
     return(
       <div>
@@ -68,8 +65,6 @@ class SearchPage extends Component {
       </div>
     )
   }
-  
-
 }
 
 const mapStateToProps = state => {

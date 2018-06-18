@@ -40,12 +40,9 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
       password
     }
 
-    console.log('uuuuu', userObj)
-
     if(password === verifypassword) {
       signup(userObj)
     }
-
   }
 
   document.body.style.backgroundColor = "#ff9966";
@@ -74,7 +71,6 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
                   value={name}
                   onChange={e => inputName(e.target.value)}
                 />
-                {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
               </FormGroup>
               <FormGroup>
                 <Label for="username">Username</Label>
@@ -86,7 +82,6 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
                   value={username}
                   onChange={e => inputUsername(e.target.value)}
                 />
-                {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
               </FormGroup>
               <FormGroup>
                 <Label for="email">Email</Label>
@@ -98,7 +93,6 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
                   value={email}
                   onChange={e => inputEmail(e.target.value)}
                 />
-                {/* {!this.state.email && this.state.isSubmit ? <Alert color="primary">Please enter your email</Alert>: '' } */}
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
@@ -110,7 +104,6 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
                   value={password}
                   onChange={e => inputPassword(e.target.value)}
                 />
-                 {/* {!this.state.password && this.state.isSubmit ? <Alert color="primary">Please enter your address</Alert>: '' } */}
               </FormGroup>
               <FormGroup>
                 <Label for="verify_password">Verify Password</Label>
@@ -122,9 +115,6 @@ const SignUp = ({ name, username, email, password, verifypassword, inputName, in
                   value={verifypassword}
                   onChange={e => inputVerifyPassword(e.target.value)}   
                 />
-                {/* {!this.state.isValid ? (
-                  <Alert color="danger">Passwords do not match</Alert>
-                ) : null} */}
               </FormGroup>
               <Button color="primary" type="submit">
                 Submit

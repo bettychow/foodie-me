@@ -14,36 +14,25 @@ import { getUserInfo } from '../actions/index'
 
 class NavBar extends Component {
   
-
   render() {
     const handleLogout = (e) => {
       localStorage.removeItem('authorization')
     }
 
-    
-    
-    
     const token = localStorage.getItem('authorization')
     const logoutButton = token? 'Log Out': 'Log In'
 
-
     const handleRerender = () => {
-console.log('999999999999999')
       this.forceUpdate().bind(this)
     }
 
     const {history, isAuth, currentUser} = this.props
-
-    console.log('KKKKKKKKKKKKKKKKKK', this.props.urlUsername)
     const urlUsername = token? jwtDecode(token).sub.username: this.props.urlUsername
-
     const displayLoginLogout = token? <span className="logout">{jwtDecode(token).sub.username}<img className="avator" src={`${currentUser.profile_pic}`}/><Link to={'/'} onClick={e => handleLogout(e)} >Log Out</Link></span>: <Link to={'/'}>Log In</Link>
     const displaySignup = token? '': <Link className="signup" to={'/signup'}>Sign Up</Link>
 
-    
     return(
       <div className="nav">
-      
         <div className="logo">foodie<i className="fas fa-crown"></i>me</div>
         <div className="login-logout">
           <Link className="home-button" to={`/${urlUsername}`} onClick={handleRerender} >{urlUsername}'s Home</Link> 
@@ -51,7 +40,6 @@ console.log('999999999999999')
           {displayLoginLogout}
           {displaySignup}
         </div>
-      
       </div>
     )
   }

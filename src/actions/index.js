@@ -10,13 +10,11 @@ export const setMapLocation = (locationObj) => {
       payload: locationObj
     })
   }
-
 }
 
 export const RESET_MAP_LOCATION = 'RESET_MAP_LOCATION'
 export const resetMapLocation = () => {
   return dispatch => {
-
     dispatch({
       type: RESET_MAP_LOCATION
       
@@ -27,7 +25,6 @@ export const resetMapLocation = () => {
 export const INPUT_SEARCH = 'INPUT_SEARCH'
 export const inputSearch = content => {
   return dispatch => {
-
     dispatch({
       type: INPUT_SEARCH,
       payload: content
@@ -80,7 +77,6 @@ export const addFavoriteAndRestaurant = (user_id, restaurant) => {
         'Accept': 'application/json'
       }
     })
-
       dispatch({
         type: ADD_FAVORITE,
         payload: JSONres[0]
@@ -113,7 +109,6 @@ export const addFavorite = (user_id, restaurant_id) => {
 export const DELETE_FAVORITE = 'DELETE_FAVORITE'
 export const deleteUserFavorite = ( userRestaurantObj, token ) => {
 
-  console.log('TTTTTOOOOOOOO++++++ toekn deleteUserFav in ac', token)
   return async dispatch => {
      const response = await fetch(`${process.env.REACT_APP_API_URL}/favorite`, {
        method: 'DELETE',
@@ -129,7 +124,6 @@ export const deleteUserFavorite = ( userRestaurantObj, token ) => {
        type: DELETE_FAVORITE,
        payload: Number( userRestaurantObj.restaurant_id )
      })
-
   }
 }
 
@@ -154,14 +148,12 @@ export const updateUserFavorites = (user_id, restaurant_id) => {
 
 }
 
-
 export const LATEST_FIRST = 'LATEST_FIRST'
 export const OLDEST_FIRST = 'OLDEST_FIRST'
 export const All_RESTAURANTS = 'All_RESTAURANTS'
 export const sortByTime = (filter) => {
   
   return dispatch => {
-
     if(filter === 'latestFirst') {
       dispatch({
         type: LATEST_FIRST
@@ -204,7 +196,6 @@ export const getUserInfo = (username) => {
 export const GET_DISPLAY_USER = 'GET_DISPLAY_USER'
 export const getDisplayUser = (username) => {
 
-  console.log('username in getDisplayUser in action+++++++', username)
   return async dispatch => {
 
     const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${username}` , {
@@ -222,7 +213,6 @@ export const getDisplayUser = (username) => {
       payload: JSONres[0]
     })
   }
-  
 }
 
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
@@ -239,16 +229,12 @@ export const updateUserInfo = (updatedInfo, username) => {
     })
 
     const JSONres = await response.json()
-    console.log('JSONres in updateUserInfo action', JSONres)
     
     dispatch({
       type: UPDATE_USER_INFO,
       payload: JSONres[0]
-
     })
-
   }
-
 }
 
 export const GET_ALL_RESTAURANTS =' GET_ALL_RESTAURANTS'
@@ -268,7 +254,6 @@ export const getAllRestaurants = () => {
       type: GET_ALL_RESTAURANTS,
       payload: JSONres
     })
-
   }
 }
 
@@ -392,10 +377,7 @@ export const deleteReview = review_id =>{
       type: DELETE_REVIEW,
       payload: Number(review_id)
     })
-
   }
-
-  
 }
 
 export const INPUT_NAME = 'INPUT_NAME'
@@ -520,8 +502,6 @@ export const checkLogin = (email, password) => {
   if(!JSONres.error) {
     localStorage.setItem("authorization", JSON.stringify(JSONres))
   }
-  
-
 
     dispatch({
       type: CHECK_LOGIN,
@@ -572,7 +552,6 @@ export const addReview = reviewObj => {
 export const ADD_FOLLOW_PAIR = 'ADD_FOLLOW_PAIR'
 export const addFollowPair = (followed_id, follower_id) => {
 
-  console.log('FFFFFFOOOOOO', followed_id, follower_id)
   return async dispatch => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/follow`, {
       method: 'POST',
@@ -588,7 +567,7 @@ export const addFollowPair = (followed_id, follower_id) => {
 export const GET_FOLLOWED_USERS = 'GET_FOLLLOWED_USERS'
 export const FOLLOWED = 'FOLLOWED'
 export const getFollowedUsers = (purpose, follower_id) => {
-  console.log('FOOOOOOOID in action GET FOLLOWED', follower_id)
+  
   return async (dispatch, getState) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/follow/${follower_id}`, {
       method: 'GET',
@@ -609,12 +588,7 @@ export const getFollowedUsers = (purpose, follower_id) => {
       })
     } else if (purpose === 'decidedFollow' ) {
 
-      console.log('DEcidedfollow in action XXXXXXX', purpose)
-
-      console.log('JJJJJJJJJJJJNNNNNNNNNNNNNNNNNN',JSONres)
-      console.log('DISSSSSSSSPPPPPPPPPPPPPP', displayUser.id)
       const filterdUsers = JSONres.filter(user => {
-        console.log('USERRRRRRRRR%%%%%%%% in action', user)
         return user.followed_id === displayUser.id
       } )
 
@@ -644,5 +618,4 @@ export const deleteFollowPair = (followed_id, follower_id) => {
       type: UNFOLLOW
     })
   }
-
 }

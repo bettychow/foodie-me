@@ -57,7 +57,6 @@ const search = (state = {content: '', businesses: []}, action) => {
   switch(action.type) {
     
     case INPUT_SEARCH:
-    console.log('aaaaaaa', action.type)
       return ({
         ...state,
         content: action.payload
@@ -271,7 +270,6 @@ const currentUser = (state = {
           password: action.payload
         }
       case CHECK_LOGIN:
-      console.log('action in login reducer', action)
         return {
           ...state,
           isError: action.payload.error? true: false
@@ -301,32 +299,26 @@ const currentUser = (state = {
   }
 
   const follow = (state = {followedUsers: [], isFollowed: false}, action) => {
-  switch(action.type) {
-   
-    case GET_FOLLOWED_USERS:
-    
+    switch(action.type) {
+      case GET_FOLLOWED_USERS:
+        return {
+          ...state,
+          followedUsers: action.payload
+        }
+      case FOLLOWED:
+        return {
+          ...state,
+          isFollowed: true
+        }
+      case UNFOLLOW:
       return {
         ...state,
-        followedUsers: action.payload
+        isFollowed: false
       }
-    case FOLLOWED:
-      return {
-        ...state,
-        isFollowed: true
-      }
-    case UNFOLLOW:
-    return {
-      ...state,
-      isFollowed: false
+      default:
+        return state
     }
-    default:
-      return state
   }
-  }
-
-  
-
-
 
 export default combineReducers({
   search,

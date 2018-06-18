@@ -13,32 +13,28 @@ import {  } from '../actions/index'
 
 class FollowedUsers extends Component {
 
-render() {
+  render() {
 
-  const goToFollowed = () => {
+    const goToFollowed = () => {
+      this.forceUpdate().bind(this)
+    }
 
-    console.log('WWWWWWWWHAT IS THIS'), this
-    this.forceUpdate().bind(this)
+    const displayFollowedUsers = this.props.followedUsers.map(user => {
+      return  <li className="followed-user" key={user.followed_id}>
+                <h5>{user.username}</h5>
+                <img className="followed-user-pic" src={user.profile_pic}/>
+                <Link to={`/${user.username}`} onClick={goToFollowed}>Go to {user.username}'s blog</Link>
+              </li>
+    })
+
+    return(
+      <div>
+        <ul>
+        {displayFollowedUsers}
+        </ul>
+      </div>
+    )
   }
-
-  const displayFollowedUsers = this.props.followedUsers.map(user => {
-    return  <li className="followed-user" key={user.followed_id}>
-              <h5>{user.username}</h5>
-              <img className="followed-user-pic" src={user.profile_pic}/>
-              <Link to={`/${user.username}`} onClick={goToFollowed}>Go to {user.username}'s blog</Link>
-            </li>
-   
-  })
-
-  return(
-    <div>
-      <ul>
-      {displayFollowedUsers}
-      </ul>
-    </div>
-  )
-}
-
 }
 
 export default FollowedUsers

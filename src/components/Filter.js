@@ -14,7 +14,6 @@ import { sortByTime, getUserRestaurants } from '../actions/index'
 class Filter extends Component {
 
   handleChangeTime = (event) => {
-
     if(event.target.value === 'allRestaurants') {
       this.props.getUserRestaurants(this.props.userId)
     } else {
@@ -43,7 +42,6 @@ const mapStateToProps = state => ({
   restaurants: state.favorites.restaurants,
   userId: state.currentUser.id,
 })
-
 
 const mapDispatchToProps = dispatch => bindActionCreators({
    sortByTime,

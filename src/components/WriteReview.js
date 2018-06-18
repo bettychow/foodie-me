@@ -12,7 +12,6 @@ import {
 import jwtDecode from'jwt-decode'
 import { addReview, getRestaurant } from '../actions/index'
 
-
 class WriteReview extends Component {
 
   componentDidMount() {
@@ -70,16 +69,13 @@ class WriteReview extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log('????????????????', e)
     const restaurant_id = this.props.match.params.restaurant_id
     const user_id = this.props.match.params.user_id
     const username = this.props.match.params.username
     const yelp_id = this.props.currentRestaurant.yelp_id
     const reviewObj = {...this.state, restaurant_id, user_id, username, yelp_id}
 
-    console.log('reviewObj in writereview', reviewObj)
     this.props.addReview(reviewObj)
-
     this.props.history.push(`/${username}`)
   }
 
@@ -89,9 +85,6 @@ class WriteReview extends Component {
   
   render() {
 
-    //const { currentReview } = this.props
-
-    console.log('mmmmmmmmmm', this.props.match.params)
     const {currentRestaurant} =this.props
     
     return(
@@ -112,7 +105,6 @@ class WriteReview extends Component {
               value={this.state.title}
               onChange={e => this.handleTitleChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="comment">Comment</Label>
@@ -124,7 +116,6 @@ class WriteReview extends Component {
               value={this.state.comment}
               onChange={e => this.handleCommentChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="dishes">Recommended Dishes</Label>
@@ -136,7 +127,6 @@ class WriteReview extends Component {
               value={this.state.dishes}
               onChange={e => this.handleDishesChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="food">Food Rating</Label>
@@ -148,7 +138,6 @@ class WriteReview extends Component {
               value={this.state.food_rating}
               onChange={e => this.handleFoodRatingChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="service">Service Rating</Label>
@@ -160,7 +149,6 @@ class WriteReview extends Component {
               value={this.state.service_rating}
               onChange={e => this.handleServiceRatingChange(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_01">Pic_01</Label>
@@ -172,7 +160,6 @@ class WriteReview extends Component {
               value={this.state.pic_01}
               onChange={e => this.handlePic01Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_02">Pic_02</Label>
@@ -184,7 +171,6 @@ class WriteReview extends Component {
               value={this.state.pic_02}
               onChange={e => this.handlePic01Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_03">Pic_03</Label>
@@ -196,7 +182,6 @@ class WriteReview extends Component {
               value={this.state.pic_03}
               onChange={e => this.handlePic01Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <FormGroup>
             <Label for="pic_04">Pic_04</Label>
@@ -208,30 +193,23 @@ class WriteReview extends Component {
               value={this.state.pic_04}
               onChange={e => this.handlePic01Change(e)}
             />
-            {/* {!this.state.name && this.state.isSubmit ? <Alert color="primary">Please enter your name</Alert>: '' } */}
           </FormGroup>
           <Button>Submit</Button> <Button onClick={this.handleCanel}>Cancel</Button>
         </Form>
-        
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
-  return({
-  
+  return({ 
     currentRestaurant: state.restaurants.currentRestaurant
   })
 }
-
-
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getRestaurant,
   addReview
 }, dispatch)
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(WriteReview)

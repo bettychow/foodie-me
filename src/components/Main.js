@@ -71,11 +71,8 @@ class Main extends Component {
 }
 
   resetMap = () => {
-    
     this.props.resetMapLocation()
   }
-
-  
 
   render() {
     document.body.style.backgroundColor = "white";
@@ -84,11 +81,9 @@ class Main extends Component {
     const userId = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.id: this.props.userId
     const username = this.state.isAuth? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
     const displayMap = <Map favorites={userFavorites} />
-    console.log('#############', displayUserId)
     const userReviews = allReviews.filter(review => review.user_id === displayUserId)
     
     return (
-      
       <div>
         <div className="main">
           <NavBar isAuth={this.state.isAuth} urlUsername={this.props.match.params.username}/>
@@ -118,7 +113,6 @@ class Main extends Component {
 }
 
 const mapStateToProps = state =>  {
-  console.log('sssssss', state)
   return {
     userId: state.currentUser.id,
     displayUserId: state.displayUser.id,

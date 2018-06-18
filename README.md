@@ -1,5 +1,5 @@
 `Project Description`
-Foodie Me is a web app where user can sign up as member and has own web page with customized url for writing reviews on restaurants. Other members and visitors can vote on reviews of the user. The user will gain a honor of foodie of foodies if user's reviews' quantity and the number of votes gained meet certain criteria. User can share reviews via social media say Facebook. I am still fine tuning the app, although the app is actually already fully function. 
+foodie me is a web app that encourages the real foodies who know and care about foods to write and share reliable reviews on restaurants. Both members and non members can upvote or down vote the reviews. Members can also follow other members. Member who writes good amount of quality reviews will get the status of “Elite Foodie” and earn a crown. People can save time of searching for quality reviews on Yelp (which are rare) by reading the quality reviews from real foodies on foodie me. 
 
 `Technologies used`
 Javascript (ES6)

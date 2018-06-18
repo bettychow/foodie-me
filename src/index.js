@@ -10,7 +10,6 @@ import 'bootswatch/dist/materia/bootstrap.min.css'
 import jwtDecode from'jwt-decode'
 
 const token = localStorage.getItem('authorization')
-console.log('TOKKKKKKKKK', token)
   if(token) {
     const decoded = jwtDecode(token)
     const userId = decoded.sub.id

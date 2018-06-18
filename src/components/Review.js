@@ -1,5 +1,3 @@
-/*global FB*/
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -11,7 +9,6 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
-
 import '../index.css'
 import jwtDecode from'jwt-decode'
 import { FacebookShareButton, FacebookIcon, FacebookShareCount,  TwitterShareButton, TwitterIcon } from 'react-share'
@@ -28,37 +25,7 @@ class Review extends Component {
   componentDidMount() {
     this.props.getCurrentReview(this.props.match.params.reviewid)
     this.props.getRestaurant(this.props.match.params.restaurant_id)
-    
-
-    //console.log('????????', FB)
-  //   window.fbAsyncInit = function() {
-  //     //SDK loaded, initialize it
-
-  //     FB.init({
-  //       appId      : '207666283375899',
-  //       status     : true,
-  //       xfbml      : true,
-  //       version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
-  //     });
-
-  //     // FB.init({
-  //     //     appId      : '207666283375899',
-  //     //     xfbml      : true,
-  //     //     version    : 'v2.7'
-  //     // });
-  //     //JS SDK initialized, now you can use it
-  //     FB.XFBML.parse();
-  // };
-
-  //   (function(d, s, id) {
-  //     var js, fjs = d.getElementsByTagName(s)[0];
-  //     if (d.getElementById(id)) return;
-  //     js = d.createElement(s); js.id = id;
-  //     js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=207666283375899';
-  //     fjs.parentNode.insertBefore(js, fjs);
-  //   }(document, 'script', 'facebook-jssdk'))
- 
-
+  
     window.twttr = (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0],
         t = window.twttr || {};
@@ -72,15 +39,11 @@ class Review extends Component {
       t.ready = function(f) {
         t._e.push(f);
       };
-
-      console.log("Review componentDidMount is happening!!!! ***")
-    
       return t;
     }(document, "script", "twitter-wjs"));
   }
 
   shouldComponentUpdate() {
-
     return true
   }
 
@@ -97,15 +60,11 @@ class Review extends Component {
       t._e = [];
       t.ready = function(f) {
         t._e.push(f);
-      };
-
-      console.log("Review componentDidUpdate is happening!!!! ***")
-    
+      };    
       return t;
     }(document, "script", "twitter-wjs"));
   }
   
-
   toggleEdit() {
     this.setState({isEditing: !this.state.isEditing})
   }
@@ -135,14 +94,11 @@ class Review extends Component {
       }
     };
 
-
     this.toggleEdit = this.toggleEdit.bind(this)
     const token = localStorage.getItem('authorization')
     const { reviewid , username } = this.props.match.params
     const { currentReview, currentRestaurant, getRestaurant, vote, deleteReview } = this.props
     const currentUsername = token? jwtDecode(localStorage.getItem('authorization')).sub.username: this.props.match.params.username
-    
-
     const restaurant_ID = this.props.match.params.restaurant_id
 
     const handleVote = e => {
@@ -154,7 +110,7 @@ class Review extends Component {
     }
 
     const handleGoBack = () => {
-this.props.history.goBack()
+      this.props.history.goBack()
     }
     
     const displayEditButton = token && jwtDecode(token).sub.username === username? <Button onClick={this.toggleEdit}>Edit</Button>: ''
@@ -171,7 +127,6 @@ this.props.history.goBack()
     } else {
       return(
         <DocumentMeta >
-        
           <div>
             <DocumentMeta {...meta} />
             <NavBar isAuth={this.state.isAuth} urlUsername={this.props.match.params.username}/>
@@ -205,25 +160,6 @@ this.props.history.goBack()
             {displayDownVoteButton}
             {displayVoteMessage}
             <div id="fb-root"></div>
-            {/* <div className="fb-share-button" data-href="https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow/1/1" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgentle-taiga-80518.herokuapp.com%2Freview%2FGochi%2520Japanese%2520Fusion%2520Tapas%2Fbettychow%2F1%2F1&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
-          {/* <FacebookShareButton
-            url={'https://gentle-taiga-80518.herokuapp.com/review/Gochi%20Japanese%20Fusion%20Tapas/bettychow'}
-            quote={'hello'}
-            className="Demo__some-network__share-button">
-            <FacebookIcon
-              size={32}
-              round />
-          </FacebookShareButton> */}
-
-          {/* <TwitterShareButton
-            url={sharedURL}
-            title={'hello'}
-            className="Demo__some-network__share-button">
-            <TwitterIcon
-              size={32}
-              round />
-          </TwitterShareButton> */}
-
         <div className="twitter-button">
           <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
         </div>
@@ -236,7 +172,6 @@ this.props.history.goBack()
 }
 
 const mapStateToProps = state => {
-  console.log('state in Review', state)
   return ({
     currentReview: state.reviews.currentReview,
     currentRestaurant: state.restaurants.currentRestaurant,
