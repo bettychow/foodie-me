@@ -59,8 +59,8 @@ class SignUp extends Component {
     }
 
     const passwordError = this.state.isPasswordSame? '' : <p style={{color: "#FF0000"}}>Passwords do not match</p>
-    const userNameError = errorMessage === 'Username already exists'? <p style={{color: "#FF0000"}}>Username already exists</p>: ''
-    const emailError = errorMessage === 'Email already exists'? <p style={{color: "#FF0000"}}>Email already exists</p>: ''
+    const userNameError = errorMessage === 'Username already exists' || errorMessage === 'Both username and email already exist' ? <p style={{color: "#FF0000"}}>Username already exists</p>: ''
+    const emailError = errorMessage === 'Email already exists' || errorMessage === 'Both username and email already exist'? <p style={{color: "#FF0000"}}>Email already exists</p>: ''
 
     document.body.style.backgroundColor = "#ff9966";
 
