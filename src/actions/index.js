@@ -451,10 +451,16 @@ export const signup = userObj => {
         }
       })
 
-      dispatch({
-        type: SIGN_UP,
-        payload: userObj
-      })
+      const JSONres = await response.json()
+
+      if(typeof JSONres === 'string' ) {
+        dispatch({
+          type: SIGN_UP,
+          payload: JSONres
+        })
+      } else {
+        window.history.back()
+      } 
     }
 }
 

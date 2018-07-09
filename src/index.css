@@ -20,6 +20,14 @@ html{
   height: 1000px;
 }
 
+.alert{
+  color: red;
+}
+
+.signup-submit-btn {
+  margin-right: 10px;
+}
+
 .restaurant{
   border: solid;
   border-width: thin;

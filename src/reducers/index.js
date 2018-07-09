@@ -31,7 +31,8 @@ import {
          All_RESTAURANTS,
          GET_FOLLOWED_USERS,
          FOLLOWED,
-         UNFOLLOW
+         UNFOLLOW,
+         SIGN_UP
        } from '../actions'
 
 const mapLocation = (state = {coordinates: { lat: 37.0902, lng: -95.7129}, zoom: 4}, action) => {
@@ -248,13 +249,25 @@ const currentUser = (state = {
           password: action.payload
         }
       case INPUT_VERIFY_PASSWORD:
-      return {
-        ...state,
-        verifypassword: action.payload
-      }
+        return {
+          ...state,
+          verifypassword: action.payload
+        }
       default:
         return state
     }
+  }
+
+  const checkUser = (state = {errorMessage: null }, action) => {
+      switch(action.type) {
+        case SIGN_UP:
+          return {
+            ...state,
+            errorMessage: action.payload
+          }
+        default: 
+          return state
+      }
   }
 
   const login = (state = {email: '', password: '', isError: false}, action) => {
@@ -327,6 +340,7 @@ export default combineReducers({
   displayUser,
   reviews,
   signup,
+  checkUser,
   login,
   restaurants,
   mapLocation,
