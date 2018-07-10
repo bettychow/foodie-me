@@ -31,7 +31,8 @@ import {
 class SignUp extends Component {
 
   state = {
-    isPasswordSame: true
+    isPasswordSame: true,
+    isPasswordAvailable: true
   }
 
   render() {
@@ -52,6 +53,10 @@ class SignUp extends Component {
         this.setState({
           isPasswordSame: false
         })
+      } else if (password === '' && verifypassword === '') {
+        this.setState({
+          isPasswordAvailable: false
+        })
       } else {
         signup(userObj)
       }
@@ -61,6 +66,7 @@ class SignUp extends Component {
     const passwordError = this.state.isPasswordSame? '' : <p style={{color: "#FF0000"}}>Passwords do not match</p>
     const userNameError = errorMessage === 'Username already exists' || errorMessage === 'Both username and email already exist' ? <p style={{color: "#FF0000"}}>Username already exists</p>: ''
     const emailError = errorMessage === 'Email already exists' || errorMessage === 'Both username and email already exist'? <p style={{color: "#FF0000"}}>Email already exists</p>: ''
+    const passwordAvailError = this.state.isPasswordAvailable? '' : <p style={{color: "#FF0000"}}>Please create a password</p>
 
     document.body.style.backgroundColor = "#ff9966";
 
@@ -123,6 +129,7 @@ class SignUp extends Component {
                     value={password}
                     onChange={e => inputPassword(e.target.value)}
                   />
+                  {passwordAvailError}
                 </FormGroup>
                 <FormGroup>
                   <Label for="verify_password">Verify Password</Label>
